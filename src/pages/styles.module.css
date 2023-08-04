@@ -1,0 +1,108 @@
+/* stylelint-disable docusaurus/copyright-header */
+
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.tab {
+    border: 1px solid #eaeaea;
+    background: #fbfbfb;
+    padding: 1.5rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.tab h3 {
+    font-weight: 700;
+}
+
+html[data-theme='dark'] .tab {
+    border-color: #333;
+    background: #080808;
+    text-shadow: 0 1px 2px black;
+}
+
+.tab:hover {
+    background: #fbfbfb;
+}
+
+html[data-theme='dark'] .tab:hover {
+    background: var(--ifm-gradient);
+}
+
+html[data-theme='dark'] .tab:hover .lead {
+    color: #fff;
+    text-shadow: 0 1px 2px black;
+}
+
+html[data-theme='dark'] .tab svg {
+    filter: drop-shadow(0 1px 1px black);
+}
+
+.tab .lead {
+    font-size: 1.15rem;
+}
+
+.red {
+    color: red;
+}
+
+.red[aria-selected='true'] {
+    border-bottom-color: red;
+}
+
+.blue {
+    color: blue;
+}
+
+.blue[aria-selected='true'] {
+    border-bottom-color: blue;
+}
+
+.orange {
+    color: orange;
+}
+
+.orange[aria-selected='true'] {
+    border-bottom-color: orange;
+}
+
+.yellow {
+    color: yellow;
+}
+
+.yellow[aria-selected='true'] {
+    border-bottom-color: yellow;
+}
+
+.media-exchange-info {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.media-exchange-info h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.media-exchange-info table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.media-exchange-info td {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.media-exchange-info td:first-of-type {
+    font-weight: bold;
+}

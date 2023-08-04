@@ -1,0 +1,83 @@
+---
+title: Process
+sidebar_label: Process
+sidebar_position: 2
+---
+
+:::note
+Please note that this documentation is currently a work in progress, and we apologize for any errors or blank pages you may come across. We welcome any contributions or feedback to improve the documentation via the official repository at https://github.com/mediafoundation/media-docs.
+:::
+
+This document is a living document which represents the current process guidelines for developing and advancing Media Network Governance Proposals.
+
+## Process
+
+Several governance venues are available to Media Network governance, each serving its own particular purpose.
+
+1. [**Media Network Forum**](https://forum.media.network/)
+
+    A Discourse-hosted forum for governance-related discussion. Community members must register for an account before sharing or liking posts. New members are required to enter 4 topics and read 15 posts over the course of 10 minutes before they are permitted to post themselves.
+
+2. [**SnapshotMedia**](https://snapshot.page/#/media)
+
+    SnapshotMedia is a simple voting interface that allows users to signal sentiment off-chain. Votes on snapshot are weighted by the number of MEDIA delegated to the address used to vote.
+
+3. [**Governance Portal**](https://governance.media.network/#/vote)
+
+    The formal governance portal can be accessed directly through the Governance Interface. Votes are delegated and cast through the portal.
+
+Below we outline a preliminary draft for the Media Network governance process, detailing exactly where these venues fit in. These processes are subject to change according to feedback from the Media community.
+
+### Phase 1: Temperature Check — Discourse/SnapshotMedia
+
+The purpose of the Temperature Check is to determine if there is sufficient will to make changes to the status quo.
+
+To create a Temperature Check:
+
+1. Ask a general, non-biased question to the community on gov.media.network about a potential change (example: "Should Media Network governance add a new feature?"). Forum posts should be labeled as: "Temperature Check - [Your Title Here]". The forum post should include a link to the associated SnapshotMedia poll.
+
+1. Voters use SnapshotMedia to indicate their interest in bringing it forward to the next stage. Snapshot poll lengths should be set to 2 days.
+
+That's it! You've just started the process of gaining support for a proposal. At the end of the 2 days, a majority vote with a 25,000 MEDIA yes-vote threshold wins.
+
+If the Temperature check does not suggest a change from the status quo, the topic will be closed on the governance site. If the Temperature Check does suggest a change, proceed to Stage 2: Consensus Check.
+
+### Phase 2: Consensus Check — Discourse/SnapshotMedia
+
+The purpose of the Consensus Check is to establish formal discussion around a potential proposal.
+
+To create a Consensus Check:
+
+1. Use feedback from the Temperature Check post and create a new SnapshotMedia poll which covers the options which have gained support. This poll can either be binary or multiple choice but you are required to include the option "Make no change" or its equivalent. Set the poll duration to 5 days.
+
+1. Create a new topic in the Proposal Discussion category on gov.media.network titled "Consensus Check — [Your Title Here]". This will alert the community that this topic has already passed Temperature Check. Any topics beginning with Consensus Check that have not passed Temperature Check will immediately be removed by moderators. Make sure that the discussion thread links to the new SnapshotMedia poll and the Temperature Check thread.
+
+1. Reach out to your network to build support for the proposal. Discuss the proposal and actively solicit delegates to vote on it. Be willing to respond to questions on the Consensus Check topic. Share your viewpoint, although try to remain as impartial as possible.
+
+At the end of 5 days, whichever option has the majority of votes wins, and can be included in a governance proposal for Stage 3. A 400,000 MEDIA yes-vote quorum is required for the Consensus Check to pass.
+
+If the option "Make no change" wins, the Consensus Check topic will be closed by the moderators.
+
+### Phase 3: Governance Proposal — Governance Portal
+
+Phase 3 — Governance Proposal — is the final step of the governance process. The proposal should be based on the winning outcome from the Consensus Check and can consist of one or multiple actions, up to a maximum of 10 actions per proposal.
+
+To create a Governance Proposal:
+
+1. Write the code for your proposal, which will be voted on through the Governance Portal. More resources can be found [here](https://compound.finance/docs/governance#propose). All proposed code should be audited by a professional auditor. This auditing process may be paid or reimbursed by the community treasury.
+
+1. Ensure that you have at least 25,000 MEDIA delegated to your address in order to submit a proposal, or find someone who has enough MEDIA to meet the proposal threshold to propose on your behalf.
+
+1. Create a topic in the Proposal Discussion category on gov.media.network titled "Governance Proposal — [Your Title Here]" and link to any relevant SnapshotMedia polls/discussion threads as well as the code audit report. Topics that begin with "Governance Proposal" that have not successfully passed through the Temperature Check and Consensus Check stages will be removed by moderators.
+
+1. Call the propose() function of the Governor Bravo to deploy your proposal.
+
+Once the propose() function has been called, a two day voting delay will start. After voting delay is finished a seven day voting period begins. Ongoing discussion can take place in the gov.media.network forum. If the proposal passes successfully, a two day timelock will follow before the proposed code is executed.
+
+## Soft governance
+
+The process described above lays out a structure for those wishing to host a formal vote around a particular issue.
+
+However, governing this system also requires a degree of "meta governance", discussions that inform the direction of and the implementation processes behind policy but which don't qualify as policy themselves.
+
+The community may discuss new ideas and strategies for governance — including changes to the three-step process outlined above — in the "Governance-Meta" category. On-chain voting is not necessary to make updates to off-chain processes.

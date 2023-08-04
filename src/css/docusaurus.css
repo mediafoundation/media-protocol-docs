@@ -1,0 +1,5 @@
+/* Ajustar automáticamente la longitud de la barra lateral según el contenido */
+nav[aria-label="Sidebar"] {
+    width: fit-content;
+    max-width: 100%;
+}

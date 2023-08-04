@@ -1,0 +1,63 @@
+---
+title: "Resources"
+sidebar_label: Resources
+sidebar_position: 3
+---
+
+## **Resources Contract**
+
+### **Overview:**
+
+The `Resources` contract allows users to manage encrypted data resources on the blockchain. Users can add, update, and remove these resources, control access permissions, and keep track of allowed readers for each resource.
+
+### **Details:**
+
+- **Inheritance**:
+  - The `Resources` contract extends the `Recoverable` contract, suggesting the contract has functions related to the recovery of funds or tokens.
+
+- **Structs**:
+  - `Resource`: Represents an encrypted data resource with fields like `id`, `owner`, `encryptedData`, and `encryptedSharedKey`.
+
+- **State Variables**:
+
+  - `resources`: Mapping of resource id to the encrypted data.
+  - `resourceCounter`: Total count of resources.
+  - `resourceAutoIncrement`: An auto-increment value for resources.
+  - `marketplace`: Address of the marketplace contract.
+  - `sharedKeys`: Mapping of resource id to mapping of client address to encrypted shared keys.
+  - `userResourcesIds`: Mapping of user address to their resource ids.
+  - `userResourceIndexes`: Mapping from resource id to the user's resource index.
+  - `resourceOwner`: Mapping from resource id to its owner's address.
+  - `readers`: Mapping from resource id to its readers' addresses.
+  - `readersIndexes`: Mapping from resource id to its readers' index.
+  - `delegationCount`: Mapping from resource id to the count of how many times a client was added as a reader.
+  - `ownerKeys`: Mapping of client address to encrypted JSON string containing all decryption keys.
+
+- **Functions**:
+
+  1. `setMarketplace`: Sets the marketplace contract address.
+  2. `addResource`: Adds a new resource.
+  3. `updateResource`: Updates a resource's encrypted data.
+  4. `removeResource`: Removes a resource.
+  5. `addAllowedAddress`: Adds an allowed address to access a resource.
+  6. `removeAllowedAddress`: Removes an allowed address from accessing a resource.
+  7. `userOwnsResource`: Checks if a user owns a particular resource.
+  8. `getResource`: Retrieves a specific resource based on id and address.
+  9. `getResources`: Retrieves all resources of a specific address.
+  10. `getPaginatedResources`: Retrieves a paginated list of resources.
+  11. `getOwnerKeys`: Retrieves encrypted owner keys for a given address.
+  12. `receive`: Allows receiving native coin.
+  13. `recoverTokens`: Allows the owner to recover any ERC20 tokens sent to this contract.
+
+- **Events**:
+
+  - `AddedResource`: Emitted when a new resource is added.
+  - `RemovedResource`: Emitted when a resource is removed.
+  - `UpdatedResource`: Emitted when a resource is updated.
+  - `UpdatedOwnerKeys`: Emitted when the owner keys are updated.
+  - `AddedAllowedAddress`: Emitted when an address is allowed access to a resource.
+  - `RemovedAllowedAddress`: Emitted when an address is removed from accessing a resource.
+
+:::note
+This is a high-level technical breakdown. For a deep understanding of each function's inner workings and logic, refer to the smart contract's actual implementation.
+:::

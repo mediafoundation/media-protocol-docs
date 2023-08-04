@@ -1,0 +1,50 @@
+---
+title: "Marketplace Viewer"
+sidebar_label: Marketplace Viewer
+sidebar_position: 2
+---
+
+This contract, `MarketplaceViewer`, acts as a viewer for the `Marketplace` contract. It provides functions that allow one to view different offers and deals that exist within the main `Marketplace`. It's aimed at improving readability and accessibility of the data stored in the `Marketplace`.
+
+### **Details:**
+
+- **State Variables:**
+
+  - `marketplace`: This is a state variable that holds a reference to the main `Marketplace` contract. This enables the `MarketplaceViewer` to access the functions and state of the `Marketplace`.
+
+- **Constructor:**
+
+  - The constructor takes an instance of the `Marketplace` contract as a parameter. This is to initialize the `marketplace` state variable.
+
+- **Functions:**
+
+  1. **getAllOffers(uint start, uint pageSize)**:
+     
+     - **Purpose**: Retrieves a page of offers starting from a specific offer ID up to the specified page size.
+     - **Parameters**:
+       - `start`: The starting offer ID.
+       - `pageSize`: The number of offers to retrieve.
+     - **Returns**: An array of offers, the last accessed offer ID, the auto-increment value of the marketplace for offers, and the total number of offers.
+     - **Logic**:
+       - It checks if the starting point is valid; if not, it resets to retrieve from the beginning.
+       - Based on the starting ID and page size, it calculates how many offers should be expected.
+       - It then loops through offers from the main `Marketplace` and accumulates the valid ones (those with providers that aren't the zero address).
+  
+  2. **getPaginatedDeals(address _address, bool isProvider, uint _start, uint _count)**:
+     
+     - **Purpose**: Fetches deals either associated with a provider or a client in a paginated manner.
+     - **Parameters**:
+       - `_address`: The address of the provider or client.
+       - `isProvider`: A boolean to determine if the provided address is of a provider or client.
+       - `_start`: Starting index for pagination.
+       - `_count`: The number of deals to retrieve.
+     - **Returns**: An array of deals and the total number of deals for the provided address.
+     - **Logic**:
+       - Based on whether the address is of a provider or a client, it fetches the relevant deal IDs.
+       - It then slices the deals according to the pagination parameters `_start` and `_count`.
+       - Finally, it retrieves and returns the deals associated with those IDs.
+
+
+:::note
+This is a high-level technical breakdown. For a deep understanding of each function's inner workings and logic, refer to the smart contract's actual implementation.
+:::
