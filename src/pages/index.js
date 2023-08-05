@@ -9,17 +9,17 @@ import styles from "./styles.module.css";
 const features = [
   {
     title: <>What is Media Network</>,
-    imageUrl: "/media-network/overview",
+    imageUrl: "/overview",
     description: <>Learn about the core concepts of the Media Network Protocol, its governance structure, and key terminology.</>
   }, //
   {
     title: <>Integrate with Media Network</>,
-    imageUrl: "/media-network/overview",
-    description: <>Explore the process of integrating with Media Network by building a decentralized p2p with step-by-step guidance.</>
+    imageUrl: "/sdk/overview",
+    description: <>Explore the process of integrating with Media Network, using the SDK and step-by-step guidance.</>
   }, //
   {
-    title: <>The Media Network smart contracts</>,
-    imageUrl: "/media-network/overview",
+    title: <>Media Network Smart Contracts</>,
+    imageUrl: "/smart-contracts/overview",
     description: <>Discover the architecture of the smart contracts powering the Media Network Protocol.</>
   }, //
 ];

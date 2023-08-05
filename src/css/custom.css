@@ -7,8 +7,27 @@
   --ifm-navbar-padding-vertical:0;
   --ifm-navbar-padding-horizontal:1.5rem;
   --ifm-link-hover-decoration:none;
+  --ifm-h1-font-size:2rem;
+  --ifm-footer-border-color:var(--ifm-color-gray-300);
+  --ifm-pagination-border-color:var(--ifm-color-gray-300);
 }
 
+.markdown h1:first-child,
+.markdown > h1 {
+  --ifm-h1-font-size: 2rem;
+}
+.markdown > h2 {
+  --ifm-h2-font-size: 1.6rem;
+}
+.markdown > h3 {
+  --ifm-h3-font-size: 1.4rem;
+}
+.markdown > h4 {
+  --ifm-h3-font-size: 1.2rem;
+}
+.pagination-nav__link {
+  border-color: var(--ifm-pagination-border-color);
+}
 html[data-theme='dark'] {
   --ifm-background-color: var(--dark-1300);
   --ifm-navbar-shadow:rgba(4, 4, 5, 0.2) 0px 1px 0px, rgba(6, 6, 7, 0.05) 0px 1.5px 0px, rgba(4, 4, 5, 0.05) 0px 2px 0px;
@@ -23,6 +42,14 @@ html[data-theme='dark'] {
   --ifm-menu-color:var(--dark-300);
   --ifm-menu-color-background-active:var(--dark-900);
   --ifm-menu-color-background-hover:var(--dark-1000);
+  --ifm-toc-border-color:var(--dark-1500);
+  --ifm-menu-color:var(--dark-350) !important;
+  --ifm-footer-border-color:var(--dark-1500);
+  --ifm-footer-background-color:var(--dark-1100);
+  --ifm-pagination-border-color:var(--dark-900);
+  --ifm-pagination-nav-color-hover:var(--dark-600);
+  --ifm-color-content-secondary:var(--dark-400);
+
   --dark-1500: #18191c;
   --dark-1400: #202225;
   --dark-1370: #242529;
@@ -71,7 +98,6 @@ html[data-theme='dark'] .navbar__brand {
 }
 
 aside {
-  border-right-color:var(--dark-1500) !important;
   background:var(--dark-1200);
 }
 
@@ -91,10 +117,8 @@ nav.menu {
 .markdown a:hover{
   text-decoration-color: var(--dark-200);
 }
+/* 
 
-.menu {
-  font-weight: 400;
-}
 .menu__link--active,
 .menu__list-item-collapsible .menu__link--active
 {
@@ -113,10 +137,9 @@ html[data-theme='dark'] .menu__list-item-collapsible .menu__link--active:hover {
   background: var(--dark-900) !important;
   color:var(--dark-100);
 }
-
+ */
 .footer {
-  border-top:1px solid var(--dark-1500);
-  --ifm-footer-background-color:var(--dark-1400);
+  border-top:1px solid var(--ifm-footer-border-color);
 }
 
 /* tabs */

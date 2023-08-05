@@ -1,0 +1,33 @@
+---
+title: "SDK Quick start"
+sidebar_label: "Quick start"
+sidebar_position: 0
+---
+
+The Media Network SDK exists to help developers build on top of Media Network. It's designed to run in any environment that can execute JavaScript (think websites, node scripts, etc.). While simple enough to use in a hackathon project, it's also robust enough to power production applications.
+
+## Installation
+
+The easiest way to consume the SDK is via [npm](https://npmjs.com/package/@medianetwork/sdk). To install it in your project, simply run `yarn add @medianetwork/sdk` (or `npm install @medianetwork/sdk`).
+
+## Usage
+
+To run code from the SDK in your application, use an `import` or `require` statement, depending on which your environment supports. Note that the guides following this page will use ES6 syntax.
+
+## ES6 (import)
+
+```typescript
+import { ChainId } from '@medianetwork/sdk'
+console.log(`The chainId of mainnet is ${ChainId.MAINNET}.`)
+```
+
+## CommonJS (require)
+
+```typescript
+const MEDIANETWORK = require('@medianetwork/sdk')
+console.log(`The chainId of mainnet is ${MEDIANETWORK.ChainId.MAINNET}.`)
+```
+
+## Reference
+
+Comprehensive reference material for the SDK can be found [here](../reference/getting-started)
