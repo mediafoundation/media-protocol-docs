@@ -1,0 +1,49 @@
+---
+title: Media Network Contract Deployments
+sidebar_label: Deployments Addresses
+sidebar_position: 3
+---
+
+The latest version of the Media Network smart contracts are deployed at the addresses listed below on the following blockchains: 
+
+Ethereum, Polygon, Optimism, Arbitrum, BNB Chain, Fantom, LaChain, Avalanche, Celo, Harmony
+<!-- 
+Integrators **should not assume that they are deployed to the same addresses across all chains** and be extremely careful to confirm mappings below. -->
+
+| Contract            | Address                                      |
+|---------------------|----------------------------------------------|
+| Resources           | `0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2` |
+| Staking             | `0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2` |
+| Marketplace         | `0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2` |
+| MarketplaceViewer   | `0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2` |
+| MarketplaceHelper   | `0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2` |
+| Disputes            | `0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2` |
+| RatingSystem        | `0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2` |
+
+---
+
+### Uniswap V2 Contracts
+
+Media Networks utilizes Uniswap V2 in several places across the protocol. The following are the official Uniswap Deployment addresses on Ethereum mainnet, and the Ropsten, Rinkeby, Görli, and Kovan testnets.
+
+| Contract            | Address                                      |
+|---------------------|----------------------------------------------|
+| UniswapV2Factory    | `0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f` |
+| UniswapV2Router02   | `0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D` |
+
+
+### Wrapped Native Token Addresses
+
+Media Network requires an Uniswap liquidity pool of [ MEDIA / Native Asset ] to function. In order to create liquidity pools with a native asset like ETH (or MATIC on Polygon), Uniswap wraps these assets in an ERC20 wrapped native token contract. Uniswap uses the following WETH9 addresses on Ethereum and WMATIC addresses on Polygon.
+
+| Network             | ChainId  | Wrapped Native Token | Address                                      |
+|---------------------|----------|----------------------|----------------------------------------------|
+| Ethereum            | `1`      | WETH                 | `0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2` |
+| Goerli              | `5`      | WETH                 | `0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6` |
+| Arbitrum            | `42161`  | WETH                 | `0x82aF49447D8a07e3bd95BD0d56f35241523fBab1` |
+| Arbitrum Goerli     | `421613` | WETH                 | `0xe39Ab88f8A4777030A534146A9Ca3B52bd5D43A3` |
+| Optimism            | `10`     | WETH                 | `0x4200000000000000000000000000000000000006` |
+| Optimism Goerli     | `420`    | WETH                 | `0x4200000000000000000000000000000000000006` |
+| Polygon             | `137`    | WMATIC               | `0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270` |
+| Polygon Mumbai      | `80001`  | WMATIC               | `0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889` |
+| Binance Smart Chain | `56`     | WBNB                 | `0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c` |
