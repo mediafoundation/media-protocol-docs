@@ -8,6 +8,9 @@ module.exports = {
   organizationName: "mediafoundation",
   projectName: "documentation",
   themeConfig: {
+    prism: {
+      additionalLanguages: ['solidity'],
+    },
     image: "https://media.network/images/mediasocial.jpg",
     colorMode: {
       disableSwitch: false,

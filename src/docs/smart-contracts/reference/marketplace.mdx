@@ -11,7 +11,7 @@ The `Marketplace` smart contract facilitates the creation, updating, and deletio
 ### Main Components
 
 ### 1. **Providers**:
-Providers are entities or individuals that offer specific services or goods in the marketplace. 
+Providers are entities or individuals that offer specific services or goods in the marketplace.
 
 - **Adding a Provider**: Only the owner of the contract can add a new provider, ensuring control over who gets to provide services in the marketplace.
 - **Updating a Provider**: The owner can also update a provider's details.
@@ -48,11 +48,147 @@ Initializes the contract by setting the addresses for the associated ERC20 token
 
 ---
 
-### Structs and Variables
-
+## Structs and Variables
+<!---
 1. `struct Offer {...}`: Represents the details of a CDN offer.
 2. `struct Deal {...}`: Represents a deal between a client and a provider.
 3. Various state variables are declared for managing offers, deals, authorized proxies, and more.
+4. `Domain{string key;string value;}`: Represents the domain offered by a provider.
+--->
+
+### Domain
+```solidity
+struct Domain {
+    string key;
+    string value;
+}
+```
+
+Defines the structure of domains used in the smart contract.
+
+| Name  | Type     |                                    |
+|-------|----------|------------------------------------|
+| key   | `string` | Some value to identify the domain. |
+| value | `string` | The actual value of the domain.    |
+---
+
+## Functions
+
+### registerProvider
+
+```solidity
+function registerProvider(
+    string calldata label,
+    string calldata publicKey,
+    uint stakeAmount,
+    Domain[] calldata domains
+) external onlyAuthorized nonReentrant;
+```
+
+Registers as provider in order to be able to create offers.
+
+| Name        | Type                  |                                                                       |
+|-------------|-----------------------|-----------------------------------------------------------------------|
+| label       | `string`              | The label that would have the provider in the marketplace.            |
+| publicKey   | `string`              | The public key shared to the clients to encrypt their resources       |
+| stakeAmount | `uint`                | The amount of LP token to stake to be a provider (it can be updated). |
+| domains     | [`Domain[]`](#domain) | A list of domains that the provider will offer.                       |
+
+
+### unregisterProvider
+
+```solidity
+function unregisterProvider() external nonReentrant onlyAuthorized returns(uint removedStake);
+```
+
+Unregister as a provider and recover the staked lp tokens.
+
+### updateProvider
+
+```solidity
+function updateProvider(
+      string calldata label,
+      string calldata publicKey,
+      uint stakeAmount,
+      Domain[] calldata domains
+) external onlyAuthorized nonReentrant;
+```
+
+Updates the provider's information.
+
+| Name        | Type                  |                                                                       |
+|-------------|-----------------------|-----------------------------------------------------------------------|
+| label       | `string`              | The label that would have the provider in the marketplace.            |
+| publicKey   | `string`              | The public key shared to the clients to encrypt their resources       |
+| stakeAmount | `uint`                | The amount of LP token to stake to be a provider (it can be updated). |
+| domains     | [`Domain[]`](#domain) | A list of domains that the provider will offer.                       |
+
+
+### updateProviderStake
+
+Updates only the provider's lp staked token amount.
+
+```solidity
+function updateProviderStake(uint stakeAmount) external onlyAuthorized nonReentrant();
+```
+
+| Name        | Type   |                                      |
+|-------------|--------|--------------------------------------|
+| stakeAmount | `uint` | The amount of LP token to be staked. |
+
+### createOffer
+
+Creates a new offer.
+
+```solidity
+function createOffer(
+      uint _maximumDeals,
+      bool _autoAccept,
+      uint _pricePerSecond,
+      uint _minDealDuration,
+      bool _billFullPeriods,
+      Domain[] calldata _domains,
+      string calldata _metadata
+    ) external nonReentrant();
+```
+
+| Name             | Type                  |                                                                                                                                                 |
+|------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| _maximumDeals    | `uint`                | The maximum amount of deals that this offer can provide.                                                                                        |
+| _autoAccept      | `bool`                | Defines whether the offer will autoaccept deals or not.                                                                                         |
+| _pricePerSecond  | `uint`                | Price per second for the deals.                                                                                                                 |
+| _minDealDuration | `uint`                | The minimum duration that deal's must have, expressed in seconds.                                                                               |
+| _billFullPeriods | `bool`                | If enabled, once the minimum deal's duration has elapsed the next <br/>billing will cover a complete billing period up to the minimum duration. |
+| _domains         | [`Domain[]`](#domain) | The domains that will be offered to the clients in their deals.                                                                                 |
+| _metadata        | `string`              | Useful additional information about the offer.                                                                                                  |
+
+---
+
+### updateOffer
+
+Updates an offer.
+
+```solidity
+function updateOffer(
+      uint _maximumDeals,
+      bool _autoAccept,
+      uint _pricePerSecond,
+      uint _minDealDuration,
+      bool _billFullPeriods,
+      Domain[] calldata _domains,
+      string calldata _metadata
+    ) external nonReentrant();
+```
+
+| Name             | Type                  |                                                                                                                                                 |
+|------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| _maximumDeals    | `uint`                | The maximum amount of deals that this offer can provide.                                                                                        |
+| _autoAccept      | `bool`                | Defines whether the offer will autoaccept deals or not.                                                                                         |
+| _pricePerSecond  | `uint`                | Price per second for the deals.                                                                                                                 |
+| _minDealDuration | `uint`                | The minimum duration that deal's must have, expressed in seconds.                                                                               |
+| _billFullPeriods | `bool`                | If enabled, once the minimum deal's duration has elapsed the next <br/>billing will cover a complete billing period up to the minimum duration. |
+| _domains         | [`Domain[]`](#domain) | The domains that will be offered to the clients in their deals.                                                                                 |
+| _metadata        | `string`              | Useful additional information about the offer.                                                                                                  |
 
 ---
 
@@ -71,11 +207,11 @@ Modifiers are used to conditionally change the behavior of functions. For instan
 ### Provider Management
 
 - `registerProvider(string memory _name, string memory _description, string memory _location) external returns (bool)`: Allows providers to register themselves.
-  
+
 - `deregisterProvider() external returns (bool)`: Allows registered providers to deregister.
 
 - `updateOffer(...) external returns (bool)`: Providers can update their CDN offers.
-  
+
 - `cancelOffer(uint _offerId) external returns (bool)`: Allows providers to cancel their active offers.
 
 ---
@@ -83,9 +219,9 @@ Modifiers are used to conditionally change the behavior of functions. For instan
 ### Deal Management
 
 - `createDeals(...) external returns (uint[] memory dealsId, uint totalDeposit)`: Clients can create deals based on available CDN offers.
-  
+
 - `acceptDeal(uint _dealId) external returns (bool)`: Providers can accept deals made by clients.
-  
+
 - Other functions exist for rejecting, canceling, and collecting deals.
 
 ---
