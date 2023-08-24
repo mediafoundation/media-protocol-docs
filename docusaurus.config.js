@@ -114,228 +114,383 @@ module.exports = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        // redirects: [
-        //   // /docs/oldDoc -> /docs/newDoc
-        //   {
-        //     to: '/media-network/about',
-        //     from: '/about-intro',
-        //   },
-        //   {
-        //     to: '/media-network/components',
-        //     from: '/about-components',
-        //   },
-        //   {
-        //     to: '/media-network/glossary',
-        //     from: '/about-glossary',
-        //   },
-        //   {
-        //     to: '/media-token/about',
-        //     from: '/media-token-about',
-        //   },
-        //   {
-        //     to: '/media-token/stats',
-        //     from: '/media-token-stats',
-        //   },
-        //   {
-        //     to: '/cdn-marketplace/about',
-        //     from: '/cdn-marketplace-about',
-        //   },
-        //   {
-        //     to: '/cdn-marketplace/clients',
-        //     from: '/cdn-marketplace-clients',
-        //   },
-        //   {
-        //     to: '/cdn-marketplace/providers',
-        //     from: '/cdn-marketplace-providers',
-        //   },
-        //   {
-        //     to: '/software/media-edge/about',
-        //     from: '/cdn-marketplace-edge',
-        //   },
-        //   {
-        //     to: '/cdn-marketplace/faq',
-        //     from: '/cdn-marketplace-faq',
-        //   },
-        //   {
-        //     to: '/media-app/about',
-        //     from: '/media-app-about',
-        //   },
-        //   {
-        //     to: '/media-app/troubleshooting',
-        //     from: '/media-app-troubleshooting',
-        //   },
-        //   {
-        //     to: '/smart-contracts/about',
-        //     from: '/media-contracts-about',
-        //   },
-        //   {
-        //     to: '/smart-contracts/troubleshooting',
-        //     from: '/media-contracts-troubleshooting',
-        //   },
-        //   {
-        //     to: '/governance',
-        //     from: [
-        //       '/media-governance-dao',
-        //       '/media-governance-troubleshooting'
-        //     ]
-        //   },
-        //   {
-        //     to: '/software/media-server/about',
-        //     from: '/ms-about',
-        //   },
-        //   {
-        //     to: '/software/media-server/setup',
-        //     from: '/ms-setup',
-        //   },
-        //   {
-        //     to: '/software/media-server/stream',
-        //     from: '/ms-stream',
-        //   },
-        //   {
-        //     to: '/software/media-server/integration',
-        //     from: '/ms-media',
-        //   },
-        //   {
-        //     to: '/software/media-server/playback',
-        //     from: '/ms-playback',
-        //   },
-        //   {
-        //     to: '/software/media-peerpool/about',
-        //     from: '/peerpool-about',
-        //   },
-        //   {
-        //     to: '/software/media-peerpool/demo',
-        //     from: '/peerpool-demo',
-        //   },
-        //   {
-        //     to: '/software/media-peerpool/setup',
-        //     from: '/peerpool-setup',
-        //   },
-        //   {
-        //     to: '/tutorials/ipfs/about',
-        //     from: '/ipfs-about',
-        //   },
-        //   {
-        //     to: '/tutorials/ipfs/setup',
-        //     from: '/ipfs-setup',
-        //   },
-        //   {
-        //     to: '/tutorials/ipfs/config',
-        //     from: '/ipfs-config',
-        //   },
-        //   {
-        //     to: '/tutorials/ipfs/upload',
-        //     from: '/ipfs-upload',
-        //   },
-        //   {
-        //     to: '/tutorials/ipfs/integration',
-        //     from: '/ipfs-media',
-        //   },
-        //   {
-        //     to: '/tutorials/arweave/about',
-        //     from: '/ar-about',
-        //   },
-        //   {
-        //     to: '/tutorials/arweave/miner',
-        //     from: '/ar-miner',
-        //   },
-        //   {
-        //     to: '/tutorials/arweave/gateway',
-        //     from: '/ar-gateway',
-        //   },
-        //   {
-        //     to: '/tutorials/arweave/upload',
-        //     from: '/ar-deploy',
-        //   },
-        //   {
-        //     to: '/tutorials/arweave/integration',
-        //     from: '/ar-media',
-        //   },
-        //   {
-        //     to: '/tutorials/storj/about',
-        //     from: '/storj-about',
-        //   },
-        //   {
-        //     to: '/tutorials/storj/setup',
-        //     from: '/storj-setup',
-        //   },
-        //   {
-        //     to: '/tutorials/storj/integration',
-        //     from: '/storj-media',
-        //   },
-        //   {
-        //     to: '/tutorials/owncast/about',
-        //     from: '/owncast-about',
-        //   },
-        //   {
-        //     to: '/tutorials/owncast/setup',
-        //     from: '/owncast-setup',
-        //   },
-        //   {
-        //     to: '/tutorials/owncast/integration',
-        //     from: '/owncast-media',
-        //   },
-        //   {
-        //     to: '/tutorials/owncast/config',
-        //     from: '/owncast-config',
-        //   },
-        //   {
-        //     to: '/tutorials/uniswap/about',
-        //     from: '/uniswap-about',
-        //   },
-        //   {
-        //     to: '/tutorials/uniswap/setup',
-        //     from: '/uniswap-setup',
-        //   },
-        //   {
-        //     to: '/tutorials/livepeer/about',
-        //     from: '/livepeer-about',
-        //   },
-        //   {
-        //     to: '/tutorials/livepeer/setup',
-        //     from: '/livepeer-setup',
-        //   },
-        //   {
-        //     to: '/tutorials/livepeer/connect',
-        //     from: '/livepeer-connect',
-        //   },
-        //   {
-        //     to: '/tutorials/livepeer/broadcaster',
-        //     from: '/livepeer-broadcaster',
-        //   },
-        //   {
-        //     to: '/tutorials/livepeer/stream',
-        //     from: '/livepeer-stream',
-        //   },
-        //   {
-        //     to: '/tutorials/livepeer/integration',
-        //     from: '/livepeer-media',
-        //   },
-        //   {
-        //     to: '/tutorials/livepeer/livepeer.com',
-        //     from: '/livepeer-livepeer.com',
-        //   },
-        //   {
-        //     to: '/legacy-dcdn/handshake',
-        //     from: '/hns-about',
-        //   },
-        //   {
-        //     to: '/legacy-dcdn/handshake',
-        //     from: '/hns-setup',
-        //   },
-        //   {
-        //     to: '/legacy-dcdn/handshake',
-        //     from: '/hns-media',
-        //   },
-        //   {
-        //     to: '/legacy-dcdn/about',
-        //     from: '/legacy-about',
-        //   },
-        //   {
-        //     to: '/legacy-dcdn/setup',
-        //     from: '/legacy-setup',
-        //   },
-        // ],
+        redirects: [
+          // /docs/oldDoc -> /docs/newDoc
+          {
+            to: '/protocol-overview',
+            from: [
+              '/media-network/about',
+              '/about-intro'
+            ]
+          },
+          {
+            to: '/overview',
+            from: [
+              '/media-network/components',
+              '/about-components'
+            ]
+          },
+          {
+            to: '/glossary',
+            from: [
+              '/media-network/glossary',
+              '/about-glossary'
+            ]
+          },
+          {
+            to: '/media-token',
+            from: [
+              '/media-token/about',
+              '/media-token-about',
+              '/media-token/stats',
+              '/media-token-stats'
+            ]
+          },
+ /*          {
+            to: 'https://www.mediacloud.ws/overview',
+            from: [
+              '/cdn-marketplace/about',
+              '/cdn-marketplace-about'
+            ]
+          },
+          {
+            to: 'https://www.mediacloud.ws/for-clients/overview',
+            from: [
+              '/cdn-marketplace/clients',
+              '/cdn-marketplace-clients'
+            ]
+          },
+          {
+            to: 'https://www.mediacloud.ws/for-providers/overview',
+            from: [
+              '/cdn-marketplace/providers',
+              '/cdn-marketplace-providers'
+            ]
+          },
+          {
+            to: 'https://www.mediacloud.ws/for-providers/CDN/media-edge/about',
+            from: [
+              '/software/media-edge/about',
+              '/cdn-marketplace-edge'
+            ]
+          }, */
+          {
+            to: '/faq',
+            from: [
+              '/cdn-marketplace/faq',
+              '/cdn-marketplace-faq'
+            ]
+          },
+          {
+            to: "/governance/overview",
+            from: [
+              '/governance',
+              '/media-governance-dao',
+              '/media-governance-troubleshooting'
+            ]
+          },
+/*           {
+            to: "",
+            from: [
+              '/media-app/about',
+              '/media-app-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/media-app/troubleshooting',
+              '/media-app-troubleshooting'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/smart-contracts/about',
+              '/media-contracts-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/smart-contracts/troubleshooting',
+              '/media-contracts-troubleshooting'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/software/media-server/about',
+              '/ms-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/software/media-server/setup',
+              '/ms-setup'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/software/media-server/stream',
+              '/ms-stream'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/software/media-server/integration',
+              '/ms-media'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/software/media-server/playback',
+              '/ms-playback'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/software/media-peerpool/about',
+              '/peerpool-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/software/media-peerpool/demo',
+              '/peerpool-demo'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/software/media-peerpool/setup',
+              '/peerpool-setup'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/ipfs/about',
+              '/ipfs-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/ipfs/setup',
+              '/ipfs-setup'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/ipfs/config',
+              '/ipfs-config'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/ipfs/upload',
+              '/ipfs-upload'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/ipfs/integration',
+              '/ipfs-media'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/arweave/about',
+              '/ar-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/arweave/miner',
+              '/ar-miner'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/arweave/gateway',
+              '/ar-gateway'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/arweave/upload',
+              '/ar-deploy'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/arweave/integration',
+              '/ar-media'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/storj/about',
+              '/storj-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/storj/setup',
+              '/storj-setup'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/storj/integration',
+              '/storj-media'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/owncast/about',
+              '/owncast-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/owncast/setup',
+              '/owncast-setup'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/owncast/integration',
+              '/owncast-media'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/owncast/config',
+              '/owncast-config'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/uniswap/about',
+              '/uniswap-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/uniswap/setup',
+              '/uniswap-setup'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/livepeer/about',
+              '/livepeer-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/livepeer/setup',
+              '/livepeer-setup'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/livepeer/connect',
+              '/livepeer-connect'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/livepeer/broadcaster',
+              '/livepeer-broadcaster'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/livepeer/stream',
+              '/livepeer-stream'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/livepeer/integration',
+              '/livepeer-media'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/tutorials/livepeer/livepeer.com',
+              '/livepeer-livepeer.com'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/legacy-dcdn/handshake',
+              '/hns-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/legacy-dcdn/handshake',
+              '/hns-setup'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/legacy-dcdn/handshake',
+              '/hns-media'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/legacy-dcdn/about',
+              '/legacy-about'
+            ],
+          },
+          {
+            to: "",
+            from: [
+              '/legacy-dcdn/setup',
+              '/legacy-setup'
+            ],
+          }, */
+        ],
       },
     ],
   ],
