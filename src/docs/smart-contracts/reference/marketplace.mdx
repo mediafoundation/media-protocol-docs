@@ -6,39 +6,46 @@ sidebar_position: 1
 
 # Marketplace Smart Contract
 
-The `Marketplace` smart contract facilitates the creation, updating, and deletion of providers, offers, and deals within a decentralized marketplace environment on the Blockchain.
+The `Marketplace`` smart contract is the core contract for the Media Network. Its capabilities include initializing new marketplaces, as well as creating, updating, and deleting providers, offers, and deals.
 
-### Main Components
+## Main Components
 
-### 1. **Providers**:
-Providers are entities or individuals that offer specific services or goods in the marketplace.
+### 1. **Owner**:
+The smart contract allows anybody to initialize new marketplaces. The owner of each marketplace is able to modify its `marketFeeTo`, `marketFeeRate` and `REQUIRED_STAKE`. Given the decentralized nature of the protocol, owners can't ban providers, but these can be filtered in their UI.
 
-- **Adding a Provider**: Only the owner of the contract can add a new provider, ensuring control over who gets to provide services in the marketplace.
-- **Updating a Provider**: The owner can also update a provider's details.
-- **Deleting a Provider**: For removing any providers that are no longer active or valid.
+### 2. **Providers**:
+Providers are entities or individuals that offer specific services or goods in marketplaces.
 
-### 2. **Offers**:
+- **Register as Provider**: Anybody can register as a provider. It is required to stake MEDIA tokens to do so. The amount is set by the Marketplace Owner.
+
+- **Updating a Provider**: Providers can update their details and staked amount of MEDIA.
+
+- **Unregistering Provider**: Providers without current open deals can safely unregister and retrieve their MEDIA stake back.
+
+### 3. **Offers**:
 Offers are the specific goods or services that providers put forth in the marketplace.
 
 - **Creating an Offer**: A provider can create an offer detailing what they are providing, its cost, and other essential information.
 - **Updating an Offer**: Providers have the flexibility to adjust their offers based on changing circumstances or market demands.
 - **Deleting an Offer**: Offers that are no longer available or valid can be removed by the provider.
 
-### 3. **Deals**:
+### 4. **Deals**:
 Deals represent the agreement between a provider and a consumer.
 
 - **Creating a Deal**: Once a consumer selects an offer, a deal is created, capturing the terms agreed upon.
-- **Updating a Deal**: Circumstances may require a deal to be adjusted, which can be done by the provider.
-- **Deleting a Deal**: In situations where a deal is no longer valid or has been completed, it can be removed.
+- **Cancelling a Deal**: In situations where a deal is no longer needed or has been completed, it can be canceled, retrieving the not consumed balance to the client.
 
 ## Key Features
 
-- **Ownership Management**: The smart contract has a built-in ownership system, ensuring that only the owner has specific controls, like adding or updating providers. This adds an extra layer of security and management to the marketplace.
-- **Event Logging**: For transparency and traceability, the contract emits events when significant actions occur, like the creation or modification of providers, offers, or deals.
+- **Ownership Management**: The smart contract has a built-in ownership system, ensuring that only the owner has specific controls.
+
+- **Event Logging**: For traceability, the contract emits events when significant actions occur, like the creation or modification of providers, offers, or deals.
 
 
 The `Marketplace` smart contract provides a structured and secure environment for providers to list their offers and for consumers to engage with these offers by creating deals. With built-in management and transparency features, it ensures smooth operations while maintaining the trustless essence of blockchain-based solutions.
 
+
+## Technical Reference
 
 ### Constructor
 
@@ -49,28 +56,9 @@ Initializes the contract by setting the addresses for the associated ERC20 token
 ---
 
 ## Structs and Variables
-<!---
-1. `struct Offer {...}`: Represents the details of a CDN offer.
+
+1. `struct Offer {...}`: Represents the details of an offer.
 2. `struct Deal {...}`: Represents a deal between a client and a provider.
-3. Various state variables are declared for managing offers, deals, authorized proxies, and more.
-4. `Domain{string key;string value;}`: Represents the domain offered by a provider.
---->
-
-### Domain
-```solidity
-struct Domain {
-    string key;
-    string value;
-}
-```
-
-Defines the structure of domains used in the smart contract.
-
-| Name  | Type     |                                    |
-|-------|----------|------------------------------------|
-| key   | `string` | Some value to identify the domain. |
-| value | `string` | The actual value of the domain.    |
----
 
 ## Functions
 
@@ -206,21 +194,21 @@ Modifiers are used to conditionally change the behavior of functions. For instan
 
 ### Provider Management
 
-- `registerProvider(string memory _name, string memory _description, string memory _location) external returns (bool)`: Allows providers to register themselves.
+- `registerProvider(uint marketplaceId, string memory _name, string memory _description, string memory _location) external returns (bool)`: Allows providers to register themselves.
 
-- `deregisterProvider() external returns (bool)`: Allows registered providers to deregister.
+- `unregisterProvider(uint marketplaceId) external returns (bool)`: Allows registered providers to unregister.
 
 - `updateOffer(...) external returns (bool)`: Providers can update their CDN offers.
 
-- `cancelOffer(uint _offerId) external returns (bool)`: Allows providers to cancel their active offers.
+- `cancelOffer(uint marketplaceId, uint _offerId) external returns (bool)`: Allows providers to cancel their active offers.
 
 ---
 
 ### Deal Management
 
-- `createDeals(...) external returns (uint[] memory dealsId, uint totalDeposit)`: Clients can create deals based on available CDN offers.
+- `createDeals(uint marketplaceId, ...) external returns (uint[] memory dealsId, uint totalDeposit)`: Clients can create deals based on available offers.
 
-- `acceptDeal(uint _dealId) external returns (bool)`: Providers can accept deals made by clients.
+- `acceptDeal(uint marketplaceId, uint _dealId) external returns (bool)`: Providers can accept deals made by clients.
 
 - Other functions exist for rejecting, canceling, and collecting deals.
 
@@ -228,9 +216,9 @@ Modifiers are used to conditionally change the behavior of functions. For instan
 
 ### Utility Functions
 
-- `hasActiveDeals(uint _offerId) public view returns (bool)`: Checks if a given offer ID has active deals associated with it.
+- `hasActiveDeals(uint marketplaceId, uint _offerId) public view returns (bool)`: Checks if a given offer ID has active deals associated with it.
 
-- `isRegisteredProvider(address _provider) public view returns (bool)`: Verifies if a given address is a registered provider.
+- `isRegisteredProvider(uint marketplaceId, address _provider) public view returns (bool)`: Verifies if a given address is a registered provider.
 
 ---
 
