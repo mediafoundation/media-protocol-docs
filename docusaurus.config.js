@@ -1,5 +1,5 @@
 module.exports = {
-  title: "Media Network Documentation",
+  title: "Media Protocol Documentation",
   tagline:
     "A suite of persistent, non-upgradable smart contracts that together create a protocol enabling anyone to build their own decentralized marketplace.",
   url: "https://docs.media.network/",
@@ -17,9 +17,9 @@ module.exports = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: "Media Network Docs",
+      title: "Media Protocol Docs",
       logo: {
-        alt: "Media Network Logo",
+        alt: "Media Protocol Logo",
         src: "/img/medianetwork.svg",
         srcDark: "/img/medianetworkwhite.svg",
       },

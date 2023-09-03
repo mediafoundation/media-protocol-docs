@@ -1,6 +1,6 @@
-# Media Network Documentation
+# Media Protocol Documentation
 
-This repository contains documentation for the Media Network Protocol. It includes a set of markdown files that serve as the source for a static site generated using Docusaurus. 
+This repository contains documentation for the Media Protocol. It includes a set of markdown files that serve as the source for a static site generated using Docusaurus. 
 
 ## Installation and Running
 
@@ -8,10 +8,10 @@ To get started with this project, you'll need to have Node.js and Yarn installed
 
 1. Clone the repository:
 
-    - Using HTTPS: `git clone https://github.com/mediafoundation/media-network-docs.git`
-    - Using GitHub CLI: `gh repo clone mediafoundation/media-network-docs`
+    - Using HTTPS: `git clone https://github.com/mediafoundation/media-protocol-docs.git`
+    - Using GitHub CLI: `gh repo clone mediafoundation/media-protocol-docs`
 
-2. Navigate into the repository directory: `cd media-network-docs`
+2. Navigate into the repository directory: `cd media-protocol-docs`
 
 3. Install the dependencies: `yarn install`
 

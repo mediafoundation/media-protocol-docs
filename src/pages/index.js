@@ -8,19 +8,19 @@ import styles from "./styles.module.css";
 
 const features = [
   {
-    title: <>What is Media Network</>,
+    title: <>What is Media Protocol</>,
     imageUrl: "/overview",
-    description: <>Learn about the core concepts of the Media Network Protocol, its governance structure, and key terminology.</>
+    description: <>Learn about the core concepts of the Media Protocol Protocol, its governance structure, and key terminology.</>
   }, //
   {
-    title: <>Integrate with Media Network</>,
+    title: <>Integrate with Media Protocol</>,
     imageUrl: "/sdk/overview",
-    description: <>Explore the process of integrating with Media Network, using the SDK and step-by-step guidance.</>
+    description: <>Explore the process of integrating with Media Protocol, using the SDK and step-by-step guidance.</>
   }, //
   {
-    title: <>Media Network Smart Contracts</>,
+    title: <>Media Protocol Smart Contracts</>,
     imageUrl: "/smart-contracts/overview",
-    description: <>Discover the architecture of the smart contracts powering the Media Network Protocol.</>
+    description: <>Discover the architecture of the smart contracts powering the Media Protocol Protocol.</>
   }, //
 ];
 
@@ -48,7 +48,7 @@ function Home() {
   const { siteConfig = {} } = context;
   return (
     <Layout
-      title="Media Network"
+      title="Media Protocol"
       description="Documentation"
     >
       {/* <header className={clsx("hero hero--primary", styles.heroBanner)}> */}
