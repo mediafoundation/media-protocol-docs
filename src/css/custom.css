@@ -14,16 +14,19 @@
 
 .markdown h1:first-child,
 .markdown > h1 {
-  --ifm-h1-font-size: 2rem;
+  --ifm-h1-font-size: 2.5rem;
 }
 .markdown > h2 {
-  --ifm-h2-font-size: 1.6rem;
+  --ifm-h2-font-size: 2rem;
 }
 .markdown > h3 {
-  --ifm-h3-font-size: 1.4rem;
+  --ifm-h3-font-size: 1.75rem;
 }
 .markdown > h4 {
-  --ifm-h3-font-size: 1.2rem;
+  --ifm-h4-font-size: 1.25rem;
+}
+.markdown > h5 {
+  --ifm-h5-font-size: 1rem;
 }
 .pagination-nav__link {
   border-color: var(--ifm-pagination-border-color);

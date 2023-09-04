@@ -4,61 +4,7 @@ sidebar_label: Marketplace
 sidebar_position: 1
 ---
 
-# Marketplace Smart Contract
-
-The `Marketplace`` smart contract is the core contract for the Media Protocol. Its capabilities include initializing new marketplaces, as well as creating, updating, and deleting providers, offers, and deals.
-
-## Main Components
-
-### 1. **Owner**:
-The smart contract allows anybody to initialize new marketplaces. The owner of each marketplace is able to modify its `marketFeeTo`, `marketFeeRate` and `REQUIRED_STAKE`. Given the decentralized nature of the protocol, owners can't ban providers, but these can be filtered in their UI.
-
-### 2. **Providers**:
-Providers are entities or individuals that offer specific services or goods in marketplaces.
-
-- **Register as Provider**: Anybody can register as a provider. It is required to stake MEDIA tokens to do so. The amount is set by the Marketplace Owner.
-
-- **Updating a Provider**: Providers can update their details and staked amount of MEDIA.
-
-- **Unregistering Provider**: Providers without current open deals can safely unregister and retrieve their MEDIA stake back.
-
-### 3. **Offers**:
-Offers are the specific goods or services that providers put forth in the marketplace.
-
-- **Creating an Offer**: A provider can create an offer detailing what they are providing, its cost, and other essential information.
-- **Updating an Offer**: Providers have the flexibility to adjust their offers based on changing circumstances or market demands.
-- **Deleting an Offer**: Offers that are no longer available or valid can be removed by the provider.
-
-### 4. **Deals**:
-Deals represent the agreement between a provider and a consumer.
-
-- **Creating a Deal**: Once a consumer selects an offer, a deal is created, capturing the terms agreed upon.
-- **Cancelling a Deal**: In situations where a deal is no longer needed or has been completed, it can be canceled, retrieving the not consumed balance to the client.
-
-## Key Features
-
-- **Ownership Management**: The smart contract has a built-in ownership system, ensuring that only the owner has specific controls.
-
-- **Event Logging**: For traceability, the contract emits events when significant actions occur, like the creation or modification of providers, offers, or deals.
-
-
-The `Marketplace` smart contract provides a structured and secure environment for providers to list their offers and for consumers to engage with these offers by creating deals. With built-in management and transparency features, it ensures smooth operations while maintaining the trustless essence of blockchain-based solutions.
-
-
-## Technical Reference
-
-### Constructor
-
-`constructor(address _token, address _staking, address _resources)`
-
-Initializes the contract by setting the addresses for the associated ERC20 token, staking mechanism, and CDN resources.
-
----
-
-## Structs and Variables
-
-1. `struct Offer {...}`: Represents the details of an offer.
-2. `struct Deal {...}`: Represents a deal between a client and a provider.
+# Marketplace Technical Reference
 
 ## Functions
 
@@ -66,28 +12,22 @@ Initializes the contract by setting the addresses for the associated ERC20 token
 
 ```solidity
 function registerProvider(
+    uint marketplaceId,
     string calldata label,
     string calldata publicKey,
-    uint stakeAmount,
-    Domain[] calldata domains
+    uint stakeAmount
 ) external onlyAuthorized nonReentrant;
 ```
 
 Registers as provider in order to be able to create offers.
 
-| Name        | Type                  |                                                                       |
-|-------------|-----------------------|-----------------------------------------------------------------------|
-| label       | `string`              | The label that would have the provider in the marketplace.            |
-| publicKey   | `string`              | The public key shared to the clients to encrypt their resources       |
-| stakeAmount | `uint`                | The amount of LP token to stake to be a provider (it can be updated). |
-| domains     | [`Domain[]`](#domain) | A list of domains that the provider will offer.                       |
+| Name          | Type                  |                                                                            |
+|---------------|-----------------------|----------------------------------------------------------------------------|
+| marketplaceId | `uint`                | The id of the marketplace you are registering to.                          |
+| label         | `string`              | A vanity name for the provider.                                            |
+| publicKey     | `string`              | The encryption public key shared to the clients to encrypt their resources.|
+| stakeAmount   | `uint`                | The amount of LP token to stake to be a provider.                          |
 
-
-### unregisterProvider
-
-```solidity
-function unregisterProvider() external nonReentrant onlyAuthorized returns(uint removedStake);
-```
 
 Unregister as a provider and recover the staked lp tokens.
 
@@ -95,34 +35,50 @@ Unregister as a provider and recover the staked lp tokens.
 
 ```solidity
 function updateProvider(
-      string calldata label,
-      string calldata publicKey,
-      uint stakeAmount,
-      Domain[] calldata domains
+    uint marketplaceId,
+    string calldata label,
+    string calldata publicKey,
+    uint stakeAmount
 ) external onlyAuthorized nonReentrant;
 ```
 
 Updates the provider's information.
 
-| Name        | Type                  |                                                                       |
-|-------------|-----------------------|-----------------------------------------------------------------------|
-| label       | `string`              | The label that would have the provider in the marketplace.            |
-| publicKey   | `string`              | The public key shared to the clients to encrypt their resources       |
-| stakeAmount | `uint`                | The amount of LP token to stake to be a provider (it can be updated). |
-| domains     | [`Domain[]`](#domain) | A list of domains that the provider will offer.                       |
+| Name          | Type                  |                                                    |
+|---------------|-----------------------|----------------------------------------------------|
+| marketplaceId | `uint`                | The id of the marketplace where you are registered.|
+| label         | `string`              | The new vanity name for the provider.              |
+| publicKey     | `string`              | The new encryption public key                      |
+| stakeAmount   | `uint`                | The new amount of staked LP tokens.                |
 
 
 ### updateProviderStake
 
-Updates only the provider's lp staked token amount.
+Updates only the provider's LP staked token amount.
 
 ```solidity
-function updateProviderStake(uint stakeAmount) external onlyAuthorized nonReentrant();
+function updateProviderStake(
+    uint marketplaceId, 
+    uint stakeAmount
+) external onlyAuthorized nonReentrant();
 ```
 
-| Name        | Type   |                                      |
-|-------------|--------|--------------------------------------|
-| stakeAmount | `uint` | The amount of LP token to be staked. |
+| Name          | Type   |                                                    |
+|---------------|--------|----------------------------------------------------|
+| marketplaceId | `uint` | The id of the marketplace where you are registered.|
+| stakeAmount   | `uint` | The new amount of staked LP tokens.                |
+
+### unregisterProvider
+
+Unregisters provider from a given marketplace.
+
+```solidity
+function unregisterProvider(uint marketplaceId) external nonReentrant onlyAuthorized;
+```
+
+| Name          | Type   |                                                    |
+|---------------|--------|----------------------------------------------------|
+| marketplaceId | `uint` | The id of the marketplace where you are registered.|
 
 ### createOffer
 
@@ -130,53 +86,98 @@ Creates a new offer.
 
 ```solidity
 function createOffer(
-      uint _maximumDeals,
-      bool _autoAccept,
-      uint _pricePerSecond,
-      uint _minDealDuration,
-      bool _billFullPeriods,
-      Domain[] calldata _domains,
-      string calldata _metadata
-    ) external nonReentrant();
+    uint marketplaceId,
+    uint maximumDeals, 
+    bool autoAccept, 
+    uint pricePerSecond, 
+    uint minDealDuration,
+    bool billFullPeriods,
+    bool singlePeriodOnly,
+    string calldata metadata
+) external nonReentrant;
 ```
 
-| Name             | Type                  |                                                                                                                                                 |
-|------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| _maximumDeals    | `uint`                | The maximum amount of deals that this offer can provide.                                                                                        |
-| _autoAccept      | `bool`                | Defines whether the offer will autoaccept deals or not.                                                                                         |
-| _pricePerSecond  | `uint`                | Price per second for the deals.                                                                                                                 |
-| _minDealDuration | `uint`                | The minimum duration that deal's must have, expressed in seconds.                                                                               |
-| _billFullPeriods | `bool`                | If enabled, once the minimum deal's duration has elapsed the next <br/>billing will cover a complete billing period up to the minimum duration. |
-| _domains         | [`Domain[]`](#domain) | The domains that will be offered to the clients in their deals.                                                                                 |
-| _metadata        | `string`              | Useful additional information about the offer.                                                                                                  |
+| Name             | Type     |                                                                                                                                            |
+|------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace where you are registered.                                                                                        |
+| maximumDeals     | `uint`   | The maximum amount of deals that this offer can provide.                                                                                   |
+| autoAccept       | `bool`   | Defines whether the offer will auto-accept deals or not.                                                                                   |
+| pricePerSecond   | `uint`   | Price per second for the deals.                                                                                                            |
+| minDealDuration  | `uint`   | The minimum duration that deal's must have, expressed in seconds.                                                                          |
+| billFullPeriods  | `bool`   | If enabled, once the minimum deal's duration has elapsed the next billing will cover a complete billing period up to the minimum duration. |
+| singlePeriodOnly | `uint`   | If enabled, only one period will be billed and then the deal will be considered finished. (Can't extend for more periods)                  |
+| metadata         | `string` | Useful additional information about the offer.                                                                                             |
 
 ---
 
 ### updateOffer
 
-Updates an offer.
+Updates an offer. It is important to clarify that once a Deal is taken, it cannot be modified. If you modify a offer with opened deals, only new Deals will follow the updated Offer parameters.
 
 ```solidity
 function updateOffer(
-      uint _maximumDeals,
-      bool _autoAccept,
-      uint _pricePerSecond,
-      uint _minDealDuration,
-      bool _billFullPeriods,
-      Domain[] calldata _domains,
-      string calldata _metadata
-    ) external nonReentrant();
+    uint marketplaceId,
+    uint offerId, 
+    uint maximumDeals, 
+    bool autoAccept, 
+    uint pricePerSecond, 
+    uint minDealDuration,
+    bool billFullPeriods,
+    bool singlePeriodOnly,
+    string calldata metadata
+) external nonReentrant;
 ```
 
-| Name             | Type                  |                                                                                                                                                 |
-|------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
-| _maximumDeals    | `uint`                | The maximum amount of deals that this offer can provide.                                                                                        |
-| _autoAccept      | `bool`                | Defines whether the offer will autoaccept deals or not.                                                                                         |
-| _pricePerSecond  | `uint`                | Price per second for the deals.                                                                                                                 |
-| _minDealDuration | `uint`                | The minimum duration that deal's must have, expressed in seconds.                                                                               |
-| _billFullPeriods | `bool`                | If enabled, once the minimum deal's duration has elapsed the next <br/>billing will cover a complete billing period up to the minimum duration. |
-| _domains         | [`Domain[]`](#domain) | The domains that will be offered to the clients in their deals.                                                                                 |
-| _metadata        | `string`              | Useful additional information about the offer.                                                                                                  |
+| Name             | Type     |                                                                                                                                            |
+|------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace where you are registered.                                                                                        |
+| offerId          | `uint`   | The id of the offer you want to update.                                                                                                    |
+| maximumDeals     | `uint`   | The maximum amount of deals that this offer can provide.                                                                                   |
+| autoAccept       | `bool`   | Defines whether the offer will auto-accept deals or not.                                                                                   |
+| pricePerSecond   | `uint`   | Price per second for the deals.                                                                                                            |
+| minDealDuration  | `uint`   | The minimum duration that deal's must have, expressed in seconds.                                                                          |
+| billFullPeriods  | `bool`   | If enabled, once the minimum deal's duration has elapsed the next billing will cover a complete billing period up to the minimum duration. |
+| singlePeriodOnly | `uint`   | If enabled, only one period will be billed and then the deal will be considered finished. (Can't extend for more periods)                  |
+| metadata         | `string` | Useful additional information about the offer.                                                                                             |
+
+
+### deleteOffer
+
+Allows providers to delete their active offers.
+
+```solidity
+function deleteOffer(
+    uint marketplaceId, 
+    uint offerId
+) external onlyAuthorized nonReentrant; 
+```
+
+| Name             | Type     |                                                     |
+|------------------|----------|-----------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace where you are registered. |
+| offerId          | `uint`   | The id of the offer you want to update.             |
+
+---
+
+### createDeal
+
+Allows a client to create a Deal from an Offer. This can be called from the Operations Helper or from the client itself, as it uses onlyAuthorized modifier.
+
+```solidity
+  function createDeal(
+      uint marketplaceId,
+      uint resourceId,
+      uint offerId,  
+      uint blockedBalance,
+      string calldata sharedKeyCopy
+    ) external nonReentrant onlyAuthorized returns (uint dealId, uint actualDeposit)
+```
+
+- `createDeals(uint marketplaceId, ...) external returns (uint[] memory dealsId, uint totalDeposit)`: Clients can create deals based on available offers.
+
+- `acceptDeal(uint marketplaceId, uint _dealId) external returns (bool)`: Providers can accept deals made by clients.
+
+- Other functions exist for rejecting, canceling, and collecting deals.
 
 ---
 
@@ -189,28 +190,6 @@ Events are emitted for significant actions within the contract, such as registra
 ### Modifiers
 
 Modifiers are used to conditionally change the behavior of functions. For instance, certain functions can only be executed by the contract owner or by authorized proxies.
-
----
-
-### Provider Management
-
-- `registerProvider(uint marketplaceId, string memory _name, string memory _description, string memory _location) external returns (bool)`: Allows providers to register themselves.
-
-- `unregisterProvider(uint marketplaceId) external returns (bool)`: Allows registered providers to unregister.
-
-- `updateOffer(...) external returns (bool)`: Providers can update their CDN offers.
-
-- `cancelOffer(uint marketplaceId, uint _offerId) external returns (bool)`: Allows providers to cancel their active offers.
-
----
-
-### Deal Management
-
-- `createDeals(uint marketplaceId, ...) external returns (uint[] memory dealsId, uint totalDeposit)`: Clients can create deals based on available offers.
-
-- `acceptDeal(uint marketplaceId, uint _dealId) external returns (bool)`: Providers can accept deals made by clients.
-
-- Other functions exist for rejecting, canceling, and collecting deals.
 
 ---
 
