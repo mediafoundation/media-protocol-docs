@@ -10,7 +10,7 @@ const features = [
   {
     title: <>What is Media Protocol</>,
     imageUrl: "/overview",
-    description: <>Learn about the core concepts of the Media Protocol Protocol, its governance structure, and key terminology.</>
+    description: <>Learn about the core concepts of the Media Protocol, its governance structure, and key terminology.</>
   }, //
   {
     title: <>Integrate with Media Protocol</>,
@@ -20,7 +20,7 @@ const features = [
   {
     title: <>Media Protocol Smart Contracts</>,
     imageUrl: "/smart-contracts/overview",
-    description: <>Discover the architecture of the smart contracts powering the Media Protocol Protocol.</>
+    description: <>Discover the architecture of the smart contracts powering the Media Protocol.</>
   }, //
 ];
 
