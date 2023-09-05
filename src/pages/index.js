@@ -18,9 +18,9 @@ const features = [
     description: <>Explore the process of integrating with Media Protocol, using the SDK and step-by-step guidance.</>
   }, //
   {
-    title: <>Media Protocol Smart Contracts</>,
+    title: <>Media Smart Contracts</>,
     imageUrl: "/smart-contracts/overview",
-    description: <>Discover the architecture of the smart contracts powering the Media Protocol.</>
+    description: <>Discover the architecture and technical reference of the smart contracts powering the Media Protocol.</>
   }, //
 ];
 
@@ -30,7 +30,7 @@ function Feature({ imageUrl, title, description }) {
     <div className={clsx("col col--4 aos-init aos-animate", styles.feature)}>
       {imgUrl && (
         <Link className="navbar_link" to={imgUrl}>
-          <div className="group gradient-box margin-top--lg">
+          <div className="group gradient-box margin-bottom--lg">
             <div class="gradient-box-child"></div>
             <div class="gradient-box-content">
               <h3>{title}</h3>
@@ -68,6 +68,9 @@ function Home() {
       {/* </div> */}
       {/* </header> */}
       <main>
+        <div className="container">
+            <h1 className="hero__title margin--lg padding--lg">Welcome to Media Protocol Docs</h1>
+        </div>
         {features && features.length > 0 && (
           <section className={styles.features}>
             <div className="container padding-bottom--lg">

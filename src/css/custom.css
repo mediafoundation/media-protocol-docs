@@ -198,3 +198,10 @@ html[data-theme='dark'] .gradient-box-child {
   transition-duration: .15s;
   background: linear-gradient(var(--link-grid-hover-bg,#fff),var(--link-grid-hover-bg,#fff)) padding-box,linear-gradient(to top,#818cf8,#22d3ee,#0ea5e9) border-box;
 }
+
+.hero__title {
+  text-align: center;
+  margin:2rem;
+  font-size: 2rem;
+  font-weight: 500;
+}
