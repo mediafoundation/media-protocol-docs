@@ -1,8 +1,171 @@
 ---
-title: "Staking"
+title: Staking Contract Technical Reference
 sidebar_label: Staking
 sidebar_position: 6
 ---
+
+The `Staking` contract allows users to stake tokens to become a provider in a marketplace.
+
+## Details:
+
+### Inheritance
+The `Staking` contract extends the `Recoverable` contract and the `ReentrancyGuard` contract.
+
+### State Variables
+
+- `token`: The staking ERC20 Token.
+- `marketplaceAddress`: The address of the marketplace contract.
+- `stakes`: Mapping of marketplace id to mapping of provider addresses to stake amount.
+
+### Functions
+
+- [`updateStake`](#updatestake): Updates the stake of a provider.
+- [`setMarketplace`](#setmarketplace): Sets the marketplace contract address.
+- [`setStakingToken`](#setstakingtoken): Sets the staking token address.
+- [`getMarketplace`](#getmarketplace): Retrieves the marketplace contract address.
+- [`getStakeAmount`](#getstakeamount): Retrieves the stake amount of a provider.
+- [`recoverTokens`](#): Allows the owner to recover any ERC20 tokens sent to this contract.
+
+### Events
+
+- [`UpdatedStake`](#updatedstake): Emitted when a provider's stake is updated.
+
+---
+
+## Write Functions
+
+### updateStake
+
+Updates the stake of a provider.
+
+```solidity
+function updateStake(uint marketplaceId, uint256 newStake)
+    external
+    onlyMarketplace
+    nonReentrant
+    returns (uint256 amount)
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
+| newStake      | `uint256` | The new stake amount.                               |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| amount        | `uint256` | The amount of tokens staked.                        |
+
+---
+
+### setMarketplace
+
+Sets the marketplace contract address.
+
+```solidity
+function setMarketplace(address _marketplaceAddress) external onlyOwner returns (bool)
+```
+
+Parameters:
+
+| Name                  | Type      |                                                    |
+|-----------------------|-----------|----------------------------------------------------|
+| _marketplaceAddress   | `address` | The address of the marketplace contract.           |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
+
+---
+
+### setStakingToken
+
+Sets the staking token address.
+
+```solidity
+function setStakingToken(address _tokenAddress) external onlyOwner returns (bool)
+```
+
+Parameters:
+
+| Name                  | Type      |                                                    |
+|-----------------------|-----------|----------------------------------------------------|
+| _tokenAddress         | `address` | The address of the staking token.                   |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
+
+---
+
+## Read Functions
+
+### getMarketplace
+
+Retrieves the marketplace contract address.
+
+```solidity
+function getMarketplace() public view returns(address addr)
+```
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| addr          | `address` | The address of the marketplace contract.           |
+
+---
+
+### getStakeAmount
+
+Retrieves the stake amount of a provider.
+
+```solidity
+function getStakeAmount(uint marketplaceId, address provider) public view returns (uint256)
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
+| provider      | `address` | The address of the provider.                       |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `uint256` | The stake amount.                                  |
+
+---
+
+## Events
+
+### UpdatedStake
+
+Emitted when a provider's stake is updated.
+
+```solidity
+event UpdatedStake(uint marketplaceId, address provider, uint256 newStake)
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
+| provider      | `address` | The address of the provider.                       |
+| newStake      | `uint256` | The new stake amount.                               |
+
+---
+
 :::note
 Please note that this documentation is currently a work in progress, and we apologize for any errors or blank pages you may come across. We welcome any contributions or feedback to improve the documentation via the official repository at https://github.com/mediafoundation/media-protocol-docs.
 :::

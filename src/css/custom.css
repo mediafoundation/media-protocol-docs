@@ -10,26 +10,28 @@
   --ifm-h1-font-size:2rem;
   --ifm-footer-border-color:var(--ifm-color-gray-300);
   --ifm-pagination-border-color:var(--ifm-color-gray-300);
-}
+  --ifm-heading-font-weight:600;
 
-.markdown h1:first-child,
-.markdown > h1 {
-  --ifm-h1-font-size: 2.5rem;
-}
-.markdown > h2 {
-  --ifm-h2-font-size: 2rem;
-}
-.markdown > h3 {
-  --ifm-h3-font-size: 1.75rem;
-}
-.markdown > h4 {
-  --ifm-h4-font-size: 1.25rem;
-}
-.markdown > h5 {
-  --ifm-h5-font-size: 1rem;
-}
-.pagination-nav__link {
-  border-color: var(--ifm-pagination-border-color);
+  --dark-1500: #18191c;
+  --dark-1400: #202225;
+  --dark-1370: #242529;
+  --dark-1340: #26282c;
+  --dark-1300: #292b2f;
+  --dark-1250: #303339;
+  --dark-1200: #2f3136;
+  --dark-1100: #32353B;
+  --dark-1000: #36393f;
+  --dark-900 : #3d4148;
+  --dark-800 : #42464d;
+  --dark-700 : #4d525b;
+  --dark-600 : #72767d;
+  --dark-500 : #a6a6a6;
+  --dark-450:  #9a9da2;
+  --dark-400 : #b9bbbe;
+  --dark-350: #c6c8cb;
+  --dark-300 : #dcddde;
+  --dark-200 : #ebebeb;
+  --dark-100 : #ffffff;
 }
 html[data-theme='dark'] {
   --ifm-background-color: var(--dark-1300);
@@ -52,28 +54,44 @@ html[data-theme='dark'] {
   --ifm-pagination-border-color:var(--dark-900);
   --ifm-pagination-nav-color-hover:var(--dark-600);
   --ifm-color-content-secondary:var(--dark-400);
-
-  --dark-1500: #18191c;
-  --dark-1400: #202225;
-  --dark-1370: #242529;
-  --dark-1340: #26282c;
-  --dark-1300: #292b2f;
-  --dark-1200: #2f3136;
-  --dark-1250: #303339;
-  --dark-1100: #32353B;
-  --dark-1000: #36393f;
-  --dark-900 : #3d4148;
-  --dark-800 : #42464d;
-  --dark-700 : #4d525b;
-  --dark-600 : #72767d;
-  --dark-500 : #a6a6a6;
-  --dark-450:  #9a9da2;
-  --dark-400 : #b9bbbe;
-  --dark-350: #c6c8cb;
-  --dark-300 : #dcddde;
-  --dark-200 : #ebebeb;
-  --dark-100 : #ffffff;
 }
+html[data-theme='dark'] pre {
+
+  background-color:var(--dark-1400) !important;
+}
+.markdown h1:first-child,
+.markdown > h1 {
+  --ifm-h1-font-size: 2.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ifm-pagination-border-color);
+  font-weight: 500;
+}
+.markdown > h2 {
+  --ifm-h2-font-size: 1.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ifm-pagination-border-color);
+  font-weight: 500;
+}
+.markdown > h3 {
+  --ifm-h3-font-size: 1.5rem;
+  font-weight: 500;
+}
+.markdown > h4 {
+  --ifm-h4-font-size: 1.25rem;
+  font-weight: 500;
+}
+.markdown > h5 {
+  --ifm-h5-font-size: 1rem;
+  font-weight: 500;
+}
+.markdown > hr {
+  background-color: var(--ifm-pagination-border-color);
+}
+
+.pagination-nav__link {
+  border-color: var(--ifm-pagination-border-color);
+}
+
 .navbar__logo {
   height: 2.5rem;
   padding: 0.125rem;
@@ -86,13 +104,11 @@ html[data-theme='dark'] {
 .navbar__brand:hover {
   color:var(--ifm-navbar-link-color);
 }
-.navbar {
-  border-top: 1px solid var(--dark-1400);
-}
 
 html[data-theme='dark'] .navbar {
   background-color: var(--dark-1000);
   text-shadow: 0 1px 0 #000;
+  border-top: 1px solid var(--dark-1400);
 }
 
 html[data-theme='dark'] .navbar__brand {
@@ -100,7 +116,7 @@ html[data-theme='dark'] .navbar__brand {
 
 }
 
-aside {
+html[data-theme='dark'] aside {
   background:var(--dark-1200);
 }
 
@@ -110,16 +126,19 @@ nav.menu {
   padding: 0.5rem !important;
 }
 
-.markdown a{
-  text-decoration:underline;
-  font-weight: 500;
-  text-decoration-color: rgba(255, 255, 255, 0.4);
-  text-decoration-thickness: 2px;
+.markdown p a {
+  border:1px solid transparent;
+  border-bottom-color:rgb(0, 168, 252);
+  transition: all 0.1s ease-in-out;
+  margin: 0px 1px;
 }
 
-.markdown a:hover{
-  text-decoration-color: var(--dark-200);
+.markdown p a:hover{
+  text-decoration:none;
+  color: rgb(0, 168, 252);
 }
+
+
 /* 
 
 .menu__link--active,
@@ -146,6 +165,12 @@ html[data-theme='dark'] .menu__list-item-collapsible .menu__link--active:hover {
 }
 
 /* tabs */
+.navbar_link {
+  color:var(--ifm-navbar-link-color);
+}
+.navbar_link:hover {
+  color:var(--ifm-navbar-link-color);
+}
 html[data-theme='dark'] .gradient-box {
   --tw-border-opacity: 1;
   border-color: var(--dark-1400);

@@ -1,63 +1,464 @@
 ---
-title: "Resources"
+title: "Resources Contract Technical Reference"
 sidebar_label: Resources
 sidebar_position: 3
 ---
 
-## **Resources Contract**
-
-### **Overview:**
-
 The `Resources` contract allows users to manage encrypted data resources on the blockchain. Users can add, update, and remove these resources, control access permissions, and keep track of allowed readers for each resource.
 
-### **Details:**
+## Details:
 
-- **Inheritance**:
-  - The `Resources` contract extends the `Recoverable` contract, suggesting the contract has functions related to the recovery of funds or tokens.
+### Inheritance
+The `Resources` contract extends the `Recoverable` contract.
 
-- **Structs**:
-  - `Resource`: Represents an encrypted data resource with fields like `id`, `owner`, `encryptedData`, and `encryptedSharedKey`.
+### Structs
+`Resource`: Represents an encrypted data resource with the following fields: `id`, `owner`, `encryptedData`, and `encryptedSharedKey`.
 
-- **State Variables**:
+### State Variables
 
-  - `resources`: Mapping of resource id to the encrypted data.
-  - `resourceCounter`: Total count of resources.
-  - `resourceAutoIncrement`: An auto-increment value for resources.
-  - `marketplace`: Address of the marketplace contract.
-  - `sharedKeys`: Mapping of resource id to mapping of client address to encrypted shared keys.
-  - `userResourcesIds`: Mapping of user address to their resource ids.
-  - `userResourceIndexes`: Mapping from resource id to the user's resource index.
-  - `resourceOwner`: Mapping from resource id to its owner's address.
-  - `readers`: Mapping from resource id to its readers' addresses.
-  - `readersIndexes`: Mapping from resource id to its readers' index.
-  - `delegationCount`: Mapping from resource id to the count of how many times a client was added as a reader.
-  - `ownerKeys`: Mapping of client address to encrypted JSON string containing all decryption keys.
+- `resources`: Mapping of resource id to the encrypted data.
+- `resourceCounter`: Total count of resources.
+- `resourceAutoIncrement`: An auto-increment value for resources.
+- `marketplace`: Address of the marketplace contract.
+- `sharedKeys`: Mapping of resource id to mapping of client address to encrypted shared keys.
+- `userResourcesIds`: Mapping of user address to their resource ids.
+- `userResourceIndexes`: Mapping from resource id to the user's resource index.
+- `resourceOwner`: Mapping from resource id to its owner's address.
+- `readers`: Mapping from resource id to its readers' addresses.
+- `readersIndexes`: Mapping from resource id to its readers' index.
+- `delegationCount`: Mapping from resource id to the count of how many times a client was added as a reader.
+- `ownerKeys`: Mapping of client address to encrypted JSON string containing all decryption keys.
 
-- **Functions**:
+### Functions
 
-  1. `setMarketplace`: Sets the marketplace contract address.
-  2. `addResource`: Adds a new resource.
-  3. `updateResource`: Updates a resource's encrypted data.
-  4. `removeResource`: Removes a resource.
-  5. `addAllowedAddress`: Adds an allowed address to access a resource.
-  6. `removeAllowedAddress`: Removes an allowed address from accessing a resource.
-  7. `userOwnsResource`: Checks if a user owns a particular resource.
-  8. `getResource`: Retrieves a specific resource based on id and address.
-  9. `getResources`: Retrieves all resources of a specific address.
-  10. `getPaginatedResources`: Retrieves a paginated list of resources.
-  11. `getOwnerKeys`: Retrieves encrypted owner keys for a given address.
-  12. `receive`: Allows receiving native coin.
-  13. `recoverTokens`: Allows the owner to recover any ERC20 tokens sent to this contract.
+- [`setMarketplace`](#setmarketplace): Sets the marketplace contract address.
+- [`addResource`](#addresource): Adds a new resource.
+- [`updateResource`](#updateresource): Updates a resource's encrypted data.
+- [`removeResource`](#removeresource): Removes a resource.
+- [`addAllowedAddress`](#addallowedaddress): Adds an allowed address to access a resource.
+- [`removeAllowedAddress`](#removeallowedaddress): Removes an allowed address from accessing a resource.
+- [`userOwnsResource`](#userownsresource): Checks if a user owns a particular resource.
+- [`getResource`](#getresource): Retrieves a specific resource based on id and address.
+- [`getResources`](#getresources): Retrieves all resources of a specific address.
+- [`getPaginatedResources`](#getpaginatedresources): Retrieves a paginated list of resources.
+- [`getOwnerKeys`](#getownerkeys): Retrieves encrypted owner keys for a given address.
+- [`receive`](#): Allows receiving native coin.
+- [`recoverTokens`](#): Allows the owner to recover any ERC20 tokens sent to this contract.
 
-- **Events**:
+### Events
 
-  - `AddedResource`: Emitted when a new resource is added.
-  - `RemovedResource`: Emitted when a resource is removed.
-  - `UpdatedResource`: Emitted when a resource is updated.
-  - `UpdatedOwnerKeys`: Emitted when the owner keys are updated.
-  - `AddedAllowedAddress`: Emitted when an address is allowed access to a resource.
-  - `RemovedAllowedAddress`: Emitted when an address is removed from accessing a resource.
+- [`AddedResource`](#addedresource): Emitted when a new resource is added.
+- [`RemovedResource`](#removedresource): Emitted when a resource is removed.
+- [`UpdatedResource`](#updatedresource): Emitted when a resource is updated.
+- [`UpdatedOwnerKeys`](#updatedownerkeys): Emitted when the owner keys are updated.
+- [`AddedAllowedAddress`](#addedallowedaddress): Emitted when an address is allowed access to a resource.
+- [`RemovedAllowedAddress`](#removedallowedaddress): Emitted when an address is removed from accessing a resource.
 
-:::note
-This is a high-level technical breakdown. For a deep understanding of each function's inner workings and logic, refer to the smart contract's actual implementation.
-:::
+---
+
+## Write Functions
+
+### setMarketplace
+
+Sets the marketplace contract address.
+
+```solidity
+function setMarketplace(address _marketplace) external onlyOwner returns (bool);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _marketplace  | `address` | The address of the marketplace contract.           |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
+
+---
+
+### addResource
+
+Adds a new resource.
+
+```solidity 
+function addResource(
+    uint marketplaceId,
+    string calldata encryptedData,
+    string calldata encryptedSharedKey,
+    string calldata _ownerKeys
+) external onlyAuthorized nonReentrant returns (uint resourceId);
+```
+
+Parameters:
+
+| Name                  | Type      |                                                    |
+|-----------------------|-----------|----------------------------------------------------|
+| marketplaceId         | `uint`    | The id of the marketplace where you are registered.|
+| encryptedData         | `string`  | The encrypted data of the resource.                |
+| encryptedSharedKey    | `string`  | The encrypted shared key of the resource.          |
+| _ownerKeys            | `string`  | The encrypted owner keys of the resource.          |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| resourceId    | `uint`    | The id of the created resource.                    |
+
+---
+
+### updateResource
+
+Updates a resource's encrypted data.
+
+```solidity
+function updateResource(
+    uint marketplaceId,
+    uint resourceId,
+    string calldata encryptedData
+) external onlyAuthorized nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
+| resourceId    | `uint`    | The id of the resource to update.                  |
+| encryptedData | `string`  | The new encrypted data of the resource.            |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the update was successful or not.          |
+
+---
+
+### removeResource
+
+Removes a resource.
+
+```solidity
+function removeResource(
+    uint marketplaceId,
+    uint resourceId
+) external onlyAuthorized nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
+| resourceId    | `uint`    | The id of the resource to remove.                  |
+
+Return values:
+
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the removal was successful or not.         |
+
+---
+
+### addAllowedAddress
+
+Adds an allowed address to access a resource.
+
+```solidity
+function addAllowedAddress(
+    uint marketplaceId,
+    uint resourceId,
+    address user,
+    string calldata encryptedSharedKey
+) external onlyAuthorized nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
+| resourceId    | `uint`    | The id of the resource to add an allowed address.  |
+| user          | `address` | The address of the user to add.                    |
+| encryptedSharedKey | `string`  | The encrypted shared key of the resource.          |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the addition was successful or not.        |
+
+---
+
+### removeAllowedAddress
+
+Removes an allowed address from accessing a resource.
+
+```solidity
+function removeAllowedAddress(
+    uint marketplaceId,
+    uint resourceId,
+    address user
+) external onlyAuthorized nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
+| resourceId    | `uint`    | The id of the resource to remove an allowed address.|
+| user          | `address` | The address of the user to remove.                 |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the removal was successful or not.         |
+
+---
+
+
+## Read Functions
+
+### userOwnsResource
+
+Checks if a user owns a particular resource.
+
+```solidity
+function userOwnsResource(
+    address user,
+    uint resourceId
+) public view returns (bool);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| user          | `address` | The address of the user.                            |
+| resourceId    | `uint`    | The id of the resource to check.                    |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the user owns the resource or not.         |
+
+---
+
+### getResource
+
+Retrieves a specific resource based on id and address.
+
+```solidity
+function getResource(
+    uint marketplaceId,
+    uint resourceId,
+    address _addr
+) external view returns (Resource memory resource);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
+| resourceId    | `uint`    | The id of the resource to retrieve.                 |
+| _addr         | `address` | The address of the user.                            |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| resource      | `Resource`| The resource object.                                |
+
+
+---
+
+### getResources
+
+Retrieves all resources of a specific address.
+
+```solidity
+function getResources(
+    uint marketplaceId,
+    address _addr
+) external view returns (Resource[] memory _resources);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
+| _addr         | `address` | The address of the user.                            |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _resources    | `Resource[]`| The array of resources.                           |
+
+---
+
+### getPaginatedResources
+
+Retrieves a paginated list of resources.
+
+```solidity
+function getPaginatedResources(
+    uint marketplaceId,
+    address _addr,
+    uint _start,
+    uint _count
+) external view returns (Resource[] memory _resources, uint _totalResources);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
+| _addr         | `address` | The address of the user.                            |
+| _start        | `uint`    | The start index of the resources to retrieve.       |
+| _count        | `uint`    | The number of resources to retrieve.                |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _resources    | `Resource[]`| The array of resources.                           |
+| _totalResources| `uint`   | The total number of resources.                      |
+
+---
+
+### getOwnerKeys
+
+Retrieves encrypted owner keys for a given address.
+
+```solidity
+function getOwnerKeys(
+    address _addr
+) public view returns (string memory _ownerKeys);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _addr         | `address` | The address of the user.                            |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _ownerKeys    | `string`  | The encrypted owner keys.                           |
+
+---
+
+## Events
+
+### AddedResource
+
+Emitted when a new resource is added.
+
+```solidity
+event AddedResource(uint _id);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _id           | `uint`    | The id of the added resource.                       |
+
+---
+
+### RemovedResource
+
+Emitted when a resource is removed.
+
+```solidity
+event RemovedResource(uint _id);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _id           | `uint`    | The id of the removed resource.                     |
+
+---
+
+### UpdatedResource
+
+Emitted when a resource is updated.
+
+```solidity
+event UpdatedResource(uint _id);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _id           | `uint`    | The id of the updated resource.                     |
+
+---
+
+### UpdatedOwnerKeys
+
+Emitted when the owner keys are updated.
+
+```solidity
+event UpdatedOwnerKeys(address _addr);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _addr         | `address` | The address of the user.                            |
+
+---
+
+### AddedAllowedAddress
+
+Emitted when an address is allowed access to a resource.
+
+```solidity
+event AddedAllowedAddress(uint _id, address _addr);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _id           | `uint`    | The id of the resource.                             |
+| _addr         | `address` | The address of the user.                            |
+
+---
+
+### RemovedAllowedAddress
+
+Emitted when an address is removed from accessing a resource.
+
+```solidity
+event RemovedAllowedAddress(uint _id, address _addr);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _id           | `uint`    | The id of the resource.                             |
+| _addr         | `address` | The address of the user.                            |
+
+---
+

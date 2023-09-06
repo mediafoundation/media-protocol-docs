@@ -6,7 +6,9 @@ sidebar_position: 1
 
 # Marketplaces Technical Reference
 
-## Write functions
+This is a technical reference for the Media Protocol Marketplaces smart contract. It is intended for developers who want to integrate with the Media Protocol Marketplaces smart contract.
+
+## Write Functions
 
 ### initializeMarketplace
 
@@ -367,7 +369,6 @@ function cancelDeal(uint marketplaceId, uint dealId) external nonReentrant retur
 Parameters:
 
 | Name             | Type     |                                                      |
-
 |------------------|----------|------------------------------------------------------|
 | marketplaceId    | `uint`   | The id of the marketplace where you are registered.  |
 | dealId           | `uint`   | The id of the deal you want to cancel.               |
@@ -517,7 +518,7 @@ Return:
 
 ---
 
-## Views and getters
+## Read Functions
 
 ### hasActiveDeals
 
@@ -842,7 +843,7 @@ Return:
 
 ---
 
-### getRequiredStake
+`### getRequiredStake
 
 Returns the amount of LP tokens required to be a provider.
 
@@ -892,11 +893,11 @@ Modifiers are used to conditionally change the behavior of functions. For instan
 
 ### onlyAuthorized
 
-Only authorized modifier makes sure that `tx.origin` is the same as `msg.sender` or that `msg.sender` is an authorized proxy. This is used to make sure that only the actual providers and clients or authorized proxies like the [Marketplace Helper](../periphery/marketplace-helper) can execute certain functions like `registerProvider`, `unregisterProvider`, `updateProvider`, `updateProviderStake`, `deleteOffer`, `createDeal`, and `createDeals`.
+The `onlyAuthorized` modifier ensures that `tx.origin` is the same as `msg.sender` or that `msg.sender` is an authorized proxy. This is implemented to ensure that only the actual providers, clients, or authorized proxies such as the Marketplace Helper can execute specific functions. These functions include `registerProvider`, `unregisterProvider`, `updateProvider`, `updateProviderStake`, `deleteOffer`, `createDeal`, and `createDeals`.
 
 ### onlyOwner
 
-Only the deployer of the Marketplace contract can execute functions with this modifier. This is used to make sure that only the owner of the contract can execute functions like `setToken`, `setLPToken`, `setProtocolFeeTo`, `setProtocolFeeRate`, `authorizeProxy`, and `deAuthorizeProxy`.
+The `onlyOwner` modifiers ensures that `msg.sender` is the deplayer (owner). This is implemented to ensure that only the owner of the contract can execute functions like `setToken`, `setLPToken`, `setProtocolFeeTo`, `setProtocolFeeRate`, `authorizeProxy`, and `deAuthorizeProxy`.
 
 ### nonReentrant
 

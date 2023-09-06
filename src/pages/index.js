@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 const features = [
   {
     title: <>What is Media Protocol</>,
-    imageUrl: "/overview",
+    imageUrl: "/introduction",
     description: <>Learn about the core concepts of the Media Protocol, its governance structure, and key terminology.</>
   }, //
   {
