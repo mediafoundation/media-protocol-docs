@@ -1,0 +1,35 @@
+---
+title: "Marketplace Viewer Technical Reference"
+sidebar_label: Marketplace Viewer
+sidebar_position: 2
+---
+
+The [MarketplaceViewer contract](/smart-contracts/reference/periphery/marketplace-viewer) is a read-only contract that enables users to view the state of the Marketplace contract. All functions available in the `MarketplaceViewer` contract are also accessible through the SDK. [Click here](/smart-contracts/reference/periphery/marketplace-viewer) to view the technical reference for the `MarketplaceViewer` contract and see all the available functions.
+
+Additionally, there are extra functions added to the SDK to simplify interaction with the `MarketplaceViewer` contract. Below is a detailed explanation of each of these functions:
+
+
+## getAllOffersPaginating
+
+Gets all offers from a specific marketplace.
+```typescript
+async getAllOffersPaginating({ marketplaceId, start = 0, steps = 20 }) {
+  return offers
+}
+```
+Example:
+```typescript 
+  import { initSdk, MarketplaceViewer } from 'media-sdk';
+
+  // initialize the sdk using your mnemonic (you can also use a privateKey or viem walletClient)
+  initSdk({ mnemonic: 'your mnemonic phrase' });
+
+  const marketplaceViewer = new MarketplaceViewer();
+
+  // get 20 offers per request until there are no more offers
+  let offers = await marketplaceViewer.getAllOffersPaginating({ 
+    marketplaceId: 1, 
+    start: 0, 
+    steps: 20 
+  })
+``` 

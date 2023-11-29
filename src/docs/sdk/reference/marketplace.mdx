@@ -1,0 +1,53 @@
+---
+title: "Marketplace Technical Reference"
+sidebar_label: Marketplace
+sidebar_position: 1
+---
+
+The [Marketplace contract](/smart-contracts/reference/core/marketplace) is the core of the Media Protocol. It allows users to initialize new marketplaces, register as providers, create offers, take deals, and more. Through the SDK, users can make use of all the functions available in the contract in a Javascript enviroment. [Click here](/smart-contracts/reference/core/marketplace) to check the technical reference of the contract where you can find all the available functions.
+
+## Examples
+
+### Initialize a new marketplace
+  
+```javascript
+// import the sdk
+import { initSdk, config, Marketplace } from 'media-sdk';
+
+// initialize the sdk using your mnemonic (you can also use a privateKey or viem walletClient)
+initSdk({ mnemonic: 'your mnemonic phrase' });
+
+// instanciate the marketplace contract
+const marketplace = new Marketplace();
+
+// initialize a new marketplace
+const hash = await marketplace.initializeMarketplace({
+  requiredStake: 100,  // replace with your required stake 
+  marketFeeTo: config().walletClient.account.address, // replace with your market fee recipient address 
+  marketFeeRate: 5 // replace with your market fee rate %
+});
+
+// wait for the transaction to be mined
+const transaction = await config().publicClient.waitForTransactionReceipt( 
+  { hash: hash }
+);
+
+//get the id of the new marketplace from the transaction logs
+console.log(transaction.logs[0].topics[1]);
+
+```
+
+### Get a specific offer from a marketplace
+
+```javascript
+// import the sdk
+import { initSdk, Marketplace } from 'media-sdk';
+
+// initialize the sdk (defaults to goerli testnet)
+initSdk();
+
+// instanciate the marketplace contract
+const marketplace = new Marketplace();
+
+const offer = await marketplace.view("getOffer",[1, 1]);
+```

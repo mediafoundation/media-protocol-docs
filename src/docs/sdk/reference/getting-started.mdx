@@ -6,4 +6,18 @@ sidebar_position: 1
 
 The pages that follow contain technical reference information on the Media Protocol SDK. Looking for a [quick start](../guides/quick-start) instead? You may also want to jump into a [guide](../guides/fetching-deals), which offers a friendlier introduction to the SDK!
 
-The SDK is written in TypeScript, has a robust test suite. The principal exports of the SDK are entities: classes that contain initialization and validation checks, necessary data fields, and helper functions.
+The SDK is written in Javascript, but will be rewritten in Typescript in the near future. 
+
+The main exports of the SDK are as follows: ```initSdk```, ```config```, ```Marketplace```, ```MarketplaceViewer```, ```Resources```, ```Encryption```, ```EventHandler```, ```Blockchain```, ```Helper```.
+
+## Code
+
+The [source code is available on GitHub](https://github.com/mediafoundation/media-sdk).
+
+## Dependencies
+
+The SDK installs a small number of [dependencies](https://github.com/mediafoundation/media-sdk/blob/main/package.json).
+
+- [Viem](https://www.npmjs.com/package/viem)
+- [@metamask/eth-sig-util](https://www.npmjs.com/package/@metamask/eth-sig-util)
+- [Uniswap V3 SDK](https://www.npmjs.com/package/@uniswap/v3-sdk)

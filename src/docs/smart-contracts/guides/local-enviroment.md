@@ -22,9 +22,11 @@ npm install
 
 Then hop to the [Local Node with a Mainnet Fork](#local-node-with-a-mainnet-fork) section to complete your set up and start developing. 
 
-## Or... Start from Scratch -->
+## Or... Start from Scratch
 
-In the following sections, we’ll walk through the steps to create the same environment set up as the boilerplate from scratch and learn the underlying concepts.  
+In the following sections, we’ll walk through the steps to create the same environment set up as the boilerplate from scratch and learn the underlying concepts.   -->
+
+In the following sections, we’ll walk through the steps to create the a development environment from scratch and learn the underlying concepts.
 
 ## Set Up Dependencies
 
@@ -51,10 +53,10 @@ Once the Hardhat initialization completes, take a look around at what got set up
 Next we’ll use NPM to add the Media Protocol contracts which will allow us to seamlessly integrate with the protocol in our new contracts:
 
 ```bash
-$ npm add @mediafaoundation/media-protocol-contracts
+$ git clone https://github.com/mediafoundation/media-protocol-contracts-interfaces.git
 ```
 :::info
-Please note that this package is missing audits, it is still not public. We will update this guide once it is public. Sorry for the inconvenience this may cause. We are working hard to make it public as soon as possible.
+Please note that this package is missing audits, and it is still not public. We will update this guide once it is public. Sorry for the inconvenience this may cause. We are working hard to make it public as soon as possible.
 :::
 
 The Media Protocol contracts were written using a past version of the solidity compiler. Since we’re building integrations on these contracts we have to tell Hardhat to use the correct compiler to build these files. Go to the `./hardhat.config.js` file and change the Solidity version to “0.8.17”: 
@@ -77,16 +79,16 @@ To confirm that our environment is configured correctly we’ll attempt to compi
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "@mediafoundation/media-protocol-contracts/contracts/Marketplaces.sol";
+import "media-protocol-contracts-interfaces/IMarketplace.sol";
 
 contract SimpleInitializeMarketplace {
-    Marketplaces marketplaces;
-    constructor(address _marketplacesAddress) {
-        marketplaces = Marketplaces(_marketplacesAddress);
+    Marketplace marketplace;
+    constructor(address _marketplaceAddress) {
+        marketplaces = Marketplace(_marketplaceAddress);
     }
 
     function initializeMarketplace() external returns (uint marketplaceId) {
-        marketplaceId = marketplaces.initializeMarketplace(
+        marketplaceId = marketplace.initializeMarketplace(
             5000000000000000000, // 5 LP tokens required stake
             msg.sender, // owner of the marketplace
             3 // 3% fee

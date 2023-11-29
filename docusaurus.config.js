@@ -23,7 +23,7 @@ module.exports = {
         src: "/img/medianetwork.svg",
         srcDark: "/img/medianetworkwhite.svg",
       },
-      items: [
+/*       items: [
         {
           href: "https://t.me/Media_FDN",
           label: "Chat",
@@ -34,7 +34,7 @@ module.exports = {
           label: "GitHub",
           position: "right",
         },
-      ],
+      ], */
     },
     editUrl: "https://github.com/mediafoundation/media-protocol-docs/edit/main/",
   },
