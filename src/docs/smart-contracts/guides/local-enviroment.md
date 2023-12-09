@@ -53,13 +53,13 @@ Once the Hardhat initialization completes, take a look around at what got set up
 Next we’ll use NPM to add the Media Protocol contracts which will allow us to seamlessly integrate with the protocol in our new contracts:
 
 ```bash
-$ git clone https://github.com/mediafoundation/media-protocol-contracts-interfaces.git
+$ git clone https://github.com/mediafoundation/media-protocol.git
 ```
 :::info
-Please note that this package is missing audits, and it is still not public. We will update this guide once it is public. Sorry for the inconvenience this may cause. We are working hard to make it public as soon as possible.
+Please note that this repository currently contains only the contract interfaces. The source code is not yet public due to ongoing audits. We apologize for any inconvenience this may cause and are working diligently to make it available as soon as possible.
 :::
 
-The Media Protocol contracts were written using a past version of the solidity compiler. Since we’re building integrations on these contracts we have to tell Hardhat to use the correct compiler to build these files. Go to the `./hardhat.config.js` file and change the Solidity version to “0.8.17”: 
+The Media Protocol contracts were written using a specific version of the solidity compiler. Since we’re building integrations on these contracts we have to tell Hardhat to use the correct compiler to build these files. Go to the `./hardhat.config.js` file and change the Solidity version to “0.8.17”: 
 
 ```jsx
 // ...
@@ -79,12 +79,12 @@ To confirm that our environment is configured correctly we’ll attempt to compi
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "media-protocol-contracts-interfaces/IMarketplace.sol";
+import "./media-protocol/contracts/interfaces/IMarketplace.sol";
 
 contract SimpleInitializeMarketplace {
     Marketplace marketplace;
     constructor(address _marketplaceAddress) {
-        marketplaces = Marketplace(_marketplaceAddress);
+        marketplace = Marketplace(_marketplaceAddress);
     }
 
     function initializeMarketplace() external returns (uint marketplaceId) {
@@ -112,14 +112,17 @@ Compiled { x } Solidity files successfully
 
 ## Local Node with a Mainnet Fork
 
-When building and testing integrations with on chain protocols, developers often hit a problem: the liquidity, marketplaces, providers, and offers on the live chain are critical to thoroughly test their code but testing against a live network like Mainnet can be extremely expensive. 
+When building and testing integrations with on chain protocols, developers often hit a problem: the liquidity on the live chain is critical to thoroughly testing their code but testing against a live network like Mainnet can be extremely expensive.
 
 Luckily, Hardhat has a powerful feature that allows developers to run a local Ethereum test node that uses a fork of Mainnet. This allows us to test against simulated offers for free. 
 
-As a prerequisite we’ll need an RPC that supports [Forking](https://hardhat.org/hardhat-network/docs/guides/forking-other-networks). [Alchemy](https://www.alchemy.com/) includes forking in its free tier so it’s a great place to start (sign up and get an API key [here](https://www.alchemy.com/)).  You can then run the following Hardhat command to start your node:
+As of now, the Media Protocol contracts are deployed only on Goerli, Base Goerli, and LaTestnet. To test against these contracts, you will need to fork one of these networks. Forking a network requires an RPC endpoint that supports [Forking](https://hardhat.org/hardhat-network/docs/guides/forking-other-networks). Here's a free Goerli Testnet RPC provided by [Ankr](https://www.ankr.com/rpc/eth/eth_goerli/): 
+
+You can use this RPC endpoint to start your Hardhat node with the following command:
+
 
 ```bash
-$ npx hardhat node --fork https://eth-mainnet.alchemyapi.io/v2/{YOUR_API_KEY}
+$ npx hardhat node --fork https://rpc.ankr.com/eth_goerli
 ```
 
 With your local node up and running, you can use the `--network localhost` flag in tests to point the Hardhat testing suite to that local node: 
@@ -130,8 +133,4 @@ $ npx hardhat test --network localhost
 
 ## Next Steps
 
-With your environment set up you’re ready to start building. Jump over to the guides section to learn about the Media Protocol functions you can integrate with. Remember to add all contracts (.sol files) to the `./contracts` folder and their subsequent tests to the `./tests` folder. You can then test them against your local forked node by running: 
-
-```bash
-$ npx hardhat test --network localhost
-```
+With your environment set up you’re ready to start building. Jump over to the guides section to learn about the Media Protocol functions you can integrate with.
