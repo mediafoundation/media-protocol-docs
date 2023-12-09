@@ -89,9 +89,9 @@ contract SimpleInitializeMarketplace {
 
     function initializeMarketplace() external returns (uint marketplaceId) {
         marketplaceId = marketplace.initializeMarketplace(
-            5000000000000000000, // 5 LP tokens required stake
-            msg.sender, // owner of the marketplace
-            3 // 3% fee
+            5000000000000000000, // marketplace min required liquidity
+            msg.sender, // marketplace owner
+            3000 // 3% fee
         );
     }
 }
