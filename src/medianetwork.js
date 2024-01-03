@@ -23,27 +23,33 @@ const MediaNetwork = () => {
     const [data, setData] = useState(null);
     const [priceHistory, setPriceHistory] = useState({ '7d': [], '14d': [], '30d': [] });
     const circulatingSupply = 650000;
+    const maxSupply = 10000000;
+    const solanaContractAddress = "ETAtLmCmsoiEEKfNrHKJ2kYy3MoABhU6NQvpSfij5tDs"; // Solana Contract Address
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get('https://api.coingecko.com/api/v3/coins/media-network');
-            setData(response.data);
+            try {
+                const response = await axios.get('https://api.coingecko.com/api/v3/coins/media-network');
+                setData(response.data);
 
-            const history7d = await axios.get('https://api.coingecko.com/api/v3/coins/media-network/market_chart', {
-                params: { vs_currency: 'usd', days: '7', interval: 'daily' },
-            });
-            const history14d = await axios.get('https://api.coingecko.com/api/v3/coins/media-network/market_chart', {
-                params: { vs_currency: 'usd', days: '14', interval: 'daily' },
-            });
-            const history30d = await axios.get('https://api.coingecko.com/api/v3/coins/media-network/market_chart', {
-                params: { vs_currency: 'usd', days: '30', interval: 'daily' },
-            });
+                const history7d = await axios.get('https://api.coingecko.com/api/v3/coins/media-network/market_chart', {
+                    params: { vs_currency: 'usd', days: '7', interval: 'daily' },
+                });
+                const history14d = await axios.get('https://api.coingecko.com/api/v3/coins/media-network/market_chart', {
+                    params: { vs_currency: 'usd', days: '14', interval: 'daily' },
+                });
+                const history30d = await axios.get('https://api.coingecko.com/api/v3/coins/media-network/market_chart', {
+                    params: { vs_currency: 'usd', days: '30', interval: 'daily' },
+                });
 
-            setPriceHistory({
-                '7d': history7d.data.prices,
-                '14d': history14d.data.prices,
-                '30d': history30d.data.prices,
-            });
+                setPriceHistory({
+                    '7d': history7d.data.prices,
+                    '14d': history14d.data.prices,
+                    '30d': history30d.data.prices,
+                });
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
         };
 
         fetchData();
@@ -101,11 +107,7 @@ const MediaNetwork = () => {
             <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>
                 {data.name} ({data.symbol.toUpperCase()})
             </h1>
-
-            <div style={{
-                display: 'flex', justifyContent: 'space-between',
-                width: '100%', marginBottom: '0.5rem'
-            }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '0.5rem' }}>
                 <span style={{ fontWeight: 'bold' }}>Current price:</span>
                 <span>${data.market_data.current_price.usd.toFixed(2)}</span>
             </div>
@@ -124,6 +126,14 @@ const MediaNetwork = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '0.5rem' }}>
                 <span style={{ fontWeight: 'bold' }}>Circulating supply:</span>
                 <span>{circulatingSupply.toLocaleString()}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '0.5rem' }}>
+                <span style={{ fontWeight: 'bold' }}>Max Supply:</span>
+                <span>{maxSupply.toLocaleString()}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginBottom: '0.5rem' }}>
+                <span style={{ fontWeight: 'bold' }}>Solana Contract Address:</span>
+                <span>{solanaContractAddress}</span>
             </div>
             <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', textAlign: 'center' }}>Price History</h2>
             <div style={{ width: '100%', marginBottom: '1rem' }}>
@@ -147,7 +157,14 @@ const MediaNetwork = () => {
                     </div>
                 ))}
             </div>
+
+            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                <a href="https://www.coingecko.com/en/coins/media-network" target="_blank" rel="noopener noreferrer">View on CoinGecko</a>
+                <br />
+                <a href="https://coinmarketcap.com/currencies/media-network/" target="_blank" rel="noopener noreferrer">View on CoinMarketCap</a>
+            </div>
         </div>
     );
 };
+
 export default MediaNetwork;
