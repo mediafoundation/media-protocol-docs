@@ -11,7 +11,13 @@ const MediaNetwork = () => {
     const [priceHistory, setPriceHistory] = useState({ '7d': [], '14d': [], '30d': [] });
     const circulatingSupply = 650000;
     const maxSupply = 10000000;
+    // Updated with new contract addresses and their links
     const solanaContractAddress = "ETAtLmCmsoiEEKfNrHKJ2kYy3MoABhU6NQvpSfij5tDs";
+    const solanaContractLink = "https://solscan.io/token/ETAtLmCmsoiEEKfNrHKJ2kYy3MoABhU6NQvpSfij5tDs";
+    const ethereumContractAddress = "0xc7f3ec6e0259ce1e2beabac42e2f0478ca8d74e1";
+    const ethereumContractLink = "https://etherscan.io/token/0xc7f3ec6e0259ce1e2beabac42e2f0478ca8d74e1";
+    const baseContractAddress = "0x6e51b3a19f114013e5dc09d0477a536c7e4e0207";
+    const baseContractLink = "https://basescan.org/token/0x6e51b3a19f114013e5dc09d0477a536c7e4e0207";
 
     useEffect(() => {
         const fetchData = async () => {
@@ -77,18 +83,15 @@ const MediaNetwork = () => {
                 <Statistic label="24h Price Change" value={`${data.market_data.price_change_percentage_24h.toFixed(2)}%`} />
                 <Statistic label="Circulating Supply" value={circulatingSupply.toLocaleString()} />
                 <Statistic label="Max Supply" value={maxSupply.toLocaleString()} />
-                <Statistic label="Solana Contract Address" value={solanaContractAddress} />
+                <Statistic label="Solana Contract Address" value={solanaContractAddress} link={solanaContractLink} />
+                <Statistic label="Ethereum Contract Address" value={ethereumContractAddress} link={ethereumContractLink} />
+                <Statistic label="Base Contract Address" value={baseContractAddress} link={baseContractLink} />
             </div>
 
-            <div style={{ marginBottom: '20px' }}>
-                <h2 style={{ textAlign: 'center' }}>Last 24 Hour Exchange Volume Statistics</h2>
-                {exchangeData.map((exchange, index) => (
-                    <div key={index} style={{ background: '#e0e0e0', color: '#333', borderRadius: '8px', padding: '10px', margin: '10px 0', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-                        <strong>{exchange.exchange}</strong>
-                        <p>Price: ${exchange.price.toFixed(2)}</p>
-                        <p>Volume: ${exchange.volume.toLocaleString()}</p>
-                    </div>
-                ))}
+            <div style={{ textAlign: 'Left', marginTop: '30px' }}>
+                <a href="https://www.coingecko.com/en/coins/media-network" target="_blank" rel="noopener noreferrer">View on CoinGecko</a>
+                <br />
+                <a href="https://coinmarketcap.com/currencies/media-network/" target="_blank" rel="noopener noreferrer">View on CoinMarketCap</a>
             </div>
 
             {['7d', '14d', '30d'].map(period => (
@@ -98,19 +101,15 @@ const MediaNetwork = () => {
                 </div>
             ))}
 
-            <div style={{ textAlign: 'center', marginTop: '30px' }}>
-                <a href="https://www.coingecko.com/en/coins/media-network" target="_blank" rel="noopener noreferrer">View on CoinGecko</a>
-                <br />
-                <a href="https://coinmarketcap.com/currencies/media-network/" target="_blank" rel="noopener noreferrer">View on CoinMarketCap</a>
-            </div>
+
         </div>
     );
 };
 
-const Statistic = ({ label, value }) => (
+const Statistic = ({ label, value, link }) => (
     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', border: '1px solid #eee', padding: '10px', borderRadius: '5px' }}>
         <span>{label}</span>
-        <span>{value}</span>
+        {link ? <a href={link} target="_blank" rel="noopener noreferrer">{value}</a> : <span>{value}</span>}
     </div>
 );
 
