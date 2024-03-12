@@ -9,7 +9,7 @@ ChartJS.register(LineController, PointElement, LineElement, TimeScale, LinearSca
 const MediaNetwork = () => {
     const [data, setData] = useState(null);
     const [priceHistory, setPriceHistory] = useState({ '7d': [], '14d': [], '30d': [] });
-    const circulatingSupply = 650000;
+    const circulatingSupply = 656000;
     const maxSupply = 10000000;
     // Updated with new contract addresses and their links
     const solanaContractAddress = "ETAtLmCmsoiEEKfNrHKJ2kYy3MoABhU6NQvpSfij5tDs";
