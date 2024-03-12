@@ -14,8 +14,8 @@ const MediaNetwork = () => {
     // Updated with new contract addresses and their links
     const solanaContractAddress = "ETAtLmCmsoiEEKfNrHKJ2kYy3MoABhU6NQvpSfij5tDs";
     const solanaContractLink = "https://solscan.io/token/ETAtLmCmsoiEEKfNrHKJ2kYy3MoABhU6NQvpSfij5tDs";
-    const ethereumContractAddress = "0xc7f3ec6e0259ce1e2beabac42e2f0478ca8d74e1";
-    const ethereumContractLink = "https://etherscan.io/token/0xc7f3ec6e0259ce1e2beabac42e2f0478ca8d74e1";
+    const ethereumContractAddress1 = "0xc7f3ec6e0259ce1e2beabac42e2f0478ca8d74e1";
+    const ethereumContractLink1 = "https://etherscan.io/token/0xc7f3ec6e0259ce1e2beabac42e2f0478ca8d74e1";
     const baseContractAddress = "0x6e51b3a19f114013e5dc09d0477a536c7e4e0207";
     const baseContractLink = "https://basescan.org/token/0x6e51b3a19f114013e5dc09d0477a536c7e4e0207";
 
@@ -84,7 +84,7 @@ const MediaNetwork = () => {
                 <Statistic label="Circulating Supply" value={circulatingSupply.toLocaleString()} />
                 <Statistic label="Max Supply" value={maxSupply.toLocaleString()} />
                 <Statistic label="Solana Contract Address" value={solanaContractAddress} link={solanaContractLink} />
-                <Statistic label="Ethereum Contract Address" value={ethereumContractAddress} link={ethereumContractLink} />
+                <Statistic label="Ethereum Contract Address" value={ethereumContractAddress1} link={ethereumContractLink1} />
                 <Statistic label="Base Contract Address" value={baseContractAddress} link={baseContractLink} />
             </div>
 
