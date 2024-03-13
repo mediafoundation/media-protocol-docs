@@ -1,32 +1,41 @@
-# Media Protocol Documentation
+# Website
 
-This repository contains documentation for the Media Protocol. It includes a set of markdown files that serve as the source for a static site generated using Docusaurus. 
+This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
-## Installation and Running
+### Installation
 
-To get started with this project, you'll need to have Node.js and Yarn installed on your machine. Then, follow these steps:
+```
+$ yarn
+```
 
-1. Clone the repository:
+### Local Development
 
-    - Using HTTPS: `git clone https://github.com/mediafoundation/media-protocol-docs.git`
-    - Using GitHub CLI: `gh repo clone mediafoundation/media-protocol-docs`
+```
+$ yarn start
+```
 
-2. Navigate into the repository directory: `cd media-protocol-docs`
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
-3. Install the dependencies: `yarn install`
+### Build
 
-4. Start the local development server: `yarn start`
-
-This command will start a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
-
-## Building
-
-To build the static site, run the following command: `yarn build`
+```
+$ yarn build
+```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
-## Deploying the Development Server
+### Deployment
 
-Start the local development server: `yarn start`
+Using SSH:
 
-This will start a local development server and open up a browser window. Most changes are live-reloaded, so you will not need to restart the server for your changes to take effect.
+```
+$ USE_SSH=true yarn deploy
+```
+
+Not using SSH:
+
+```
+$ GIT_USER=<Your GitHub username> yarn deploy
+```
+
+If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
