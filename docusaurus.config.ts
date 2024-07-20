@@ -41,13 +41,13 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: "https://media.network/images/mediasocial.jpg",
+    image: "/img/mediaprotocol.png",
     navbar: {
       title: "Media Protocol",
       logo: {
         alt: "Media Protocol Logo",
-        src: "/img/medianetwork.svg",
-        srcDark: "/img/medianetworkwhite.svg",
+        src: "/img/mediaprotocol.svg",
+        srcDark: "/img/mediaprotocolwhite.svg",
       },
       items: [
 

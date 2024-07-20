@@ -22,6 +22,7 @@
     "chart.js": "^4.4.2",
     "chartjs-adapter-moment": "^1.0.1",
     "clsx": "^2.0.0",
+    "moment": "^2.29.4",
     "prism-react-renderer": "^2.3.0",
     "react": "^18.0.0",
     "react-chartjs-2": "^5.2.0",
