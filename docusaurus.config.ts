@@ -8,7 +8,7 @@ const config: Config = {
     "A suite of persistent, non-upgradable smart contracts that together create a protocol enabling anyone to build their own peer-to-peer marketplaces.",
   url: "https://docs.media.network/",
   baseUrl: "/",
-  favicon: "img/favicon.ico",
+  favicon: "img/favicon.svg",
   organizationName: "mediafoundation",
   projectName: "media-protocol-docs",
 

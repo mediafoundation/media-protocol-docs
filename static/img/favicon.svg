@@ -8,7 +8,10 @@
    xmlns="http://www.w3.org/2000/svg"
 >
    <style type="text/css">
-      path {fill:#ffffff}
+      path {fill:#000000}
+      @media (prefers-color-scheme: dark) {
+         path { fill: #ffffff; }
+      }
    </style>
    <g transform="rotate(-60.299406,259.81128,1200.169)">
       <path d="m 1330.1345,655.52043 -633.87937,-3.40652 62.82445,110.33986 506.09372,2.71995 z"
