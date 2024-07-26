@@ -1,26 +1,158 @@
 ---
-title: "Marketplace Technical Reference"
+title: "Marketplace Contract Technical Reference"
 sidebar_label: Marketplace
 sidebar_position: 1
 ---
 
 This is a technical reference for the Media Protocol Marketplace smart contract.
 
-## Public Variables
+## Structs
 
-- `authorizedProxies`: Mapping of authorized addresses.
-- `authorizedAddresses`: Array of authorized addresses.
-- `protocolFeeTo`: Address that will receive the protocol fees.
-- `protocolFeeRate`: The rate of the protocol fees.
-- `marketplacesCounter`: Counter for the marketplaces.
-- `owners`: Mapping of marketplace owners.
-- `marketFeeTo`: Mapping of marketplaces fee recipients.
-- `marketFeeRate`: Mapping of marketplaces fee rates.
-- `REQUIRED_STAKE`: Mapping of required stakes for providers.
-- `offerCounter`: Mapping of offer counters.
-- `offerAutoIncrement`: Mapping of offer auto-increments.
-- `dealAutoIncrement`: Mapping of deal auto-increments.
-- `positionManager`: Uniswap V3 position manager.
+### Provider
+
+```solidity
+struct Provider {
+    string metadata;
+    string publicKey;
+}
+```
+
+| Name          | Type      |                                                        |
+|---------------|-----------|--------------------------------------------------------|
+| metadata | `string`    | Metadata for the provider.        |
+| publicKey  | `string` | The encryption public key shared to the clients to encrypt their resources.    |
+
+---
+
+### OfferTerms
+
+```solidity
+struct OfferTerms {
+    uint pricePerSecond;
+    uint minDealDuration;
+    bool billFullPeriods;
+    bool singlePeriodOnly;
+    string metadata;
+}
+```
+
+| Name             | Type    |                                                        |
+|------------------|---------|--------------------------------------------------------|
+| pricePerSecond   | `uint`  | Price per second for the deals.                        |
+| minDealDuration  | `uint`  | The minimum duration that deal's must have, expressed in seconds. |
+| billFullPeriods  | `bool`  | If enabled, once the minimum deal's duration has elapsed the next billing will cover a complete billing period up to the minimum duration. |
+| singlePeriodOnly | `bool`  | If enabled, only one period will be billed and then the deal will be considered finished. (Can't extend for more periods) |
+| metadata         | `string` | Useful additional information about the offer.        |
+
+---
+
+### Offer
+
+```solidity
+struct Offer {
+    uint id;
+    address provider;
+    string publicKey;
+    uint maximumDeals;
+    bool autoAccept;
+    OfferTerms terms;
+}
+```
+
+| Name          | Type      |                                                        |
+|---------------|-----------|--------------------------------------------------------|
+| id | `uint`    | The id of the offer.                                              |
+| provider  | `address` | The address of the provider.                               |
+| publicKey | `string` | The encryption public key shared to the clients to encrypt their resources. |
+| maximumDeals | `uint` | The maximum amount of deals that this offer can provide.   |
+| autoAccept | `bool` | Defines whether the offer will auto-accept deals or not.     |
+| terms | `OfferTerms` | The terms of the offer.                                     |
+
+---
+
+### Deal
+
+```solidity
+struct Deal {
+    uint id;
+    uint offerId;
+    address client;
+    address provider;
+    uint resourceId;
+    uint totalPayment;
+    uint blockedBalance;
+    OfferTerms terms;
+    Status status;
+}
+```
+
+| Name          | Type      |                                                |
+|----------------|--------------|--------------------------------------------|
+| id             | `uint`       | The id of the deal.                        |
+| offerId        | `uint`       | The id of the offer.                       |
+| client         | `address`    | The address of the client.                 |
+| provider       | `address`    | The address of the provider.               |
+| resourceId     | `uint`       | The id of the resource.                    |
+| totalPayment   | `uint`       | The total payment for the deal.            |
+| blockedBalance | `uint`       | The amount of tokens blocked for the deal. |
+| terms          | `OfferTerms` | The terms of the deal.                     |
+| status         | `Status`     | The status of the deal.                    |
+
+
+---
+
+### Status
+
+```solidity
+struct Status {
+    bool active;
+    uint createdAt;
+    uint acceptedAt;
+    uint billingStart;
+    bool cancelled;
+    uint cancelledAt;
+}
+```
+
+| Name          | Type      |                                                |
+|---------------|-----------|------------------------------------------------|
+| active        | `bool`    | Whether the deal is active or not.             |
+| createdAt     | `uint`    | The timestamp when the deal was created.       |
+| acceptedAt    | `uint`    | The timestamp when the deal was accepted.      |
+| billingStart  | `uint`    | The timestamp when the billing started.        |
+| cancelled     | `bool`    | Whether the deal was cancelled or not.         |
+| cancelledAt   | `uint`    | The timestamp when the deal was cancelled.     |
+
+---
+
+
+## Public State Variables
+
+### General Variables
+
+| Name               | Type                       |                                                 |
+|--------------------|----------------------------|-------------------------------------------------|
+| authorizedProxies  | `mapping(address => bool)` | Mapping of authorized addresses.                |
+| authorizedAddresses| `address[]`                | Array of authorized addresses.                  |
+| protocolFeeTo      | `address`                  | Address that will receive the protocol fees.    |
+| protocolFeeRate    | `uint256`                  | The rate of the protocol fees.                  |
+| marketplacesCounter| `uint`                     | Marketplaces counter.                           |
+| positionManager    | `IUniswapV3PositionManager`| Uniswap V3 position manager.                    |
+
+
+### Marketplaces Variables
+
+The following variables are mappings that store the data specific to each `marketplaceId`.
+
+| Name               | Type                       |                                                 |
+|--------------------|----------------------------|-------------------------------------------------|
+| owners             | `mapping(uint => address)` | Mapping of marketplaces owners.                 |
+| marketFeeTo        | `mapping(uint => address)` | Mapping of marketplaces fee recipients.         |
+| marketFeeRate      | `mapping(uint => uint)`    | Mapping of marketplaces fee rates.              |
+| REQUIRED_STAKE     | `mapping(uint => uint)`    | Mapping of required stakes for providers.       |
+| offerCounter       | `mapping(uint => uint)`    | Mapping of offer counters.                      |
+| offerAutoIncrement | `mapping(uint => uint)`    | Mapping of offer auto-increments.               |
+| dealAutoIncrement  | `mapping(uint => uint)`    | Mapping of deal auto-increments.                |
 
 
 ## Write Functions
@@ -1115,7 +1247,7 @@ Modifiers are used to conditionally change the behavior of functions. For instan
 
 ### onlyAuthorized
 
-The `onlyAuthorized` modifier ensures that `tx.origin` is the same as `msg.sender` or that `msg.sender` is an authorized proxy. This is implemented to ensure that only the actual providers, clients, or authorized proxies such as the Marketplace Helper can execute specific functions. These functions include `registerProvider`, `unregisterProvider`, `increaseProviderStake`, `decreaseProviderStake`, `createDeal`, and `createDeals`.
+The `onlyAuthorized` modifier ensures that `tx.origin` is the same as `msg.sender` or that `msg.sender` is an authorized proxy. This is implemented to ensure that only the actual providers, clients, or authorized proxies such as the [Marketplace Helper](../periphery/marketplace-helper) can execute specific functions. These functions include `registerProvider`, `unregisterProvider`, `increaseProviderStake`, `decreaseProviderStake`, `createDeal`, and `createDeals`.
 
 ### onlyOwner
 
