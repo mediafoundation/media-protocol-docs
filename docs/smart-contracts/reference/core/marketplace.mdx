@@ -6,6 +6,23 @@ sidebar_position: 1
 
 This is a technical reference for the Media Protocol Marketplace smart contract.
 
+## Public Variables
+
+- `authorizedProxies`: Mapping of authorized addresses.
+- `authorizedAddresses`: Array of authorized addresses.
+- `protocolFeeTo`: Address that will receive the protocol fees.
+- `protocolFeeRate`: The rate of the protocol fees.
+- `marketplacesCounter`: Counter for the marketplaces.
+- `owners`: Mapping of marketplace owners.
+- `marketFeeTo`: Mapping of marketplaces fee recipients.
+- `marketFeeRate`: Mapping of marketplaces fee rates.
+- `REQUIRED_STAKE`: Mapping of required stakes for providers.
+- `offerCounter`: Mapping of offer counters.
+- `offerAutoIncrement`: Mapping of offer auto-increments.
+- `dealAutoIncrement`: Mapping of deal auto-increments.
+- `positionManager`: Uniswap V3 position manager.
+
+
 ## Write Functions
 
 ### initializeMarketplace
@@ -17,21 +34,123 @@ function initializeMarketplace(
     uint requiredStake,
     address _marketFeeTo,
     uint256 _marketFeeRate
-) external returns (uint marketplaceId);
+) external nonReentrant returns (uint marketplaceId);
 ```
 Parameters:
 
-| Name          | Type      |                                                    |
-|---------------|-----------|----------------------------------------------------|
-| requiredStake | `uint`    | The amount of LP tokens required to be a provider. |
-| _marketFeeTo  | `address` | The address that will receive the marketplace fees.|
-| _marketFeeRate| `uint`    | The rate of the marketplace fees. (From 1% to 10%).|
+| Name          | Type      |                                                        |
+|---------------|-----------|--------------------------------------------------------|
+| requiredStake | `uint`    | The required staked liquidity to be a provider.        |
+| _marketFeeTo  | `address` | The address that will receive the marketplace fees.    |
+| _marketFeeRate| `uint`    | The marketplace fee rate. 100 to 100000 (0.01% to 10%).|
 
 Return values:
 
 | Name          | Type      |                                                    |
 |---------------|-----------|----------------------------------------------------|
 | marketplaceId | `uint`    | The id of the created marketplace.                 |
+
+---
+
+### setRequiredStake
+
+Sets the required stake for a marketplace.
+
+```solidity
+function setRequiredStake(
+    uint marketplaceId,
+    uint requiredStake
+) external nonReentrant returns (bool);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| requiredStake | `uint`    | The required liquidity to be a provider.           |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the operation was successful or not.       |
+
+---
+
+### transferMarketplaceOwnership
+
+Transfers the ownership of a marketplace.
+
+```solidity
+function transferMarketplaceOwnership(
+    uint marketplaceId,
+    address newOwner
+) external nonReentrant returns (bool);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| newOwner      | `address` | The address of the new owner.                      |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the operation was successful or not.       |
+
+---
+
+### setMarketFeeRate
+
+Allows marketplace owners to set the fee rate for their marketplace.
+
+```solidity
+function setMarketFeeRate(
+    uint marketplaceId, 
+    uint256 _feeRate
+) external nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                            |
+|------------------|----------|------------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace you want to set the fee for.     |
+| _feeRate         | `uint`   | The fee rate you want to set. 100 to 100000 (0.01% to 10%).|
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
+
+---
+
+### setMarketFeeTo
+
+Allows marketplace owners to set the fee recipient for their marketplace.
+
+```solidity
+function setMarketFeeTo(
+    uint marketplaceId, 
+    address _feeTo
+) external nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace you want to set the fee for.|
+| _feeTo           | `address`| The fee recipient you want to set.                    |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
 
 ---
 
@@ -42,10 +161,10 @@ Registers as provider in order to be able to create offers.
 ```solidity
 function registerProvider(
     uint marketplaceId,
-    string calldata label,
+    string calldata metadata,
     string calldata publicKey,
-    uint stakeAmount
-) external onlyAuthorized nonReentrant returns (bool);
+    uint nftId
+) external nonReentrant onlyAuthorized returns (bool);
 ```
 
 Parameters:
@@ -53,9 +172,9 @@ Parameters:
 | Name          | Type                  |                                                                            |
 |---------------|-----------------------|----------------------------------------------------------------------------|
 | marketplaceId | `uint`                | The id of the marketplace you are registering to.                          |
-| label         | `string`              | A vanity name for the provider.                                            |
+| metadata      | `string`              | Metadata for the provider.                                                 |
 | publicKey     | `string`              | The encryption public key shared to the clients to encrypt their resources.|
-| stakeAmount   | `uint`                | The amount of LP token to stake to be a provider.                          |
+| nftId         | `uint`                | The Uniswap V3 NFT ID with the required liquidity.                         |
 
 Return values:
 
@@ -71,7 +190,9 @@ Return values:
 Unregister as a provider and recover the staked lp tokens.
 
 ```solidity
-function unregisterProvider(uint marketplaceId) external nonReentrant onlyAuthorized returns(uint removedStake);
+function unregisterProvider(
+    uint marketplaceId
+) external nonReentrant onlyAuthorized returns(uint nftId);
 ```
 Parameters:
 
@@ -83,8 +204,7 @@ Return values:
 
 | Name          | Type      |                                                    |
 |---------------|-----------|----------------------------------------------------|
-| removedStake  | `uint`    | The amount of LP tokens that were returned.        |
-
+| nftId         | `uint`    | The unstaked Uniswap V3 NFT ID with the liquidity. |
 ---
 
 ### updateProvider
@@ -93,9 +213,8 @@ Updates the provider's information.
 ```solidity
 function updateProvider(
     uint marketplaceId,
-    string calldata label,
-    string calldata publicKey,
-    uint stakeAmount
+    string calldata metadata,
+    string calldata publicKey
 ) external onlyAuthorized nonReentrant returns (bool updated);
 ```
 Parameters:
@@ -103,9 +222,8 @@ Parameters:
 | Name          | Type                  |                                                    |
 |---------------|-----------------------|----------------------------------------------------|
 | marketplaceId | `uint`                | The id of the marketplace where you are registered.|
-| label         | `string`              | The new vanity name for the provider.              |
+| metadata      | `string`              | The new metadata for the provider.                 |
 | publicKey     | `string`              | The new encryption public key                      |
-| stakeAmount   | `uint`                | The new amount of staked LP tokens.                |
 
 Return values:
 
@@ -115,30 +233,62 @@ Return values:
 
 ---
 
-### updateProviderStake
+### increaseProviderStake
 
-Updates the provider's LP staked token amount. This can be used to increase or decrease the amount of staked tokens. The parameter `stakeAmount` represents the amount of LP tokens that will remain staked. For example if you had 100 LP tokens staked and you set `stakeAmount` to 75, 25 LP tokens will be returned to you and 75 will remain in the contract.
+Increases the provider's stake.
 
 ```solidity
-function updateProviderStake(
-    uint marketplaceId, 
-    uint stakeAmount
-) external onlyAuthorized nonReentrant returns (bool);
+function increaseProviderStake(
+    uint marketplaceId,
+    uint liquidity,
+    uint amount0,
+    uint amount1
+) external nonReentrant onlyAuthorized returns (bool);
 ```
 Parameters:
 
 | Name          | Type   |                                                    |
 |---------------|--------|----------------------------------------------------|
 | marketplaceId | `uint` | The id of the marketplace where you are registered.|
-| stakeAmount   | `uint` | The new amount of staked LP tokens.                |
+| liquidity     | `uint` | The amount of liquidity to increase.               |
+| amount0       | `uint` | The amount of token0 to increase.                  |
+| amount1       | `uint` | The amount of token1 to increase.                  |
 
 Return values:
 
 | Type      |                                                    |
 |-----------|----------------------------------------------------|
-| `bool`    | Whether the update was successful or not.          |
+| `bool`    | Whether the increase was successful or not.       |
 
 ---
+
+### decreaseProviderStake
+
+Decreases the provider's stake.
+
+```solidity
+function decreaseProviderStake(
+    uint marketplaceId,
+    uint amount0,
+    uint amount1
+) external nonReentrant onlyAuthorized returns (bool);
+```
+Parameters:
+
+| Name          | Type   |                                                    |
+|---------------|--------|----------------------------------------------------|
+| marketplaceId | `uint` | The id of the marketplace where you are registered.|
+| amount0       | `uint` | The amount of token0 to decrease.                  |
+| amount1       | `uint` | The amount of token1 to decrease.                  |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the decrease was successful or not.       |
+
+---
+
 
 ### createOffer
 
@@ -226,7 +376,7 @@ Allows providers to delete their active offers.
 function deleteOffer(
     uint marketplaceId, 
     uint offerId
-) external onlyAuthorized nonReentrant returns (bool); 
+) external nonReentrant returns (bool); 
 ```
 
 Parameters:
@@ -245,6 +395,78 @@ Return values:
 
 ---
 
+### acceptDeal
+
+Allows providers to accept a deal.
+
+```solidity
+function acceptDeal(uint marketplaceId, uint dealId) external nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace where you are registered.  |
+| dealId           | `uint`   | The id of the deal you want to accept.               |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the acceptance was successful or not.      |
+
+---
+
+### rejectDeal
+
+Allows providers to reject a deal.
+
+```solidity
+function rejectDeal(uint marketplaceId, uint dealId) external nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace where you are registered.  |
+| dealId           | `uint`   | The id of the deal you want to reject.               |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the rejection was successful or not.       |
+
+---
+
+### updateClient
+
+Allows clients to update their metadata.
+
+```solidity
+function updateClient(
+    uint marketplaceId,
+    string calldata metadata
+) external nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace where you are registered.  |
+| metadata         | `string` | The new metadata for the client.                     |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the update was successful or not.          |
+
+---
+
 ### createDeal
 
 Allows a client to create a Deal from an Offer.
@@ -256,7 +478,10 @@ function createDeal(
     uint offerId,  
     uint blockedBalance,
     string calldata sharedKeyCopy
-) external nonReentrant onlyAuthorized returns (uint dealId, uint actualDeposit)
+) external onlyAuthorized nonReentrant returns (
+    uint dealId, 
+    uint actualDeposit
+);
 ```
 
 Parameters:
@@ -310,52 +535,6 @@ Return values:
 ---
 
 
-### acceptDeal
-
-Allows providers to accept a deal.
-
-```solidity
-function acceptDeal(uint marketplaceId, uint dealId) external nonReentrant returns (bool);
-```
-
-Parameters:
-
-| Name             | Type     |                                                      |
-|------------------|----------|------------------------------------------------------|
-| marketplaceId    | `uint`   | The id of the marketplace where you are registered.  |
-| dealId           | `uint`   | The id of the deal you want to accept.               |
-
-Return:
-
-| Type      |                                                    |
-|-----------|----------------------------------------------------|
-| `bool`    | Whether the acceptance was successful or not.      |
-
----
-
-### rejectDeal
-
-Allows providers to reject a deal.
-
-```solidity
-function rejectDeal(uint marketplaceId, uint dealId) external nonReentrant returns (bool);
-```
-
-Parameters:
-
-| Name             | Type     |                                                      |
-|------------------|----------|------------------------------------------------------|
-| marketplaceId    | `uint`   | The id of the marketplace where you are registered.  |
-| dealId           | `uint`   | The id of the deal you want to reject.               |
-
-Return:
-
-| Type      |                                                    |
-|-----------|----------------------------------------------------|
-| `bool`    | Whether the rejection was successful or not.       |
-
----
-
 ### cancelDeal
 
 Allows clients and providers to cancel a deal.
@@ -384,7 +563,10 @@ Return:
 Allows providers to cancel all their deals.
 
 ```solidity
-function cancelAllDeals(uint marketplaceId, uint resourceId) external nonReentrant returns (bool);
+function cancelAllDeals(
+    uint marketplaceId, 
+    uint resourceId
+) external nonReentrant returns (bool);
 ```
 
 Parameters:
@@ -407,7 +589,11 @@ Return:
 Allows clients to add balance to a deal.
 
 ```solidity
-function addBalance(uint marketplaceId, uint dealId, uint blockedBalance) external nonReentrant returns (uint actualDeposit);
+function addBalance(
+    uint marketplaceId, 
+    uint dealId, 
+    uint blockedBalance
+) external nonReentrant returns (uint actualDeposit);
 ```
 
 Parameters:
@@ -431,7 +617,10 @@ Return:
 Allows clients and providers to collect a deal.
 
 ```solidity
-function collectDeal(uint marketplaceId, uint dealId) external nonReentrant returns (bool);
+function collectDeal(
+    uint marketplaceId, 
+    uint dealId
+) external nonReentrant returns (bool);
 ```
 
 Parameters:
@@ -471,20 +660,91 @@ Return:
 
 ---
 
-### setMarketFeeRate
+### extendBillingStart
 
-Allows marketplace owners to set the fee rate for their marketplace.
+Allows providers to extend the billing start of a deal.
 
 ```solidity
-function setMarketFeeRate(uint marketplaceId, uint256 _feeRate) external returns (bool);
+function extendBillingStart(
+    uint marketplaceId, 
+    uint dealId, 
+    uint extension
+) external nonReentrant returns (bool);
 ```
 
 Parameters:
 
 | Name             | Type     |                                                      |
 |------------------|----------|------------------------------------------------------|
-| marketplaceId    | `uint`   | The id of the marketplace you want to set the fee for.|
-| _feeRate         | `uint`   | The fee rate you want to set.                         |
+| marketplaceId    | `uint`   | The id of the marketplace where you are registered.  |
+| dealId           | `uint`   | The id of the deal you want to extend.               |
+| extension        | `uint`   | The amount of time you want to extend the deal.      |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the extension was successful or not.       |
+
+---
+
+### authorizeProxy
+
+Allows the contract owner to authorize a new address.
+
+```solidity
+function authorizeProxy(address _addr) external onlyOwner returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| _addr            | `address`| The address you want to authorize.                   |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the authorization was successful or not.   |
+
+---
+
+### deAuthorizeProxy
+
+Allows the contract owner to de-authorize an address.
+
+```solidity
+function deAuthorizeProxy(address _addr) external onlyOwner returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| _addr            | `address`| The address you want to de-authorize.                |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the de-authorization was successful or not.|
+
+---
+
+### setToken
+
+Allows the contract owner to set the token address.
+
+```solidity
+function setToken(address _tokenAddress) external onlyOwner returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| _tokenAddress    | `address`| The address of the token.                            |
 
 Return:
 
@@ -492,27 +752,71 @@ Return:
 |-----------|----------------------------------------------------|
 | `bool`    | Whether the setting was successful or not.         |
 
+---
 
-### setMarketFeeTo
+### setProtocolFeeTo
 
-Allows marketplace owners to set the fee recipient for their marketplace.
+Allows the contract owner to set the protocol fee recipient.
 
 ```solidity
-function setMarketFeeTo(uint marketplaceId, address _feeTo) external returns (bool);
+function setProtocolFeeTo(address feeTo) external onlyOwner returns (bool);
 ```
 
 Parameters:
 
 | Name             | Type     |                                                      |
 |------------------|----------|------------------------------------------------------|
-| marketplaceId    | `uint`   | The id of the marketplace you want to set the fee for.|
-| _feeTo           | `address`| The fee recipient you want to set.                    |
+| feeTo            | `address`| The address of the protocol fee recipient.           |
 
 Return:
 
 | Type      |                                                    |
 |-----------|----------------------------------------------------|
 | `bool`    | Whether the setting was successful or not.         |
+
+---
+
+### setProtocolFeeRate
+
+Allows the contract owner to set the protocol fee rate.
+
+```solidity
+function setProtocolFeeRate(uint256 feeRate) external onlyOwner returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                           |
+|------------------|----------|-----------------------------------------------------------|
+| feeRate          | `uint256`| The rate of the protocol fee. 100 to 100000 (0.01% to 10%)|
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
+
+---
+
+### recoverTokens
+
+Allows the contract owner to recover tokens sent unintentionally to the contract.
+
+```solidity
+function recoverTokens(IERC20 _token) external onlyOwner returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| _token           | `IERC20` | The token you want to recover.                       |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the recovery was successful or not.        |
 
 ---
 
@@ -541,104 +845,15 @@ Return:
 
 ---
 
-### getAuthorizedAddresses
-
-Returns all authorized addresses.
-
-```solidity
-function getAuthorizedAddresses() public view returns (address[] memory);
-```
-
-Return:
-
-| Type                    |                                                    |
-|-------------------------|----------------------------------------------------|
-| `address[] memory`      | Array of authorized addresses.                      |
-
----
-
-### getProtocolFeeRate
-
-Returns the protocol fee rate.
-
-```solidity
-function getProtocolFeeRate() public view returns (uint256);
-```
-
-Return:
-
-| Type                    |                                                    |
-|-------------------------|----------------------------------------------------|
-| `uint256`               | The protocol fee rate.                              |
-
----
-
-### getProtocolFeeTo
-
-Returns the protocol fee recipient.
-
-```solidity
-function getProtocolFeeTo() public view returns (address);
-```
-
-Return:
-
-| Type                    |                                                     |
-|-------------------------|-----------------------------------------------------|
-| `address`               | The protocol fee recipient.                         |
-
----
-
-### getMarketFeeRate
-
-Returns the fee rate for a marketplace.
-
-```solidity
-function getMarketFeeRate(uint marketplaceId) public view returns (uint256);
-```
-
-Parameters:
-
-| Name             | Type     |                                                       |
-|------------------|----------|-------------------------------------------------------|
-| marketplaceId    | `uint`   | The id of the marketplace you want to get the fee for.|
-
-Return:
-
-| Type                    |                                                    |
-|-------------------------|----------------------------------------------------|
-| `uint256`               | The fee rate for the marketplace.                  |
-
----
-
-### getMarketFeeTo
-
-Returns the fee recipient for a marketplace.
-
-```solidity
-function getMarketFeeTo(uint marketplaceId) public view returns (address);
-```
-
-Parameters:
-
-| Name             | Type     |                                                       |
-|------------------|----------|-------------------------------------------------------|
-| marketplaceId    | `uint`   | The id of the marketplace you want to get the fee for.|
-
-Return:
-
-| Type                    |                                                    |
-|-------------------------|----------------------------------------------------|
-| `address`               | The fee recipient for the marketplace.             |
-
----
-
 ### isRegisteredProvider
 
 Returns whether a provider is registered or not.
 
 ```solidity
-function isRegisteredProvider(uint marketplaceId, address provider) public view returns (bool);
+function isRegisteredProvider(
+    uint marketplaceId, 
+    address provider
+) public view returns (bool);
 ```
 
 Parameters:
@@ -655,7 +870,6 @@ Return:
 | `bool`   | Whether the provider is registered or not.         |
 
 ---
-
 
 ### getProvider
 
@@ -680,81 +894,15 @@ Return:
 
 ---
 
-### getStakeAmount
+### getClient
 
-Returns the amount of LP tokens a provider has staked.
-
-```solidity
-function getStakeAmount(uint marketplaceId, address provider) public view returns (uint);
-```
-
-Parameters:
-
-| Name             | Type     |                                                      |
-|------------------|----------|------------------------------------------------------|
-| marketplaceId    | `uint`   | The id of the marketplace.                           |
-| provider         | `address`| The address of the provider.                         |
-
-Return:
-
-| Type     |                                                    |
-|----------|----------------------------------------------------|
-| `uint`   | The amount of LP tokens a provider has staked.     |
-
----
-
-### getProviderOffers
-
-Returns a list of offers a provider has created.
+Returns the client details.
 
 ```solidity
-function getProviderOffers(uint marketplaceId, address provider) external view returns (uint[] memory);
-```
-
-Parameters:
-
-| Name             | Type     |                                                      |
-|------------------|----------|------------------------------------------------------|
-| marketplaceId    | `uint`   | The id of the marketplace.                           |
-| provider         | `address`| The address of the provider.                         |
-
-Return:
-
-| Type     |                                                    |
-|----------|----------------------------------------------------|
-| `uint[] memory`| An array of offer ids.                            |
-
----
-
-### getProviderDeals
-
-Returns a list of deals a provider has created.
-
-```solidity
-function getProviderDeals(uint marketplaceId, address provider) external view returns (uint[] memory);
-```
-
-Parameters:
-
-| Name             | Type     |                                                      |
-|------------------|----------|------------------------------------------------------|
-| marketplaceId    | `uint`   | The id of the marketplace.                           |
-| provider         | `address`| The address of the provider.                         |
-
-Return:
-
-| Type     |                                                    |
-|----------|----------------------------------------------------|
-| `uint[] memory`| An array of deal ids.                             |
-
----
-
-### getClientDeals
-
-Returns a list of deals a client has created.
-
-```solidity
-function getClientDeals(uint marketplaceId, address client) external view returns (uint[] memory);
+function getClient(
+    uint marketplaceId, 
+    address client
+) external view returns (string memory);
 ```
 
 Parameters:
@@ -768,30 +916,7 @@ Return:
 
 | Type     |                                                    |
 |----------|----------------------------------------------------|
-| `uint[] memory`| An array of deal ids.                             |
-
----
-
-### getOfferDealsIds
-
-Returns a list of deal ids for an offer.
-
-```solidity
-function getOfferDealsIds(uint marketplaceId, uint offerId) external view returns (uint[] memory);
-```
-
-Parameters:
-
-| Name             | Type     |                                                       |
-|------------------|----------|-------------------------------------------------------|
-| marketplaceId    | `uint`   | The id of the marketplace.                            |
-| offerId          | `uint`   | The id of the offer.                                  |
-
-Return:
-
-| Type     |                                                    |
-|----------|----------------------------------------------------|
-| `uint[] memory`| An array of deal ids.                             |
+| `string memory`| The client details.                              |
 
 ---
 
@@ -841,12 +966,36 @@ Return:
 
 ---
 
-`### getRequiredStake
 
-Returns the amount of LP tokens required to be a provider.
+### getProviderOffers
+
+Returns a list of offers a provider has created.
 
 ```solidity
-function getRequiredStake(uint marketplaceId) external view returns (uint);
+function getProviderOffers(uint marketplaceId, address provider) external view returns (uint[] memory);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace.                           |
+| provider         | `address`| The address of the provider.                         |
+
+Return:
+
+| Type     |                                                    |
+|----------|----------------------------------------------------|
+| `uint[] memory`| An array of offer ids.                            |
+
+---
+
+### getOfferDealsIds
+
+Returns a list of deal ids for an offer.
+
+```solidity
+function getOfferDealsIds(uint marketplaceId, uint offerId) external view returns (uint[] memory);
 ```
 
 Parameters:
@@ -854,12 +1003,83 @@ Parameters:
 | Name             | Type     |                                                       |
 |------------------|----------|-------------------------------------------------------|
 | marketplaceId    | `uint`   | The id of the marketplace.                            |
+| offerId          | `uint`   | The id of the offer.                                  |
 
 Return:
 
 | Type     |                                                    |
 |----------|----------------------------------------------------|
-| `uint`   | The amount of LP tokens required to be a provider. |
+| `uint[] memory`| An array of deal ids.                             |
+
+---
+
+### getClientDeals
+
+Returns a list of deals a client has created.
+
+```solidity
+function getClientDeals(uint marketplaceId, address client) external view returns (uint[] memory);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace.                           |
+| client           | `address`| The address of the client.                           |
+
+Return:
+
+| Type     |                                                    |
+|----------|----------------------------------------------------|
+| `uint[] memory`| An array of deal ids.                        |
+
+---
+
+### getProviderDeals
+
+Returns a list of deals a provider has created.
+
+```solidity
+function getProviderDeals(uint marketplaceId, address provider) external view returns (uint[] memory);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace.                           |
+| provider         | `address`| The address of the provider.                         |
+
+Return:
+
+| Type     |                                                    |
+|----------|----------------------------------------------------|
+| `uint[] memory`| An array of deal ids.                        |
+
+
+---
+
+### getStakeAmount
+
+Returns the amount of LP tokens a provider has staked.
+
+```solidity
+function getStakeAmount(uint marketplaceId, address provider) public view returns (uint);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace.                           |
+| provider         | `address`| The address of the provider.                         |
+
+Return:
+
+| Type     |                                                    |
+|----------|----------------------------------------------------|
+| `uint`   | The amount of LP tokens a provider has staked.     |
 
 ---
 
@@ -870,18 +1090,22 @@ Events are emitted for significant actions within the contract, such as registra
 - `AddressAuthorized(address _addr)`
 - `AddressDeauthorized(address _addr)`
 - `ProviderRegistered(uint _marketplaceId, address _provider)`
-- `ProviderUpdated(uint _marketplaceId, address _provider, uint _stake)`
+- `ProviderUpdated(uint _marketplaceId, address _provider)`
+- `ProviderStakeDecreased(uint _marketplaceId, address _provider, uint _amount0, uint _amount1)`
+- `ProviderStakeIncreased(uint _marketplaceId, address _provider, uint _liquidity, uint _amount0, uint _amount1)`
 - `ProviderUnregistered(uint _marketplaceId, address _provider)`
 - `OfferCreated(uint _marketplaceId, uint _offerId)`
 - `OfferUpdated(uint _marketplaceId, uint _offerId)`
 - `OfferDeleted(uint _marketplaceId, uint _offerId)`
-- `DealCreated(uint _marketplaceId, uint _dealId)`
-- `DealAccepted(uint _marketplaceId, uint _dealId)`
-- `DealRejected(uint _marketplaceId, uint _dealId)`
-- `DealCancelled(uint _marketplaceId, uint _dealId)`
-- `DealCollected(uint _marketplaceId, uint _dealId)`
+- `ClientUpdated(uint _marketplaceId, address _client)`
+- `DealCreated(uint _marketplaceId, uint _dealId, uint _amount, bool _autoAccept)`
+- `DealAccepted(uint _marketplaceId, uint _dealId, uint _amount)`
+- `DealRejected(uint _marketplaceId, uint _dealId, uint _clientRefund)`
+- `DealCancelled(uint _marketplaceId, uint _dealId, uint _paymentToProvider, uint _totalPayment, uint _clientRefund)`
+- `DealCollected(uint _marketplaceId, uint _dealId, uint _paymentToProvider, uint _totalPayment)`
 - `AddedBalance(uint _marketplaceId, uint _blockedBalance, uint _dealId)`
 - `MarketplaceInitialized(uint _marketplaceId)`
+- `BillingStartExtended(uint marketplaceId, uint dealId, uint _extension)`
 
 ---
 
@@ -891,11 +1115,11 @@ Modifiers are used to conditionally change the behavior of functions. For instan
 
 ### onlyAuthorized
 
-The `onlyAuthorized` modifier ensures that `tx.origin` is the same as `msg.sender` or that `msg.sender` is an authorized proxy. This is implemented to ensure that only the actual providers, clients, or authorized proxies such as the Marketplace Helper can execute specific functions. These functions include `registerProvider`, `unregisterProvider`, `updateProvider`, `updateProviderStake`, `deleteOffer`, `createDeal`, and `createDeals`.
+The `onlyAuthorized` modifier ensures that `tx.origin` is the same as `msg.sender` or that `msg.sender` is an authorized proxy. This is implemented to ensure that only the actual providers, clients, or authorized proxies such as the Marketplace Helper can execute specific functions. These functions include `registerProvider`, `unregisterProvider`, `increaseProviderStake`, `decreaseProviderStake`, `createDeal`, and `createDeals`.
 
 ### onlyOwner
 
-The `onlyOwner` modifiers ensures that `msg.sender` is the deplayer (owner). This is implemented to ensure that only the owner of the contract can execute functions like `setToken`, `setLPToken`, `setProtocolFeeTo`, `setProtocolFeeRate`, `authorizeProxy`, and `deAuthorizeProxy`.
+The `onlyOwner` modifiers ensures that `msg.sender` is the deplayer (owner). This is implemented to ensure that only the owner of the contract can execute functions like `setToken`, `setProtocolFeeTo`, `setProtocolFeeRate`, `recoverTokens`, `authorizeProxy`, and `deAuthorizeProxy`.
 
 ### nonReentrant
 
