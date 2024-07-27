@@ -3,9 +3,469 @@ title: "Marketplace Helper"
 sidebar_label: Marketplace Helper
 sidebar_position: 4
 ---
-:::note
-Please note that this documentation is currently a work in progress, and we apologize for any errors or blank pages you may come across. We welcome any contributions or feedback to improve the documentation via the official repository at https://github.com/mediafoundation/media-protocol-docs.
-:::
+
+This contract acts as a helper for the `Marketplace` contract. It allows users to register and unregister as providers, add liquidity, create deals, and add balance using ERC20 tokens or ETH. It utilizes Uniswap's `ISwapRouter02` and `INonfungiblePositionManager` interfaces to interact with Uniswap V3 pools. 
+
+
+## Functions
+
+### addLiquidityAndRegisterWithETH
+
+This function deposits ETH into the WETH contract, swaps half of it to MEDIA, and then adds both ERC20 tokens as liquidity on the Uniswap V3 Pool. The resulting Uniswap V3 Position NFT is sent to the Marketplace contract, which then stakes it into the Staking contract in the name of the provider. If the NFT is in range and the liquidity is sufficient, the provider is registered on the Marketplace contract.
+
+
+```solidity
+function addLiquidityAndRegisterWithETH(
+    uint256 marketplaceId,
+    string memory metadata,
+    string memory publicKey,
+    uint256 minMediaAmountOut,
+    bytes memory path,
+    uint256 slippage,
+    uint24 poolFee
+) external payable returns (
+    uint nftId, 
+    uint128 liquidity, 
+    uint amount0, 
+    uint amount1
+);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| metadata      | `string`  | The metadata of the provider.                      |
+| publicKey     | `string`  | The public key of the provider.                    |
+| minMediaAmountOut | `uint256` | The minimum amount of MEDIA Tokens to receive for **half** of the sent ETH. |
+| path          | `bytes`   | The path for WETH/MEDIA including the pool fee.    |
+| slippage      | `uint256` | The slippage for the NFT mint. Note that this is not the slippage for the swap but for `amount0Min` and `amount1Min` in Uniswap's `INonfungiblePositionManager.MintParams`. |
+| poolFee       | `uint24`  | The pool fee of the MEDIA/WETH Uniswap V3 pool.               |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `nftId`       | `uint`    | The id of the created Uniswap V3 Position NFT.                        |
+| `liquidity`   | `uint128` | The amount of liquidity added.                    |
+| `amount0`     | `uint`    | The amount of token0 added.                       |
+| `amount1`     | `uint`    | The amount of token1 added.                       |
+
+---
+
+### addLiquidityAndRegister
+
+Same as `addLiquidityAndRegisterWithETH` but with an ERC20 token instead of ETH.
+
+```solidity
+function addLiquidityAndRegister(
+    uint256 marketplaceId,
+    IERC20 inputToken,
+    uint256 inputAmount,
+    string memory metadata,
+    string memory publicKey,
+    uint256[] memory minOut,
+    bytes[] memory paths,
+    uint256 slippage,
+    uint24 poolFee
+) external nonReentrant returns (
+    uint nftId, 
+    uint128 liquidity, 
+    uint mediaAmount, 
+    uint wethAmount
+);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| inputToken    | `IERC20`  | The token to add liquidity with.                   |
+| inputAmount   | `uint256` | The amount of input token to add.                  |
+| metadata      | `string`  | The metadata of the provider.                      |
+| publicKey     | `string`  | The public key of the provider.                    |
+| minOut        | `uint256[]` | The minimum amount of tokens to receive.         |
+| paths         | `bytes[]` | The paths for swapping tokens.                     |
+| slippage      | `uint256` | The slippage for the NFT mint. Note that this is not the slippage for the swap but for `amount0Min` and `amount1Min` in Uniswap's `INonfungiblePositionManager.MintParams`. |
+| poolFee       | `uint24`  | The pool fee of the MEDIA/WETH Uniswap V3 pool.     |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `nftId`       | `uint`    | The id of the created Uniswap V3 Position NFT.                        |
+| `liquidity`   | `uint128` | The amount of liquidity added.                    |
+| `mediaAmount` | `uint`    | The amount of MEDIA added.                  |
+| `wethAmount`  | `uint`    | The amount of WETH added.                         |
+
+---
+
+### addLiquidityAndStakeWithETH
+
+It increases the liquidity of a staked Uniswap V3 Position NFT.
+
+```solidity
+function addLiquidityAndStakeWithETH(
+    uint256 marketplaceId,
+    uint256 minWethAmountOut,
+    uint256 minMediaAmountOut,
+    bytes memory path,
+    uint256 slippage
+) external payable nonReentrant returns (
+    uint128 liquidity, 
+    uint amount0, 
+    uint amount1
+);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| minWethAmountOut | `uint256` | The minimum amount of WETH to receive.          |
+| minMediaAmountOut | `uint256` | The minimum amount of media token to receive.  |
+| path          | `bytes`   | The path for swapping ETH to media token.          |
+| slippage      | `uint256` | The slippage for the NFT mint. Note that this is not the slippage for the swap but for `amount0Min` and `amount1Min` in Uniswap's `INonfungiblePositionManager.MintParams`. |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `liquidity`   | `uint128` | The amount of liquidity added.                    |
+| `amount0`     | `uint`    | The amount of token0 added.                       |
+
+---
+
+### addLiquidityAndStake
+
+Same as `addLiquidityAndStakeWithETH` but with an ERC20 token instead of ETH.
+
+```solidity
+function addLiquidityAndStake(
+    uint256 marketplaceId,
+    IERC20 inputToken,
+    uint256 inputAmount,
+    uint256 minWethAmountOut,
+    uint256 minMediaAmountOut,
+    bytes memory path0,
+    bytes memory path1,
+    uint256 slippage
+) external nonReentrant returns (
+    uint128 liquidity, 
+    uint amount0, 
+    uint amount1
+);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| inputToken    | `IERC20`  | The token to add liquidity with.                   |
+| inputAmount   | `uint256` | The amount of input token to add.                  |
+| minWethAmountOut | `uint256` | The minimum amount of WETH to receive.          |
+| minMediaAmountOut | `uint256` | The minimum amount of media token to receive.  |
+| path0         | `bytes`   | The path for swapping token0.                      |
+| path1         | `bytes`   | The path for swapping token1.                      |
+| slippage      | `uint256` | The slippage for the NFT mint. Note that this is not the slippage for the swap but for `amount0Min` and `amount1Min` in Uniswap's `INonfungiblePositionManager.MintParams`. |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `liquidity`   | `uint128` | The amount of liquidity added.                    |
+| `amount0`     | `uint`    | The amount of token0 added.                       |
+| `amount1`     | `uint`    | The amount of token1 added.                       |
+
+---
+
+### unregisterRemoveLiquidity
+
+Unregisters a provider from a marketplace and removes liquidity from the Uniswap V3 pool.
+
+```solidity
+function unregisterRemoveLiquidity(
+    uint256 marketplaceId,
+    uint256 amount0Min,
+    uint256 amount1Min
+) external nonReentrant returns(
+    uint256 collectedToken0, 
+    uint256 collectedToken1,
+    address token0,
+    address token1
+);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| amount0Min    | `uint256` | The minimum amount of token0 to receive.          |
+| amount1Min    | `uint256` | The minimum amount of token1 to receive.          |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `collectedToken0` | `uint256` | The amount of token0 collected.                |
+| `collectedToken1` | `uint256` | The amount of token1 collected.                |
+| `token0`
+| `token1`      | `address` | The addresses of the tokens collected.            |
+
+---
+
+### unregisterRemoveLiquidityAndSwap
+
+Same as `unregisterRemoveLiquidity` but it returns the liquidity to the provider in the form of MEDIA only.
+
+```solidity
+function unregisterRemoveLiquidityAndSwap(
+    uint256 marketplaceId,
+    uint256 minOutputMedia,
+    uint256 minMediaAmount,
+    uint256 minWethAmount,
+    uint24 poolFee
+) external nonReentrant;
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| minOutputMedia| `uint256` | The minimum amount of media token to receive.     |
+| minMediaAmount| `uint256` | The minimum amount of media token to receive.     |
+| minWethAmount | `uint256` | The minimum amount of WETH to receive.             |
+| poolFee       | `uint24`  | The pool fee of the Uniswap V3 pool.               |
+
+---
+
+### swapAndCreateDeal
+
+Swaps tokens and creates a deal.
+
+```solidity
+function swapAndCreateDeal(
+    uint256 marketplaceId,
+    IERC20 inputToken,
+    uint256 inputAmount,
+    uint256 resourceId,
+    uint256 offerId,
+    string memory sharedKeyCopy,
+    uint256 minAmountOut,
+    bytes memory path
+) external nonReentrant returns (
+    uint256 mediaAmount, 
+    uint actualDeposit, 
+    uint256 dealId
+);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| inputToken    | `IERC20`  | The token to swap.                                |
+| inputAmount   | `uint256` | The amount of input token to swap.                |
+| resourceId    | `uint256` | The id of the resource.                           |
+| offerId       | `uint256` | The id of the offer.                              |
+| sharedKeyCopy | `string`  | The shared key of the deal.                       |
+| minAmountOut  | `uint256` | The minimum amount of media token to receive.     |
+| path          | `bytes`   | The path for swapping tokens.                     |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `mediaAmount` | `uint256` | The amount of media token swapped.                |
+| `actualDeposit` | `uint` | The actual deposit amount.                        |
+| `dealId`      | `uint256` | The id of the created deal.                       |
+
+---
+
+### swapAndCreateDealWithETH
+
+Swaps ETH and creates a deal.
+
+```solidity
+function swapAndCreateDealWithETH(
+    uint256 marketplaceId,
+    uint256 resourceId,
+    uint256 offerId,
+    string memory sharedKeyCopy,
+    uint256 minMediaAmountOut,
+    bytes memory path
+) external payable nonReentrant returns (
+    uint256 mediaAmount, 
+    uint actualDeposit, 
+    uint256 dealId
+);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| resourceId    | `uint256` | The id of the resource.                           |
+| offerId       | `uint256` | The id of the offer.                              |
+| sharedKeyCopy | `string`  | The shared key of the deal.                       |
+| minMediaAmountOut | `uint256` | The minimum amount of media token to receive.  |
+| path          | `bytes`   | The path for swapping tokens.                     |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `mediaAmount` | `uint256` | The amount of media token swapped.                |
+| `actualDeposit` | `uint` | The actual deposit amount.                        |
+| `dealId`      | `uint256` | The id of the created deal.                       |
+
+---
+
+### swapAndCreateDeals
+
+Swaps tokens and creates multiple deals.
+
+```solidity
+function swapAndCreateDeals(
+    uint256 marketplaceId,
+    IERC20 inputToken,
+    uint256 inputAmount,
+    uint256 resourceId,
+    uint256[] memory offerIds,
+    string[] memory sharedKeyCopies,
+    uint256 minAmountOut,
+    bytes memory path
+) external nonReentrant returns (
+    uint256 mediaAmount, 
+    uint actualDeposit, 
+    uint256[] memory dealsId
+);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| inputToken    | `IERC20`  | The token to swap.                                |
+| inputAmount   | `uint256` | The amount of input token to swap.                |
+| resourceId    | `uint256` | The id of the resource.                           |
+| offerIds      | `uint256[]` | The ids of the offers.                           |
+| sharedKeyCopies | `string[]` | The shared keys of the deals.                    |
+| minAmountOut  | `uint256` | The minimum amount of media token to receive.     |
+| path          | `bytes`   | The path for swapping tokens.                     |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `mediaAmount` | `uint256` | The amount of media token swapped.                |
+| `actualDeposit` | `uint` | The actual deposit amount.                        |
+| `dealsId`     | `uint256[]` | The ids of the created deals.                    |
+
+---
+
+### swapAndCreateDealsWithETH
+
+Swaps ETH and creates multiple deals.
+
+```solidity
+function swapAndCreateDealsWithETH(
+    uint256 marketplaceId,
+    uint256 resourceId,
+    uint256[] memory offerIds,
+    string[] memory sharedKeyCopies,
+    uint256 minMediaAmountOut,
+    bytes memory path
+) external payable nonReentrant returns (
+    uint256 mediaAmount, 
+    uint actualDeposit, 
+    uint256[] memory dealsId
+);
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| resourceId    | `uint256` | The id of the resource.                           |
+| offerIds      | `uint256[]` | The ids of the offers.                           |
+| sharedKeyCopies | `string[]` | The shared keys of the deals.                    |
+| minMediaAmountOut | `uint256` | The minimum amount of media token to receive.  |
+| path          | `bytes`   | The path for swapping tokens.                     |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `mediaAmount` | `uint256` | The amount of media token swapped.                |
+| `actualDeposit` | `uint` | The actual deposit amount.                        |
+| `dealsId`     | `uint256[]` | The ids of the created deals.                    |
+
+---
+
+### swapAndAddBalance
+
+Swaps tokens and adds balance to a deal.
+
+```solidity
+function swapAndAddBalance(
+    uint256 marketplaceId,
+    IERC20 inputToken,
+    uint256 inputAmount,
+    uint256 dealId,
+    uint256 minAmountOut,
+    bytes memory path
+) external nonReentrant returns (uint256 mediaAmount);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| inputToken    | `IERC20`  | The token to swap.                                |
+| inputAmount   | `uint256` | The amount of input token to swap.                |
+| dealId        | `uint256` | The id of the deal.                               |
+| minAmountOut  | `uint256` | The minimum amount of media token to receive.     |
+| path          | `bytes`   | The path for swapping tokens.                     |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `mediaAmount` | `uint256` | The amount of media token swapped.                |
+
+---
+
+### swapAndAddBalanceWithETH
+
+Swaps ETH and adds balance to a deal.
+
+```solidity
+function swapAndAddBalanceWithETH(
+    uint256 marketplaceId,
+    uint256 dealId,
+    uint256 minMediaAmountOut,
+    bytes memory path
+) external payable nonReentrant returns (uint256 mediaAmount);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| dealId        | `uint256` | The id of the deal.                               |
+| minMediaAmountOut | `uint256` | The minimum amount of media token to receive.  |
+| path          | `bytes`   | The path for swapping tokens.                     |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| `mediaAmount` | `uint256` | The amount of media token swapped.                |
+
+
+---
 
 :::note
 This is a high-level technical breakdown. For a deep understanding of each function's inner workings and logic, refer to the smart contract's actual implementation.
