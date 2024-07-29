@@ -3,9 +3,120 @@ title: "Rating system"
 sidebar_label: Rating system
 sidebar_position: 5
 ---
-:::note
-Please note that this documentation is currently a work in progress, and we apologize for any errors or blank pages you may come across. We welcome any contributions or feedback to improve the documentation via the official repository at https://github.com/mediafoundation/media-protocol-docs.
-:::
+
+The `RatingSystem` contract is responsible for managing the rating system for providers on the marketplace. It allows clients to rate providers and retrieve the average rating for a provider.
+
+## Structs
+
+The `Rating` struct stores the sum of ratings and the count of ratings received by a provider.
+
+```solidity
+struct Rating {
+    uint256 sum;
+    uint256 count;
+}
+```
+---
+
+## State Variables
+
+- `clientRatings`: This is a mapping that stores the ratings given by clients to providers. It maps the marketplace ID to the client's address and the provider's address to the rating value.
+- `providerRatings`: This is a mapping that stores the ratings received by providers. It maps the marketplace ID to the provider's address and the `Rating` struct, which contains the sum of ratings and the count of ratings received.
+
+## Functions
+
+### getMarketplace
+
+Retrieves the marketplace contract address.
+
+```solidity
+function getMarketplace() public view returns(address)
+```
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+|               | `address` | The address of the marketplace contract.           |
+
+---
+
+### setMarketplace
+
+Sets the marketplace contract address.
+
+```solidity
+function setMarketplace(Marketplace _marketplace) external onlyOwner returns (bool)
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| _marketplace  | `Marketplace` | The address of the marketplace contract.         |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
+
+---
+
+### rateProvider
+
+Allows a client to rate a provider for a specific deal.
+
+```solidity
+function rateProvider(uint marketplaceId, uint256 dealId, uint8 rating) external
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| dealId        | `uint256` | The id of the deal.                                |
+| rating        | `uint8`   | The rating value (1-5).                            |
+
+### removeRating
+
+Allows a client to remove a rating for a provider.
+
+```solidity
+function removeRating(uint marketplaceId, uint256 dealId) external
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| dealId        | `uint256` | The id of the deal.                                |
+
+---
+
+### getAverageRating
+
+Retrieves the average rating for a provider.
+
+```solidity
+function getAverageRating(uint marketplaceId, address provider) external view returns (uint256)
+```
+
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| provider      | `address` | The address of the provider.                       |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+|               | `uint256` | The average rating for the provider.               |
+---
 
 :::note
 This is a high-level technical breakdown. For a deep understanding of each function's inner workings and logic, refer to the smart contract's actual implementation.

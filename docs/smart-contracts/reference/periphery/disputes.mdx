@@ -4,9 +4,316 @@ sidebar_label: Disputes
 sidebar_position: 7
 ---
 
-:::note
-Please note that this documentation is currently a work in progress, and we apologize for any errors or blank pages you may come across. We welcome any contributions or feedback to improve the documentation via the official repository at https://github.com/mediafoundation/media-protocol-docs.
-:::
+## Structs
+
+### Dispute
+
+```solidity
+struct Dispute {
+    uint256 dealId;
+    uint256 amount;
+    uint256 status;
+    uint256 disputeDate;
+    uint256 disputeEndDate;
+}
+```
+
+| Name             | Type      | Description                                                                 |
+|------------------|-----------|-----------------------------------------------------------------------------|
+| `dealId`         | `uint256` | The deal ID.                                                                 |
+| `amount`         | `uint256` | The amount in dispute.                                                      |
+| `status`         | `uint256` | The status of the dispute.                                                  |
+| `disputeDate`    | `uint256` | The date the dispute was created.                                           |
+| `disputeEndDate` | `uint256` | The date the dispute was resolved.                                          |
+
+
+## State Variables
+
+| Name                          | Type                                      | Description                                                                 |
+|-------------------------------|-------------------------------------------|-----------------------------------------------------------------------------|
+| `disputeCounter`              | `uint256`                                 | Counter for disputes.                                                      |
+| `disputes`                    | `mapping(uint256 => mapping(uint256 => Dispute))`| Mapping for disputes.                                                  |
+| `disputesIdsByProvider`       | `mapping(uint256 => mapping(address => uint256[]))`| Mapping for disputes by provider.                                    |
+| `comments`                    | `mapping(uint256 => mapping(uint256 => string[]))`| Mapping for comments to disputes.                                    |
+
+
+---
+
+
+## Functions
+
+### createDispute
+
+Allows the client to create a dispute.
+
+```solidity
+function createDispute(
+    uint256 marketplaceId, 
+    uint256 _dealId, 
+    uint256 _amount, 
+    string calldata message
+) external nonReentrant;
+```
+
+Parameters:
+
+| Name             | Type      | Description                                                                 |
+|------------------|-----------|-----------------------------------------------------------------------------|
+| `marketplaceId`  | `uint256` | The marketplace ID.                                                         |
+| `_dealId`        | `uint256` | The deal ID.                                                                 |
+| `_amount`        | `uint256` | The amount in dispute.                                                      |
+| `message`        | `string`  | The message to be added to the dispute.                                     |
+
+---
+
+### resolveDisputeByProvider
+
+Allows the provider to resolve a dispute.
+
+```solidity
+function resolveDisputeByProvider(
+    uint256 marketplaceId, 
+    uint256 _dealId, 
+    string calldata message
+) external nonReentrant;
+```
+
+Parameters:
+
+| Name             | Type      | Description                                                                 |
+|------------------|-----------|-----------------------------------------------------------------------------|
+| `marketplaceId`  | `uint256` | The marketplace ID.                                                         |
+| `_dealId`        | `uint256` | The deal ID.                                                                 |
+| `message`        | `string`  | The message to be added to the dispute.                                     |
+
+---
+
+### appealDisputeByProvider
+
+Allows the provider to appeal a dispute.
+
+```solidity
+function appealDisputeByProvider(
+    uint256 marketplaceId, 
+    uint256 _dealId, 
+    string calldata message
+) external nonReentrant;
+```
+
+Parameters:
+
+| Name             | Type      | Description                                                                 |
+|------------------|-----------|-----------------------------------------------------------------------------|
+| `marketplaceId`  | `uint256` | The marketplace ID.                                                         |
+| `_dealId`        | `uint256` | The deal ID.                                                                 |
+| `message`        | `string`  | The message to be added to the dispute.                                     |
+
+---
+
+### revokeDisputeByProvider
+
+Allows the provider to revoke a dispute.
+
+```solidity
+function revokeDisputeByProvider(
+    uint256 marketplaceId, 
+    uint256 _dealId, 
+    string calldata message
+) external nonReentrant;
+```
+
+Parameters:
+
+| Name             | Type      | Description                                                                 |
+|------------------|-----------|-----------------------------------------------------------------------------|
+| `marketplaceId`  | `uint256` | The marketplace ID.                                                         |
+| `_dealId`        | `uint256` | The deal ID.                                                                 |
+| `message`        | `string`  | The message to be added to the dispute.                                     |
+
+---
+
+### appealDisputeByClient
+
+Allows the client to appeal a dispute and modify the amount.
+
+```solidity
+function appealDisputeByClient(
+    uint256 marketplaceId, 
+    uint256 _dealId, 
+    uint256 _amount, 
+    string calldata message
+) external nonReentrant;
+```
+
+Parameters:
+
+| Name             | Type      | Description                                                                 |
+|------------------|-----------|-----------------------------------------------------------------------------|
+| `marketplaceId`  | `uint256` | The marketplace ID.                                                         |
+| `_dealId`        | `uint256` | The deal ID.                                                                 |
+| `_amount`        | `uint256` | The amount in dispute.                                                      |
+| `message`        | `string`  | The message to be added to the dispute.                                     |
+
+---
+
+### getDispute
+
+Returns a dispute.
+
+```solidity
+function getDispute(
+    uint256 marketplaceId, 
+    uint256 _dealId
+) external view returns (Dispute memory);
+```
+
+Parameters:
+
+| Name             | Type      | Description                                                                 |
+|------------------|-----------|-----------------------------------------------------------------------------|
+| `marketplaceId`  | `uint256` | The marketplace ID.                                                         |
+| `_dealId`        | `uint256` | The deal ID.                                                                 |
+
+Return:
+
+| Type            | Description                                                                 |
+|-----------------|-----------------------------------------------------------------------------|
+| `Dispute memory`| The dispute.                                                                |
+
+---
+
+### isDisputeExpired
+
+Checks whether a dispute is expired.
+
+```solidity
+function isDisputeExpired(
+    uint256 marketplaceId, 
+    uint256 _dealId
+) external view returns (bool);
+```
+
+Parameters:
+
+| Name             | Type      | Description                                                                 |
+|------------------|-----------|-----------------------------------------------------------------------------|
+| `marketplaceId`  | `uint256` | The marketplace ID.                                                         |
+| `_dealId`        | `uint256` | The deal ID.                                                                 |
+
+Return:
+
+| Type      | Description                                                                 |
+|-----------|-----------------------------------------------------------------------------|
+| `bool`    | Whether the dispute is expired or not.                                      |
+
+---
+
+### getDisputesByProvider
+
+Returns all disputes for a provider.
+
+```solidity
+function getDisputesByProvider(
+    uint256 marketplaceId, 
+    address _provider
+) external view returns (uint256[] memory);
+```
+
+Parameters:
+
+| Name             | Type      | Description                                                                 |
+|------------------|-----------|-----------------------------------------------------------------------------|
+| `marketplaceId`  | `uint256` | The marketplace ID.                                                         |
+| `_provider`      | `address` | The provider's address.                                                     |
+
+Return:
+
+| Type            | Description                                                                 |
+|-----------------|-----------------------------------------------------------------------------|
+| `uint256[]`     | The disputes for the provider.                                              |
+
+---
+
+### setMaxDisputeDuration
+
+Allows the contract owner to set the maximum dispute duration.
+
+```solidity
+function setMaxDisputeDuration(uint256 _maxDisputeDuration) external onlyOwner;
+```
+
+Parameters:
+
+| Name                     | Type      | Description                                                                 |
+|--------------------------|-----------|-----------------------------------------------------------------------------|
+| `_maxDisputeDuration`    | `uint256` | The maximum dispute duration.                                              |
+
+---
+
+### getMarketplace
+
+Returns the marketplace contract address.
+
+```solidity
+function getMarketplace() public view returns(address);
+```
+
+Return:
+
+| Type      | Description                                                                 |
+|-----------|-----------------------------------------------------------------------------|
+| `address` | The marketplace contract address.                                         |
+
+---
+
+### setMarketplace
+
+Allows the contract owner to set the marketplace contract address.
+
+```solidity
+function setMarketplace(Marketplace _marketplace) external onlyOwner;
+```
+
+Parameters:
+
+| Name             | Type         | Description                                                                 |
+|------------------|--------------|-----------------------------------------------------------------------------|
+| `_marketplace`   | `Marketplace`| The marketplace contract address.                                         |
+
+---
+
+### receive
+
+Allows the contract to receive native coins.
+
+```solidity
+receive() external payable;
+```
+
+---
+
+### recoverTokens
+
+Allows the contract owner to recover tokens sent unintentionally to the contract.
+
+```solidity
+function recoverTokens(IERC20 _token) external onlyOwner returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| _token           | `IERC20` | The token you want to recover.                       |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the recovery was successful or not.        |
+
+---
+
 
 :::note
 This is a high-level technical breakdown. For a deep understanding of each function's inner workings and logic, refer to the smart contract's actual implementation.

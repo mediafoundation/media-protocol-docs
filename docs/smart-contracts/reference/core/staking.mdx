@@ -4,62 +4,34 @@ sidebar_label: Staking
 sidebar_position: 6
 ---
 
-The `Staking` contract allows users to stake tokens to become a provider in a marketplace.
+The `Staking` contract allows the `Marketplace` contract to stake Uniswap V3 Positions NFTs in name of users to become providers, and also provides a way to retrieve the NFT ID of a provider and the stake amount.
 
 ## Details:
 
 ### Inheritance
-The `Staking` contract extends the `Recoverable` contract and the `ReentrancyGuard` contract.
+The `Staking` contract inherits `Recoverable`, `IERC721Receiver`, and `ReentrancyGuard` contracts.
 
 ### State Variables
 
 - `token`: The staking ERC20 Token.
-- `marketplaceAddress`: The address of the marketplace contract.
-- `stakes`: Mapping of marketplace id to mapping of provider addresses to stake amount.
+- `WETH9`: The WETH9 contract address.
+- `marketplace`: The address of the marketplace contract.
+- `nftIds`: A mapping of provider addresses to NFT IDs.
+- `positionManager`: The Uniswap V3 position manager contract.
+- `factory`: The Uniswap V3 factory contract.
+
 
 ### Functions
 
-- [`updateStake`](#updatestake): Updates the stake of a provider.
 - [`setMarketplace`](#setmarketplace): Sets the marketplace contract address.
-- [`setStakingToken`](#setstakingtoken): Sets the staking token address.
+- [`setMediaToken`](#setmediatoken): Sets the MEDIA token address.
 - [`getMarketplace`](#getmarketplace): Retrieves the marketplace contract address.
+- [`getNftId`](#getnftid): Retrieves the NFT ID of a provider.
 - [`getStakeAmount`](#getstakeamount): Retrieves the stake amount of a provider.
-- [`recoverTokens`](#): Allows the owner to recover any ERC20 tokens sent to this contract.
-
-### Events
-
-- [`UpdatedStake`](#updatedstake): Emitted when a provider's stake is updated.
 
 ---
 
 ## Write Functions
-
-### updateStake
-
-Updates the stake of a provider.
-
-```solidity
-function updateStake(uint marketplaceId, uint256 newStake)
-    external
-    onlyMarketplace
-    nonReentrant
-    returns (uint256 amount)
-```
-
-Parameters:
-
-| Name          | Type      |                                                    |
-|---------------|-----------|----------------------------------------------------|
-| marketplaceId | `uint`    | The id of the marketplace where you are registered.|
-| newStake      | `uint256` | The new stake amount.                               |
-
-Return values:
-
-| Name          | Type      |                                                    |
-|---------------|-----------|----------------------------------------------------|
-| amount        | `uint256` | The amount of tokens staked.                        |
-
----
 
 ### setMarketplace
 
@@ -83,19 +55,19 @@ Return values:
 
 ---
 
-### setStakingToken
+### setMediaToken
 
-Sets the staking token address.
+Sets the MEDIA token address.
 
 ```solidity
-function setStakingToken(address _tokenAddress) external onlyOwner returns (bool)
+function setMediaToken(address _tokenAddress) external onlyOwner returns (bool)
 ```
 
 Parameters:
 
-| Name                  | Type      |                                                    |
-|-----------------------|-----------|----------------------------------------------------|
-| _tokenAddress         | `address` | The address of the staking token.                   |
+| Name              | Type      |                                                    |  
+|-------------------|-----------|----------------------------------------------------|
+| _tokenAddress     | `address` | The address of the MEDIA token.                    |
 
 Return values:
 
@@ -123,12 +95,13 @@ Return values:
 
 ---
 
-### getStakeAmount
 
-Retrieves the stake amount of a provider.
+### getNftId
+
+Retrieves the Uniswap V3 NFT ID of a provider.
 
 ```solidity
-function getStakeAmount(uint marketplaceId, address provider) public view returns (uint256)
+function getNftId(uint marketplaceId, address provider) public view returns (uint256 nftId)
 ```
 
 Parameters:
@@ -140,20 +113,18 @@ Parameters:
 
 Return values:
 
-| Type      |                                                    |
-|-----------|----------------------------------------------------|
-| `uint256` | The stake amount.                                  |
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| nftId         | `uint256` | The NFT ID of the provider.                         |
 
 ---
 
-## Events
+### getStakeAmount
 
-### UpdatedStake
-
-Emitted when a provider's stake is updated.
+Retrieves the stake amount of a provider.
 
 ```solidity
-event UpdatedStake(uint marketplaceId, address provider, uint256 newStake)
+function getStakeAmount(uint marketplaceId, address provider) public view returns (uint256 liquidity)
 ```
 
 Parameters:
@@ -162,13 +133,14 @@ Parameters:
 |---------------|-----------|----------------------------------------------------|
 | marketplaceId | `uint`    | The id of the marketplace where you are registered.|
 | provider      | `address` | The address of the provider.                       |
-| newStake      | `uint256` | The new stake amount.                               |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| liquidity      | `uint256` | The stake amount.                                  |
 
 ---
-
-:::note
-Please note that this documentation is currently a work in progress, and we apologize for any errors or blank pages you may come across. We welcome any contributions or feedback to improve the documentation via the official repository at https://github.com/mediafoundation/media-protocol-docs.
-:::
 
 :::note
 This is a high-level technical breakdown. For a deep understanding of each function's inner workings and logic, refer to the smart contract's actual implementation.
