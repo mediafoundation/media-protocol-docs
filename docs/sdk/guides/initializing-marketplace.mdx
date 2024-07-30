@@ -1,6 +1,6 @@
 ---
-title: "Marketplace Technical Reference"
-sidebar_label: Marketplace
+title: Initializing a Marketplace
+sidebar_label: Initializing a Marketplace
 sidebar_position: 1
 ---
 
@@ -12,23 +12,23 @@ The [Marketplace contract](/smart-contracts/reference/core/marketplace) is the c
   
 ```javascript
 // import the sdk
-import { initSdk, config, Marketplace } from 'media-sdk';
+import { Sdk, Marketplace } from 'media-sdk';
 
 // initialize the sdk using your mnemonic (you can also use a privateKey or viem walletClient)
-initSdk({ mnemonic: 'your mnemonic phrase' });
+const sdk = new Sdk({ mnemonic: 'your mnemonic phrase' });
 
 // instanciate the marketplace contract
-const marketplace = new Marketplace();
+const marketplace = new Marketplace(sdk);
 
 // initialize a new marketplace
 const hash = await marketplace.initializeMarketplace({
   requiredStake: 100,  // replace with your required stake 
-  marketFeeTo: config().walletClient.account.address, // replace with your market fee recipient address 
-  marketFeeRate: 5 // replace with your market fee rate %
+  marketFeeTo: sdk.config.walletClient.account.address, // replace with your market fee recipient address 
+  marketFeeRate: 50000 // replace with your market fee rate % ex 5% = 50000
 });
 
 // wait for the transaction to be mined
-const transaction = await config().publicClient.waitForTransactionReceipt( 
+const transaction = await sdk.config.publicClient.waitForTransactionReceipt( 
   { hash: hash }
 );
 
@@ -41,13 +41,14 @@ console.log(transaction.logs[0].topics[1]);
 
 ```javascript
 // import the sdk
-import { initSdk, Marketplace } from 'media-sdk';
+import { Sdk, Marketplace } from 'media-sdk';
 
 // initialize the sdk (defaults to goerli testnet)
-initSdk();
+const sdk = new Sdk();
 
 // instanciate the marketplace contract
-const marketplace = new Marketplace();
+const marketplace = new Marketplace(sdk);
 
+// [1,1] is the id of the marketplace and the offer
 const offer = await marketplace.view("getOffer",[1, 1]);
 ```

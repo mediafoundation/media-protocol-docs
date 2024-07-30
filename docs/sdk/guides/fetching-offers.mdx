@@ -1,6 +1,6 @@
 ---
-title: "Marketplace Viewer Technical Reference"
-sidebar_label: Marketplace Viewer
+title: "Fetching Offers"
+sidebar_label: Fetching Offers
 sidebar_position: 2
 ---
 
@@ -19,12 +19,12 @@ async getAllOffersPaginating({ marketplaceId, start = 0, steps = 20 }) {
 ```
 Example:
 ```typescript 
-  import { initSdk, MarketplaceViewer } from 'media-sdk';
+  import { Sdk, MarketplaceViewer } from 'media-sdk';
 
-  // initialize the sdk using your mnemonic (you can also use a privateKey or viem walletClient)
-  initSdk({ mnemonic: 'your mnemonic phrase' });
+  // initialize the sdk
+  const sdk = new Sdk();
 
-  const marketplaceViewer = new MarketplaceViewer();
+  const marketplaceViewer = new MarketplaceViewer(sdk);
 
   // get 20 offers per request until there are no more offers
   let offers = await marketplaceViewer.getAllOffersPaginating({ 
