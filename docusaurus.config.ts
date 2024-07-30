@@ -6,7 +6,7 @@ const config: Config = {
   title: "Media Protocol Documentation",
   tagline:
     "A suite of persistent, non-upgradable smart contracts that together create a protocol enabling anyone to build their own peer-to-peer marketplaces.",
-  url: "https://docs.media.network/",
+  url: "https://www.mediaprotocol.net/",
   baseUrl: "/",
   favicon: "img/favicon.svg",
   organizationName: "mediafoundation",

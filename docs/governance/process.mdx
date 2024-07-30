@@ -14,27 +14,27 @@ This document is a living document which represents the current process guidelin
 
 Several governance venues are available to Media Protocol governance, each serving its own particular purpose.
 
-1. [**Media Protocol Forum**](https://forum.media.network/)
+1. [**Media Protocol Governance Forum**](https://gov.mediaprotocol.net/)
 
-    A Discourse-hosted forum for governance-related discussion. Community members must register for an account before sharing or liking posts. New members are required to enter 4 topics and read 15 posts over the course of 10 minutes before they are permitted to post themselves.
+    A forum for governance-related discussion. Community members must register for an account before creating threads or posting replies. The forum is the primary venue for discussing governance proposals and changes to the governance process.
 
-2. [**SnapshotMedia**](https://snapshot.page/#/media)
+2. [**Snapshot**](https://snapshot.org/#/mediaprotocol.eth)
 
-    SnapshotMedia is a simple voting interface that allows users to signal sentiment off-chain. Votes on snapshot are weighted by the number of MEDIA delegated to the address used to vote.
+    Snapshot is a simple voting interface that allows users to signal sentiment off-chain. Votes on snapshot are weighted by the number of MEDIA delegated to the address used to vote.
 
-3. [**Governance Portal**](https://governance.media.network/#/vote)
+3. [**Governance Portal**](https://www.mediaprotocol.net/)
 
     The formal governance portal can be accessed directly through the Governance Interface. Votes are delegated and cast through the portal.
 
 Below we outline a preliminary draft for the Media Protocol governance process, detailing exactly where these venues fit in. These processes are subject to change according to feedback from the Media community.
 
-### Phase 1: Temperature Check — Discourse/SnapshotMedia
+### Phase 1: Temperature Check — Forum/Snapshot
 
 The purpose of the Temperature Check is to determine if there is sufficient will to make changes to the status quo.
 
 To create a Temperature Check:
 
-1. Ask a general, non-biased question to the community on gov.media.network about a potential change (example: "Should Media Protocol governance add a new feature?"). Forum posts should be labeled as: "Temperature Check - [Your Title Here]". The forum post should include a link to the associated SnapshotMedia poll.
+1. Ask a general, non-biased question to the community on [gov.mediaprotocol.net](https://gov.mediaprotocol.net/) about a potential change (example: "Should Media Protocol governance add a new feature?"). Forum posts should be labeled as: "Temperature Check - [Your Title Here]". The forum post should include a link to the associated SnapshotMedia poll.
 
 1. Voters use SnapshotMedia to indicate their interest in bringing it forward to the next stage. Snapshot poll lengths should be set to 2 days.
 
@@ -42,7 +42,7 @@ That's it! You've just started the process of gaining support for a proposal. At
 
 If the Temperature check does not suggest a change from the status quo, the topic will be closed on the governance site. If the Temperature Check does suggest a change, proceed to Stage 2: Consensus Check.
 
-### Phase 2: Consensus Check — Discourse/SnapshotMedia
+### Phase 2: Consensus Check — Forum/Snapshot
 
 The purpose of the Consensus Check is to establish formal discussion around a potential proposal.
 
@@ -50,7 +50,7 @@ To create a Consensus Check:
 
 1. Use feedback from the Temperature Check post and create a new SnapshotMedia poll which covers the options which have gained support. This poll can either be binary or multiple choice but you are required to include the option "Make no change" or its equivalent. Set the poll duration to 5 days.
 
-1. Create a new topic in the Proposal Discussion category on gov.media.network titled "Consensus Check — [Your Title Here]". This will alert the community that this topic has already passed Temperature Check. Any topics beginning with Consensus Check that have not passed Temperature Check will immediately be removed by moderators. Make sure that the discussion thread links to the new SnapshotMedia poll and the Temperature Check thread.
+1. Create a new topic in the Proposal Discussion category on [gov.mediaprotocol.net](https://gov.mediaprotocol.net/) titled "Consensus Check — [Your Title Here]". This will alert the community that this topic has already passed Temperature Check. Any topics beginning with Consensus Check that have not passed Temperature Check will immediately be removed by moderators. Make sure that the discussion thread links to the new SnapshotMedia poll and the Temperature Check thread.
 
 1. Reach out to your network to build support for the proposal. Discuss the proposal and actively solicit delegates to vote on it. Be willing to respond to questions on the Consensus Check topic. Share your viewpoint, although try to remain as impartial as possible.
 
@@ -68,11 +68,11 @@ To create a Governance Proposal:
 
 1. Ensure that you have at least 25,000 MEDIA delegated to your address in order to submit a proposal, or find someone who has enough MEDIA to meet the proposal threshold to propose on your behalf.
 
-1. Create a topic in the Proposal Discussion category on gov.media.network titled "Governance Proposal — [Your Title Here]" and link to any relevant SnapshotMedia polls/discussion threads as well as the code audit report. Topics that begin with "Governance Proposal" that have not successfully passed through the Temperature Check and Consensus Check stages will be removed by moderators.
+1. Create a topic in the Proposal Discussion category on [gov.mediaprotocol.net](https://gov.mediaprotocol.net/) titled "Governance Proposal — [Your Title Here]" and link to any relevant SnapshotMedia polls/discussion threads as well as the code audit report. Topics that begin with "Governance Proposal" that have not successfully passed through the Temperature Check and Consensus Check stages will be removed by moderators.
 
 1. Call the propose() function of the Governor Bravo to deploy your proposal.
 
-Once the propose() function has been called, a two day voting delay will start. After voting delay is finished a seven day voting period begins. Ongoing discussion can take place in the gov.media.network forum. If the proposal passes successfully, a two day timelock will follow before the proposed code is executed.
+Once the propose() function has been called, a two day voting delay will start. After voting delay is finished a seven day voting period begins. Ongoing discussion can take place in the [gov.mediaprotocol.net](https://gov.mediaprotocol.net/) forum. If the proposal passes successfully, a two day timelock will follow before the proposed code is executed.
 
 ## Soft governance
 
