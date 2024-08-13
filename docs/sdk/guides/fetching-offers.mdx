@@ -1,6 +1,6 @@
 ---
-title: "Fetching Offers"
-sidebar_label: Fetching Offers
+title: "Fetching Offers/Deals"
+sidebar_label: Fetching Offers/Deals
 sidebar_position: 2
 ---
 
@@ -9,16 +9,20 @@ The [MarketplaceViewer contract](/smart-contracts/reference/periphery/marketplac
 Additionally, there are extra functions added to the SDK to simplify interaction with the `MarketplaceViewer` contract. Below is a detailed explanation of each of these functions:
 
 
-## getAllOffersPaginating
+## getPaginatedOffers
+Gets an offers page from a specific marketplace. Using some offer id as a starting point and a number of offers to fetch.
 
-Gets all offers from a specific marketplace.
-```typescript
-async getAllOffersPaginating({ marketplaceId, start = 0, steps = 20 }) {
-  return offers
-}
-```
-Example:
-```typescript 
+#### Parameters:
+
+- `marketplaceId`: The id of the marketplace to get offers from.
+- `start`: The index to start fetching offers from. Default is 0.
+- `steps`: The number of offers to fetch per request. Default is 20.
+
+#### Return:
+- Return an array of [Offer](#offer) objects
+
+#### Example:
+```javascript
   import { Sdk, MarketplaceViewer } from 'media-sdk';
 
   // initialize the sdk
@@ -27,9 +31,212 @@ Example:
   const marketplaceViewer = new MarketplaceViewer(sdk);
 
   // get 20 offers per request until there are no more offers
-  let offers = await marketplaceViewer.getAllOffersPaginating({ 
-    marketplaceId: 1, 
-    start: 0, 
-    steps: 20 
+  let offers = await marketplaceViewer.getAllOffersPaginating({
+    marketplaceId: 1,
+    start: 0,
+    steps: 20
   })
-``` 
+```
+## getAllOffersPaginating
+Gets **all** offers from a specific marketplace by paginating through the offers.
+
+#### Parameters
+
+- `marketplaceId`: The id of the marketplace to get offers from.
+- `start`: The index to start fetching offers from. Default is 0.
+- `steps`: The number of offers to fetch per request. Default is 20.
+
+#### Return:
+- Return an array of [Offer](#offer) objects
+
+#### Example:
+
+```javascript
+  import { Sdk, MarketplaceViewer } from 'media-sdk';
+
+  // initialize the sdk
+  const sdk = new Sdk();
+
+  const marketplaceViewer = new MarketplaceViewer(sdk);
+
+  // get all offers from a marketplace
+  let offers = await marketplaceViewer.getAllOffersPaginating({
+    marketplaceId: 1,
+    start: 0,
+    steps: 20
+  })
+```
+
+## getPaginatedDeals
+Gets a deals page from a specific marketplace. Using some deal id as a starting point and a number of deals to fetch.
+
+#### Parameters:
+
+- `marketplaceId`: The id of the marketplace to get deals from.
+- `start`: The index to start fetching deals from. Default is 0.
+- `steps`: The number of deals to fetch per request. Default is 20.
+
+#### Return:
+
+- Return an array of [Deal](#deal) objects
+
+#### Example:
+
+```javascript
+  import { Sdk, MarketplaceViewer } from 'media-sdk';
+
+  // initialize the sdk
+  const sdk = new Sdk();
+
+  const marketplaceViewer = new MarketplaceViewer(sdk);
+
+  // get 20 deals per request until there are no more deals
+  let deals = await marketplaceViewer.getAllDealsPaginating({
+    marketplaceId: 1,
+    start: 0,
+    steps: 20
+  })
+```
+
+## getAllDealsPaginating
+
+Gets **all** deals from a specific marketplace by paginating through the deals.
+
+#### Parameters:
+
+- `marketplaceId`: The id of the marketplace to get deals from.
+- `start`: The index to start fetching deals from. Default is 0.
+- `steps`: The number of deals to fetch per request. Default is 20.
+
+#### Return:
+
+- Return an array of [Deal](#deal) objects
+
+#### Example:
+
+```javascript
+  import { Sdk, MarketplaceViewer } from 'media-sdk';
+
+  // initialize the sdk
+  const sdk = new Sdk();
+
+  const marketplaceViewer = new MarketplaceViewer(sdk);
+
+  // get all deals from a marketplace
+  let deals = await marketplaceViewer.getAllDealsPaginating({
+    marketplaceId: 1,
+    start: 0,
+    steps: 20
+  })
+```
+
+## getOfferById
+
+Gets an offer by its id.
+
+#### Parameters:
+
+- `marketplaceId`: The id of the marketplace to get the offer from.
+- `offerId`: The id of the offer to get.
+
+#### Return
+
+- Return an [Offer](#offer) object
+
+#### Example:
+
+```javascript
+  import { Sdk, MarketplaceViewer } from 'media-sdk';
+
+  // initialize the sdk
+  const sdk = new Sdk();
+
+  const marketplaceViewer = new MarketplaceViewer(sdk);
+
+  // get an offer by its id
+  let offer = await marketplaceViewer.getOfferById({
+    marketplaceId: 1,
+    offerId: 1
+  })
+```
+
+## getDealById
+
+Gets a deal by its id.
+
+#### Parameters:
+
+- `marketplaceId`: The id of the marketplace to get the deal from.
+- `dealId`: The id of the deal to get.
+
+#### Return
+
+- Return a [Deal](#deal) object
+
+#### Example:
+
+```javascript
+  import { Sdk, MarketplaceViewer } from 'media-sdk';
+
+  // initialize the sdk
+  const sdk = new Sdk();
+
+  const marketplaceViewer = new MarketplaceViewer(sdk);
+
+  // get a deal by its id
+  let deal = await marketplaceViewer.getDealById({
+    marketplaceId: 1,
+    dealId: 1
+  })
+```
+
+## Glossary
+
+### Offer
+```typescript
+interface Offer {
+  id: bigint,
+  provider: Address,
+  publicKey: string,
+  maximumDeals: bigint,
+  autoAccept: boolean,
+  terms: {
+    pricePerSecond: bigint,
+    minDealDuration: bigint,
+    billFullPeriods: boolean,
+    singlePeriodOnly: boolean,
+    metadata: string
+  }
+}
+```
+
+### Deal
+```typescript
+interface Deal {
+  id: bigint,
+  offerId: bigint,
+  client: Address,
+  provider: Address,
+  resourceId: bigint,
+  totalPayment: bigint,
+  blockedBalance: bigint,
+  terms: {
+    pricePerSecond: bigint,
+    minDealDuration: bigint,
+    billFullPeriods: boolean,
+    singlePeriodOnly: boolean,
+    metadata: string
+  },
+  status: {
+    active: true,
+    createdAt: bigint,
+    acceptedAt: bigint,
+    billingStart: bigint,
+    cancelled: boolean,
+    cancelledAt: bigint
+  }
+}
+
+
+```
+`Address` type is part of the viem's types. Check [Viem Address](https://viem.sh/docs/glossary/types#address) for more details.

@@ -16,7 +16,7 @@ To run code from the SDK in your application, use an `import` or `require` state
 
 ## ES6 (import)
 
-```typescript
+```javascript
 import { Sdk, MarketplaceViewer, Marketplace, Resources, Helper } from 'media-sdk';
 
 ```
@@ -25,6 +25,68 @@ import { Sdk, MarketplaceViewer, Marketplace, Resources, Helper } from 'media-sd
 
 ```javascript
 const { Sdk, MarketplaceViewer, Marketplace, Resources, Helper } = require('media-sdk');
+```
+
+## Initializing the SDK
+
+To initialize an instance of the Media SDK, use the `Sdk` class. This class constructor takes in an object with the following **optional** parameters:
+
+- `chain`: A chain object. See [Viem's Chains](https://viem.sh/docs/chains/introduction#chains) for more details. If nothing is provided, the default chain will be used, which is Ethereum Goerli until mainnet launch.
+
+- `transport`: An array of transport objects. See [Viem's Transport](https://viem.sh/docs/clients/intro#transports) for more details.
+
+- `privateKey`: A ECP256K1 private key as a hex string to create a wallet client. Example: 'afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890'.
+
+- `mnemonic`: A BIP39 mnemonic phrase to create a wallet client. Example: 'degree tackle suggest window test behind mesh extra cover prepare oak script'.
+
+- `walletClient`: A wallet client. See [Viem's Wallet Client](https://viem.sh/docs/clients/wallet.html) for more details.
+
+All parameters are optional. If all three `privateKey`, `mnemonic`, and `walletClient` are absent, only view functions will be available. Therefore, none write functions will be available.
+
+## Examples
+
+Using a private key. (Useful for backend applications)
+
+```javascript
+import { Sdk, MarketplaceViewer, Marketplace, Resources, MarketplaceHelper } from 'media-sdk'
+
+// initialize the sdk using a private key.
+const sdk = new Sdk({ privateKey: 'afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890' })
+```
+
+Using a browser wallet:
+
+```javascript
+import { Sdk, custom, createWalletClient, validChains } from 'media-sdk'
+
+const [account] = await window.ethereum.request({method: 'eth_requestAccounts'})
+
+const walletClient = createWalletClient({
+    account: account,
+    chain: validChains[Number(window.ethereum.chainId)],
+    transport: [custom(window.ethereum)]
+})
+
+// initialize the SDK using a Viem walletClient.
+const sdk = new Sdk({ walletClient: walletClient });
+```
+
+Using it without signer just for view functions with a custom chain:
+
+```javascript
+import { Sdk, MarketplaceViewer, validChains } from 'media-sdk'
+
+const sdk = new Sdk({ chain: validChains[85432] })
+
+const marketplaceViewer = new MarketplaceViewer(sdk)
+
+const result = await marketplaceViewer.getPaginatedOffers({
+  marketplaceId: 1,
+  start: 0,
+  count: 100
+})
+console.log(result)
+
 ```
 
 ## Reference

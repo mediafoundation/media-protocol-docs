@@ -1,0 +1,182 @@
+---
+title: "Resources"
+sidebar_label: "Resources"
+sidebar_position: 3
+---
+
+In this page we will show you how to perform operations over resources.
+
+## Cryptography
+
+### Encrypting Resources
+
+Resources can be easily encrypted using the sharedPublicKey and the data to encrypt.
+
+#### Parameters
+
+- `plainText`: The data to encrypt.
+- `sharedPublicKey`: The public key to encrypt the data with.
+
+#### Return
+
+Return an object with the encrypted data and the IV used.
+
+```typescript
+interface EncryptedData {
+    sharedKey: string,
+    iv: string,
+    tag: string,
+    encryptedData: string,
+}
+```
+
+### Decrypting Resources
+
+Resources can be easily decrypted using the corresponding encrypted data
+
+#### Parameters
+
+- `key`: The key to decrypt the data.
+- `iv`: The IV used to encrypt the data.
+- `tag`: The tag used to encrypt the data.
+- `resourceData`: The data to decrypt.
+
+#### Return
+
+Return a string containing the decrypted data.
+
+### Examples
+
+#### Encrypting Resources
+
+```javascript
+import { Encryption } from 'media-sdk';
+
+const encryption = new Encryption();
+
+const resourceToEncrypt = { data: "Hello World" };
+
+const encryptedData = await encryption.encrypt({
+    plainText: JSON.stringify(resourceToEncrypt),
+    sharedPublicKey: "SOME_PUBLIC_KEY"
+})
+```
+
+#### Decrypting Resources
+
+```javascript
+import { Encryption } from 'media-sdk';
+const encryption = new Encryption();
+
+const decryptedData = await encryption.decrypt({
+    key: "SOME_KEY",
+    iv: "SOME_IV",
+    tag: "SOME_TAG",
+    resourceData: "SOME_ENCRYPTED_DATA"
+})
+```
+
+## CRUD
+
+### Add Resource
+
+Resources can be stored in the blockchain for being then used alongside deals.
+
+#### Parameters
+
+- `encryptedData`: Encrypted data returned by [`encrypt` function](#encrypting-resources).
+- `sharedKeyCopy`: The shared key copy to be used to decrypt the data. Used for the authorized providers to decrypt the data.
+- `ownerKeys`: The keys of the owner of the resource.
+
+#### Return
+
+Returns a `Promise<void>`.
+
+#### Example
+
+```javascript
+import { Sdk, Resources } from 'media-sdk';
+
+// initialize the sdk
+const sdk = new Sdk()
+
+const resources = new Resources(sdk);
+
+const resourceToEncrypt = { data: "Hello World" };
+
+const encryptedData = await encryption.encrypt({
+    plainText: JSON.stringify(resourceToEncrypt),
+    sharedPublicKey: "SOME_PUBLIC_KEY"
+})
+
+await resources.addResource({
+    encryptedData: encryptedData,
+    sharedKeyCopy: "SOME_SHARED_KEY",
+    ownerKeys: ["SOME_OWNER_KEY"]
+})
+```
+
+### Update Resource
+
+Will update a resource's data.
+
+#### Parameters
+
+- `id`: The id of the resource to update.
+- `encryptedData`: Updated encrypted data returned by [`encrypt` function](#encrypting-resources).
+
+#### Return
+
+Returns a `Promise<void>`.
+
+#### Example
+
+```javascript
+import { Sdk, Resources } from 'media-sdk';
+
+// initialize the sdk
+const sdk = new Sdk()
+
+const resources = new Resources(sdk);
+
+const updatedData = { data: "Hello World Updated" };
+
+const encryptedData = await encryption.encrypt({
+    plainText: JSON.stringify(updatedData),
+    sharedPublicKey: "SOME_PUBLIC_KEY"
+})
+
+await resources.updateResource({
+    id: 1,
+    encryptedData: encryptedData
+})
+```
+
+### Remove Resource
+
+Will remove a resource.
+
+#### Parameters
+
+- `id`: The id of the resource to remove.
+- `ownerKeys`: The keys of the owner of the resource.
+
+#### Return
+
+Returns a `Promise<void>`.
+
+#### Example
+
+```javascript
+import { Sdk, Resources } from 'media-sdk';
+
+// initialize the sdk
+const sdk = new Sdk()
+
+const resources = new Resources(sdk);
+
+await resources.removeResource({
+    id: 1,
+    ownerKeys: ["SOME_OWNER_KEY"]
+})
+```
