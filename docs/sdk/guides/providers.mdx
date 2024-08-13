@@ -1,0 +1,281 @@
+---
+title: "Providers"
+sidebar_label: Providers
+sidebar_position: 2
+---
+
+Provider operations on the Marketplace contract can be done using both the [Marketplace contract](/docs/smart-contracts/reference/core/marketplace.mdx) and the [MarketPlaceHelper contract](/smart-contracts/reference/periphery/marketplace-helper).
+
+## Register
+
+Before performing any CRUD operations, providers must register themselves on the Marketplace contract. This is done by calling either `addLiquidityAndRegisterWithETH` or `addLiquidityAndRegister` functions.
+
+#### Parameters
+`addLiquidityAndRegisterWithETH` function takes the following params:
+
+- `marketplaceId`: The id of the marketplace to register with.
+- `label`: The label of the provider.
+- `publicKey`: The public key of the provider.
+- `minMediaAmountOut` : The minimum amount of media to receive in return for the liquidity provided.
+- `slippage`: The slippage tolerance for the transaction.
+- `pairFee`: The pair fee for the transaction.
+
+`addLiquidityAndRegister` function takes the following params:
+
+- `marketplaceId`: The id of the marketplace to register with.
+- `inputToken`: The address of the token to provide liquidity with.
+- `inputAmount`: The amount of input token to provide as liquidity.
+- `label`: The label of the provider.
+- `publicKey`: The public key of the provider.
+- `slippage`: The slippage tolerance for the transaction.
+- `pairFee`: The pair fee for the transaction.
+
+#### Return
+
+Both functions will return `Promise<any>`.
+
+#### Example
+
+```javascript
+import { Sdk, MarketPlaceHelper } from 'media-sdk';
+
+// initialize the sdk using a private key
+const sdk = new Sdk({ privateKey: "afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890" });
+
+const marketPlaceHelper = new MarketPlaceHelper(sdk);
+
+// register with ETH
+
+await marketPlaceHelper.addLiquidityAndRegisterWithETH({
+    marketplaceId: 1,
+    label: 'My Provider',
+    publicKey: '0x1234567890',
+    minMediaAmountOut: 100,
+    slippage: 0.1,
+    pairFee: 0.1
+});
+
+// register with token
+
+await marketPlaceHelper.addLiquidityAndRegister({
+    marketplaceId: 1,
+    inputToken: '0x1234567890',
+    inputAmount: 100,
+    label: 'My Provider',
+    publicKey: '0x1234567890',
+    slippage: 0.1,
+    pairFee: 0.1
+});
+```
+
+
+
+## Create Offer
+
+Creates a new offer in the marketplace
+
+#### Parameters
+
+- `marketplaceId`: The id of the marketplace to create the offer on.
+- `autoAccept`: A boolean value that determines if the offer should automatically accept deals.
+- `maximumDeals`: The maximum number of deals that can be made on the offer.
+- `pricePerSecond`: The price per second of each deal expressed in Media.
+- `minDealDuration`: The minimum duration of each deal in seconds. Measured in **seconds**.
+- `billFullPeriods`: A boolean value that determines if the deal should be billed for the full period.
+- `singlePeriodOnly`: A boolean value that determines if the deal should be billed for a single period only.
+- `metadata`: A string containing useful information about the offer and the product or services being sold.
+
+#### Return
+
+The function will return `Promise<any>`.
+
+#### Example
+
+```javascript
+import { Sdk, Marketplace } from 'media-sdk';
+
+// initialize the sdk using a private key
+
+const sdk = new Sdk({ privateKey: "afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890" });
+
+const marketplace = new Marketplace(sdk);
+
+await marketplace.createOffer({
+    marketplaceId: 1,
+    autoAccept: true,
+    maximumDeals: 100,
+    pricePerSecond: 100,
+    minDealDuration: 60,
+    billFullPeriods: true,
+    singlePeriodOnly: false,
+    metadata: '{title: "My Offer", description: "This is a test offer"}'
+});
+```
+
+## Update Offer
+
+Updates an offer
+
+#### Parameters
+
+- `marketplaceId`: The id of the marketplace to update the offer on.
+- `offerId`: The id of the offer to update.
+- `maximumDeals`: The maximum number of deals that can be made on the offer.
+- `autoAccept`: A boolean value that determines if the offer should automatically accept deals.
+- `pricePerSecond`: The price per second of each deal expressed in Media.
+- `minDealDuration`: The minimum duration of each deal in seconds. Measured in **seconds**.
+- `billFullPeriods`: A boolean value that determines if the deal should be billed for the full period.
+- `singlePeriodOnly`: A boolean value that determines if the deal should be billed for a single period only.
+- `metadata`: A string containing useful information about the offer and the product or services being sold.
+
+#### Return
+
+The function will return `Promise<any>`.
+
+#### Example
+
+```javascript
+import { Sdk, Marketplace } from 'media-sdk';
+
+// initialize the sdk using the private key used to create the offer
+
+const sdk = new Sdk({ privateKey: "afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890" });
+
+const marketplace = new Marketplace(sdk);
+
+await marketplace.updateOffer({
+    marketplaceId: 1,
+    offerId: 1,
+    maximumDeals: 100,
+    autoAccept: false,
+    pricePerSecond: 100,
+    minDealDuration: 60,
+    billFullPeriods: true,
+    singlePeriodOnly: false,
+    metadata: '{title: "My Offer", description: "This is an updated test offer"}'
+});
+```
+
+## Delete Offer
+
+Deletes an offer
+
+#### Parameters
+
+- `marketplaceId`: The id of the marketplace to delete the offer from.
+- `offerId`: The id of the offer to delete.
+
+#### Return
+
+The function will return `Promise<any>`.
+
+#### Example
+
+```javascript
+import { Sdk, Marketplace } from 'media-sdk';
+
+// initialize the sdk using the private key used to create the offer
+const sdk = new Sdk({ privateKey: "afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890" });
+
+const marketplace = new Marketplace(sdk);
+
+// delete an offer
+await marketplace.deleteOffer({
+    marketplaceId: 1,
+    offerId: 1
+});
+```
+
+## Accept Deal
+
+Accepts a deal placed on an offer
+
+#### Parameters
+
+- `marketplaceId`: The id of the marketplace to accept the deal on.
+- `dealId`: The id of the deal to be accepted.
+
+#### Return
+
+The function will return `Promise<any>`.
+
+#### Example
+
+```javascript
+import { Sdk, Marketplace } from 'media-sdk';
+
+// initialize the sdk using a private key used to create the offer
+
+const sdk = new Sdk({ privateKey: "afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890" });
+
+const marketplace = new Marketplace(sdk);
+
+// accept a deal
+
+await marketplace.acceptDeal({
+    marketplaceId: 1,
+    dealId: 1
+});
+```
+
+## Reject Deal
+
+Rejects a deal placed on an offer
+
+#### Parameters
+
+- `marketplaceId`: The id of the marketplace to reject the deal on.
+- `dealId`: The id of the deal to be rejected.
+
+#### Return
+
+The function will return `Promise<any>`.
+
+#### Example
+
+```javascript
+import { Sdk, Marketplace } from 'media-sdk';
+
+// initialize the sdk using a private key used to create the offer
+const sdk = new Sdk({ privateKey: "afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890" });
+
+const marketplace = new Marketplace(sdk);
+
+// reject a deal
+
+await marketplace.rejectDeal({
+    marketplaceId: 1,
+    dealId: 1
+});
+```
+
+## Cancel Deal
+
+Cancels a deal placed on an offer
+
+#### Parameters
+
+- `marketplaceId`: The id of the marketplace to cancel the deal on.
+- `dealId`: The id of the deal to be canceled.
+
+#### Return
+
+The function will return `Promise<any>`.
+
+#### Example
+
+```javascript
+import { Sdk, Marketplace } from 'media-sdk';
+
+// initialize the sdk using a private key used to create the offer
+const sdk = new Sdk({ privateKey: "afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890" });
+
+const marketplace = new Marketplace(sdk);
+
+// cancel a deal
+
+await marketplace.cancelDeal({
+    marketplaceId: 1,
+    dealId: 1
+});
+```
