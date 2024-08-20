@@ -91,7 +91,7 @@ Gets a deals page from a specific marketplace. Using some deal id as a starting 
   const marketplaceViewer = new MarketplaceViewer(sdk);
 
   // get 20 deals per request until there are no more deals
-  let deals = await marketplaceViewer.getAllDealsPaginating({
+  let deals = await marketplaceViewer.getPaginatedDeals({
     marketplaceId: 1,
     start: 0,
     steps: 20
