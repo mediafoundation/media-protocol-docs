@@ -1,0 +1,159 @@
+---
+title: "ERC20"
+sidebar_label: ERC20
+sidebar_position: 3
+---
+
+The `ERC20` class represents interactions with an ERC20 contract, providing methods to read from and write to the contract. It supports typical ERC20 operations such as balance checks, token transfers, and approvals.
+
+## Class: ERC20
+
+The `ERC20` class allows developers to interact with ERC20 smart contracts on the blockchain, providing functionality for reading contract data and executing transactions like transfers and approvals.
+
+### Constructor
+
+The constructor initializes an instance of the `ERC20` class.
+
+#### Parameters
+
+- `sdkInstance`: `Sdk`
+An instance of the SDK containing configuration details for interacting with the blockchain.
+
+#### Usage
+
+```javascript
+const erc20 = new ERC20(sdkInstance);
+```
+
+## Attributes
+
+### `config`: `SdkConfig`
+
+Contains the configuration for the SDK, which includes:
+
+- `walletClient`: A client used for managing wallet-based blockchain transactions.
+- `publicClient`: A client used for performing read-only interactions with the blockchain.
+
+The `config` attribute holds essential information for interacting with both wallet-based and public (read-only) blockchain operations. It is initialized using an instance of the `Sdk` class and is used throughout the `ERC20` class to facilitate various contract interactions.
+
+
+## Methods
+
+### `view`
+
+Reads data from the ERC20 contract.
+
+- **Parameters**:
+- `address`: `Address`
+The address of the ERC20 contract.
+
+- `functionName`: `string`
+The name of the function to call.
+
+- `args`: `any[]`
+The arguments to pass to the function.
+
+- **Returns**: `Promise<any>`
+The result of the contract call.
+
+- **Throws**:
+Will throw an error if the contract call fails.
+
+### `execute`
+
+Executes a transaction on the ERC20 contract.
+
+- **Parameters**:
+- `address`: `Address`
+The address of the ERC20 contract.
+
+- `functionName`: `string`
+The name of the function to call.
+
+- `args`: `any[]`
+The arguments to pass to the function.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+- **Throws**:
+Will throw an error if the transaction fails.
+
+### `balanceOf`
+
+Retrieves the balance of a specified address.
+
+- **Parameters**:
+- `address`: `Address`
+The address to query the balance of.
+
+- **Returns**: `Promise<any>`
+The balance of the address.
+
+### `allowance`
+
+Retrieves the allowance of a spender for a specified token.
+
+- **Parameters**:
+- `token`: `Address`
+The address of the ERC20 token.
+
+- `spender`: `Address`
+The address of the spender.
+
+- **Returns**: `Promise<any>`
+The allowance of the spender.
+
+### `approve`
+
+Approves a spender to spend a specified amount of tokens.
+
+- **Parameters**:
+- `address`: `Address`
+The address of the ERC20 contract.
+
+- `spender`: `Address`
+The address of the spender.
+
+- `amount`: `string`
+The amount of tokens to approve.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+### `transfer`
+
+Transfers tokens to a specified address.
+
+- **Parameters**:
+- `address`: `Address`
+The address of the ERC20 contract.
+
+- `to`: `Address`
+The address to transfer tokens to.
+
+- `amount`: `string`
+The amount of tokens to transfer.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+### `transferFrom`
+
+Transfers tokens from one address to another.
+
+- **Parameters**:
+- `address`: `Address`
+The address of the ERC20 contract.
+
+- `from`: `Address`
+The address to transfer tokens from.
+
+- `to`: `Address`
+The address to transfer tokens to.
+
+- `amount`: `string`
+The amount of tokens to transfer.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
