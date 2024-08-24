@@ -4,6 +4,77 @@ sidebar_label: Protocol Flow
 sidebar_position: 3
 ---
 
+This section is aimed to explain how the media-protocol works in a high-level overview. Explaining the main components and how they interact with each other.
+It is based on the interaction between two main actors: Providers and Providers. Acting the first one as the **seller** and the second one as the **buyer**.
+
+## Overview
+
+The Media Protocol is a decentralized protocol that enables the creation, distribution, and monetization of media content. The protocol is built on top of the Ethereum blockchain and consists of several smart contracts that interact with each other to provide a seamless experience for users.
+
+## Marketplace
+
+In our protocol, the marketplace serves as the central hub for decentralized buying and selling of products and services. It provides a platform where providers (sellers) can list their offerings, and clients (buyers) can browse and initiate transactions by accepting these offers.
+
+Providers create offers within the marketplace, detailing the products or services they are selling, along with any associated terms and conditions. Clients can then review these offers and, if they agree with the terms, create deals to finalize the transaction. This deal formalizes the agreement between the provider and the client within the marketplace.
+
+An essential feature of our marketplace is the ability to attach resources to deals. Resources can be shared between clients and providers, serving as a secure method for exchanging encrypted data. This feature is particularly valuable when the transaction involves sensitive information or digital goods that need to be protected.
+
+The marketplace is fully decentralized, meaning that all transactions, offers, and deals occur without the need for a central authority. This ensures that the marketplace operates transparently and securely, with all participants having equal access to the platform's capabilities.
+
+In our protocol, the marketplace is indispensable—no transaction, offer, or deal can occur outside of it. This makes it the cornerstone of our decentralized ecosystem, facilitating all interactions between providers and clients in a trustless environment.
+
+## Providers
+
+Providers in our protocol play a crucial role by creating offers within the marketplace. These offers can include a wide range of details tailored to the provider's needs. However, certain key information is mandatory: providers must specify the price per time (e.g., hourly or daily rate), the duration of the deal that will be created when a client accepts the offer, and the billing details, such as how and when payments are processed.
+
+To participate in the marketplace, providers must first register within the system. This registration ensures that they are recognized as legitimate participants and are able to list their offers for clients to view. Once registered, providers can create and manage their offers, making them available for clients to browse.
+
+Clients can then access a list of available offers through the marketplace, where they can interact with and select offers that meet their needs. Once a client accepts an offer, a deal is created, formalizing the agreement between the provider and the client.
+
+If at any point either party fails to adhere to the agreed-upon terms, the protocol allows for a dispute to be initiated. This ensures that both providers and clients are held accountable, and that there is a mechanism in place to resolve any issues that may arise during the course of their interaction.
+
+## Clients
+
+Clients in our protocol engage with the marketplace primarily by browsing through available offers. These offers, created by providers, outline the terms and conditions under which products or services are offered. Clients can review these offers and, when they find one that meets their needs, they can choose to accept it.
+
+Once a client accepts an offer, a deal is automatically created. This deal formalizes the agreement between the client and the provider and may involve the exchange of resources, depending on the nature of the offer. Clients are not required to take any further actions after accepting an offer, as the deal is established based on the terms specified by the provider.
+
+In this marketplace, clients must accept the terms as provided by the providers, without the option to negotiate or customize the deal. This ensures clarity and consistency in the agreements made within the platform.
+
+If a provider fails to uphold their end of the deal, the client has the option to initiate a dispute. This mechanism allows for the resolution of conflicts, ensuring that clients are protected and that the integrity of the marketplace is maintained.
+
+## Resources
+
+Resources are a versatile mechanism designed to facilitate the secure exchange of information between clients and providers. They play a crucial role in maintaining privacy and data security within the marketplace. When a resource is shared, it can be encrypted so that only the authorized provider—the one specified in the deal—can access and read the content. This ensures that sensitive information is protected and only accessible to those who are intended to view it.
+
+Resources are primarily used as a means to exchange information between parties. While they can be associated with deals, they are not necessarily tied to the creation of a deal itself. Instead, they function as an independent feature within the protocol, allowing for the secure transfer of data regardless of whether a deal or offer is in place.
+
+Importantly, resources exist independently of deals and offers. This means they can be managed, shared, and utilized without being directly connected to a specific transaction within the marketplace. There are also no specific restrictions on what can be considered a resource, offering flexibility in the types of information that can be exchanged.
+
+## Offers
+
+Offers are the cornerstone of transactions between providers and clients. An offer is created by a provider and contains all the essential terms and conditions under which they are willing to sell a product or service. This includes crucial details like the price, the duration of the deal that will be created upon acceptance, and any other specific conditions that apply.
+
+Providers have the flexibility to update their offers even after they have been created. However, it's important to note that any deals that were previously made based on an older version of the offer will not be affected by these changes. This ensures that agreements made under specific terms remain consistent and enforceable.
+
+Offers are presented to clients through a user interface, typically displayed as a list that clients can browse through. This list format allows clients to easily compare different offers and choose the one that best meets their needs.
+
+Although offers do not automatically expire, they can be canceled by the provider at any time. This gives providers control over their listings, allowing them to remove or modify their offers as circumstances change.
+
+When a client decides to accept an offer, this action automatically creates a deal within the protocol. This deal formalizes the agreement between the provider and the client based on the terms specified in the offer, setting the stage for the transaction to proceed.
+
+## Deals
+
+A deal represents a formal agreement that is created when a client accepts an offer from a provider. This action effectively "seals" the contract between the two parties, establishing a binding agreement based on the terms specified in the offer. A deal may be created with or without an associated resource, depending on the specific nature of the transaction.
+
+Once a deal is created, it is recorded on the blockchain, ensuring that the details of the agreement are securely stored and tamper-proof. This blockchain-based tracking provides transparency and trust, as all participants can verify the existence and terms of the deal at any time.
+
+The responsibilities and obligations of both the provider and the client are defined by the terms and conditions that were originally set in the offer. These terms could include details about payment, delivery, duration, and other relevant factors. Since the deal is a direct acceptance of the offer, no further negotiation is required after the deal is made.
+
+While deals are binding agreements, they do have the flexibility to be canceled if necessary. However, once a deal is created, it cannot be modified. This ensures that the integrity of the original agreement is maintained and that both parties are held accountable to the terms they accepted.
+
+If issues arise or either party fails to fulfill their obligations, a dispute resolution process can be initiated to address and resolve any conflicts. This mechanism ensures that both clients and providers are protected and that fair practices are upheld within the marketplace.
+
 :::note
 Please note that this documentation is currently a work in progress, and we apologize for any errors or blank pages you may come across. We welcome any contributions or feedback to improve the documentation via the official repository at https://github.com/mediafoundation/media-protocol-docs.
 :::
