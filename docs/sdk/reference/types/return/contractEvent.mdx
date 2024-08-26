@@ -1,0 +1,42 @@
+---
+title: "ContractEvent"
+sidebar_label: ContractEvent
+sidebar_position: 4
+---
+
+The `ContractEvent` interface represents a blockchain event emitted by a contract.
+
+## Properties
+
+- **`address`**: `Address`
+The address of the contract that emitted the event.
+
+- **`blockHash`**: `string`
+The hash of the block containing the event.
+
+- **`blockNumber`**: `bigint`
+The block number in which the event was included.
+
+- **`data`**: `string`
+The data associated with the event.
+
+- **`logIndex`**: `number`
+The index of the log within the block.
+
+- **`removed`**: `boolean`
+Indicates whether the event was removed (e.g., due to a chain reorganization).
+
+- **`topics`**: `string[]`
+The list of topics associated with the event.
+
+- **`transactionHash`**: `string`
+The hash of the transaction that emitted the event.
+
+- **`transactionIndex`**: `number`
+The index of the transaction within the block.
+
+- **`args`**: `Object`
+An object containing arguments of the event.
+
+- **`eventName`**: `string`
+The name of the event.

@@ -1,0 +1,30 @@
+---
+title: "SwapAndCreatesDealWithWETHParams"
+sidebar_label: SwapAndCreatesDealWithWETHParams
+sidebar_position: 17
+---
+
+The `SwapAndCreatesDealWithWETHParams` interface defines the parameters required to swap and create a deal using WETH.
+
+## Properties
+
+- **`marketplaceId`**: `bigint | number | string`
+The ID of the marketplace.
+
+- **`resourceId`**: `bigint | number | string`
+The ID of the resource.
+
+- **`offerId`**: `bigint | number | string`
+The ID of the offer.
+
+- **`sharedKeyCopy`**: `string`
+A copy of the shared key for accessing the deal.
+
+- **`minMediaAmountOut`**: `bigint | number | string`
+The minimum media amount expected out of the transaction.
+
+- **`amount`**: `bigint`
+The amount of WETH to use.
+
+- **`pairFee`**: `FeeAmount` (optional)
+The fee amount for the Uniswap pair.

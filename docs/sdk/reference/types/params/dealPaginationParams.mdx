@@ -1,0 +1,24 @@
+---
+title: "DealPaginationParams"
+sidebar_label: DealPaginationParams
+sidebar_position: 14
+---
+
+The `DealPaginationParams` interface defines the parameters required for paginating through deals.
+
+## Properties
+
+- **`marketplaceId`**: `string | number | bigint`
+The ID of the marketplace to paginate through.
+
+- **`address`**: `string`
+The address associated with the deals.
+
+- **`isProvider`**: `boolean` (optional)
+Indicates if the address is a provider (default: false).
+
+- **`start`**: `number` (optional)
+The starting index for pagination (default: 0).
+
+- **`steps`**: `number` (optional)
+The number of items to retrieve per page (default: 20).
