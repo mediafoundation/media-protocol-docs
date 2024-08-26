@@ -1,0 +1,172 @@
+---
+title: "Resources"
+sidebar_label: Resources
+sidebar_position: 16
+---
+
+The `Resources` class is designed to interact with the Resources smart contract. It allows for reading data and executing transactions related to resources, such as adding, updating, and removing resources. This class utilizes the SDK configuration for managing public and wallet client interactions.
+
+## Class: Resources
+
+The `Resources` class provides methods to interact with the Resources smart contract, allowing developers to manage resources on the blockchain. It supports both read-only operations and state-changing transactions.
+
+### Constructor
+
+The constructor initializes an instance of the `Resources` class.
+
+#### Parameters
+
+- `sdkInstance`: `Sdk`
+An instance of the SDK containing configuration details for interacting with the blockchain.
+
+#### Throws
+
+- **Error**: Will throw an error if the `Resources` contract address is not found for the current network ID.
+
+#### Usage
+
+```javascript
+import { Resources } from "media-sdk";
+
+const resources = new Resources(sdkInstance);
+```
+
+## Attributes
+
+### `config`: `SdkConfig`
+
+Contains the configuration for the SDK, which includes:
+
+- **`walletClient`**: A client used for managing wallet-based blockchain transactions.
+- **`publicClient`**: A client used for performing read-only interactions with the blockchain.
+
+The `config` attribute is initialized using an instance of the `Sdk` class. It holds essential configuration details required for interacting with the Resources smart contract. By using this configuration, the `Resources` class ensures that all method calls are executed with the correct network and account settings, allowing for seamless interaction with the blockchain.
+
+## Methods
+
+### `view`
+
+Calls a read-only function on the Resources contract.
+
+- **Parameters**:
+- `functionName`: `string`
+The name of the contract function to call.
+- `args`: `any[]`
+The arguments to pass to the contract function.
+
+- **Returns**: `Promise<any>`
+The result of the contract function call.
+
+- **Throws**:
+Will throw an error if the contract read operation fails.
+
+### `execute`
+
+Executes a state-changing function on the Resources contract.
+
+- **Parameters**:
+- `functionName`: `string`
+The name of the contract function to execute.
+- `args`: `any[]`
+The arguments to pass to the contract function.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+- **Throws**:
+Will throw an error if the contract execution fails.
+
+### `getResource`
+
+Fetches a resource based on the provided ID and address.
+
+- **Parameters**:
+- `id`: `string`
+The ID of the resource.
+- `address`: `Address`
+The address associated with the resource.
+
+- **Returns**: `Promise<any>`
+The resource data.
+
+### `addResource`
+
+Adds a new resource to the contract.
+
+- **Parameters**:
+- `encryptedData`: `string`
+The encrypted data of the resource.
+- `sharedKeyCopy`: `string`
+The shared key copy for accessing the resource.
+- `ownerKeys`: `any`
+The owner's keys for managing the resource.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+### `updateResource`
+
+Updates an existing resource with new encrypted data.
+
+- **Parameters**:
+- `id`: `string`
+The ID of the resource to update.
+- `encryptedData`: `string`
+The new encrypted data for the resource.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+### `removeResource`
+
+Removes a resource from the contract.
+
+- **Parameters**:
+- `id`: `string`
+The ID of the resource to remove.
+- `ownerKeys`: `any`
+The owner's keys required for removing the resource.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+### `getPaginatedResources`
+
+Fetches resources in a paginated manner.
+
+- **Parameters**:
+- `address`: `Address`
+The address associated with the resources.
+- `start`: `number` (default: 0)
+The starting index for pagination.
+- `steps`: `number` (default: 20)
+The number of resources to retrieve per page.
+
+- **Returns**: `Promise<any[]>`
+An array of paginated resources.
+
+### `getAllResourcesPaginating`
+
+Fetches all resources by paginating through them.
+
+- **Parameters**:
+- `address`: `Address`
+The address associated with the resources.
+- `start`: `number` (default: 0)
+The starting index for pagination.
+- `steps`: `number` (default: 20)
+The number of resources to retrieve per page.
+
+- **Returns**: `Promise<any[]>`
+An array of all resources.
+
+### `getOwnerKeys`
+
+Retrieves the owner's keys for managing resources.
+
+- **Parameters**:
+- `address`: `Address`
+The address of the owner.
+
+- **Returns**: `Promise<any>`
+The owner's keys.

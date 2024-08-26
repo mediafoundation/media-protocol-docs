@@ -1,0 +1,139 @@
+---
+title: "MarketplaceViewer"
+sidebar_label: MarketplaceViewer
+sidebar_position: 8
+---
+
+The `MarketplaceViewer` class provides a way to interact with the `MarketplaceViewer` contract on the blockchain. This class is primarily used to read data from the contract, such as retrieving information about offers and deals. It supports various methods to fetch paginated results and allows for efficient querying of data.
+
+## Constructor
+
+The constructor initializes an instance of the `MarketplaceViewer` class, setting up the necessary configuration to interact with the `MarketplaceViewer` contract on the blockchain.
+
+### Parameters
+
+- `sdkInstance`: `Sdk`
+An instance of the SDK containing configuration details, such as `walletClient` and `publicClient`, that are necessary for blockchain interaction.
+
+### Throws
+
+- **Error**: If the `MarketplaceViewer` address is not found for the current network ID, the constructor will throw an error indicating that the address is not available for the specified network. This ensures that all operations are executed against the correct contract address.
+
+### Usage
+
+```javascript
+import { MarketplaceViewer } from "media-sdk";
+
+const marketplaceViewer = new MarketplaceViewer(sdkInstance);
+```
+
+## Attributes
+
+### `config`: `SdkConfig`
+
+Contains the configuration for the SDK, which includes:
+
+- **`walletClient`**: A client used for managing wallet-based blockchain transactions.
+- **`publicClient`**: A client used for performing read-only interactions with the blockchain.
+
+The `config` attribute is initialized using an instance of the `Sdk` class. It holds the necessary configuration details required for interacting with the `MarketplaceViewer` contract, allowing both read and write operations on the blockchain. This attribute ensures that the methods within the `MarketplaceViewer` class have access to the appropriate network, wallet, and public client configurations for executing smart contract functions effectively.
+
+## Methods
+
+### `view`
+
+Calls a read-only function on the MarketplaceViewer contract.
+
+- **Parameters**:
+- `functionName`: `string`
+The name of the contract function to call.
+
+- `args`: `any[]`
+The arguments to pass to the contract function.
+
+- **Returns**: `Promise<any>`
+The result of the contract function.
+
+- **Throws**:
+Will throw an error if the contract read operation fails.
+
+### `getPaginatedOffers`
+
+Retrieves paginated offers from the marketplace.
+
+- **Parameters**:
+- `marketplaceId`: `string`
+The ID of the marketplace.
+
+- `start`: `number` (default: 0)
+The starting index for pagination.
+
+- `steps`: `number` (default: 20)
+The number of items to retrieve per page.
+
+- **Returns**: `Promise<Offer[]>`
+A promise that resolves to an array of offers.
+
+### `getAllOffersPaginating`
+
+Retrieves all offers from the marketplace by paginating through them.
+
+- **Parameters**:
+- `marketplaceId`: `string`
+The ID of the marketplace.
+
+- `start`: `number` (default: 0)
+The starting index for pagination.
+
+- `steps`: `number` (default: 20)
+The number of items to retrieve per page.
+
+- **Returns**: `Promise<Offer[]>`
+A promise that resolves to an array of all offers.
+
+### `getPaginatedDeals`
+
+Retrieves paginated deals from the marketplace.
+
+- **Parameters**:
+- `marketplaceId`: `string`
+The ID of the marketplace.
+
+- `address`: `string`
+The address to filter deals (either client or provider).
+
+- `isProvider`: `boolean` (default: false)
+Indicates whether the address is a provider or a client.
+
+- `start`: `number` (default: 0)
+The starting index for pagination.
+
+- `steps`: `number` (default: 20)
+The number of items to retrieve per page.
+
+- **Returns**: `Promise<Deal[]>`
+A promise that resolves to an array of deals.
+
+### `getAllDealsPaginating`
+
+Retrieves all deals from the marketplace by paginating through them.
+
+- **Parameters**:
+- `marketplaceId`: `string`
+The ID of the marketplace.
+
+- `address`: `string`
+The address to filter deals (either client or provider).
+
+- `isProvider`: `boolean` (default: false)
+Indicates whether the address is a provider or a client.
+
+- `start`: `number` (default: 0)
+The starting index for pagination.
+
+- `steps`: `number` (default: 20)
+The number of items to retrieve per page.
+
+- **Returns**: `Promise<Deal[]>`
+A promise that resolves to an array of all deals.
+

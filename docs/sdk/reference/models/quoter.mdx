@@ -1,0 +1,185 @@
+---
+title: "Quoter"
+sidebar_label: Quoter
+sidebar_position: 10
+---
+
+The `Quoter` class is designed to interact with Uniswap V3 to perform various functions such as quoting token exchanges, viewing pool data, and calculating required token amounts for liquidity positions. This class is integral for developers looking to integrate Uniswap's quoting and pool functionalities into their applications.
+
+## Class: Quoter
+
+The `Quoter` class allows developers to interact with Uniswap V3's quoting functionalities, including fetching pool data and calculating quotes for token swaps. It utilizes the SDK's configuration for making read-only contract calls and handles tokens like MEDIA and WETH.
+
+### Constructor
+
+The constructor initializes an instance of the `Quoter` class.
+
+#### Parameters
+
+- `sdkInstance`: `Sdk`
+An instance of the SDK containing configuration details for interacting with the blockchain.
+
+#### Throws
+
+- **Error**: Will throw an error if the `QuoterV2` address is not found for the current network ID.
+
+#### Usage
+
+```javascript
+import { Quoter } from "media-sdk";
+
+const quoter = new Quoter(sdkInstance);
+```
+
+## Attributes
+
+### `config`: `SdkConfig`
+
+Contains the configuration for the SDK, which includes:
+
+- **`walletClient`**: A client used for managing wallet-based blockchain transactions.
+- **`publicClient`**: A client used for performing read-only interactions with the blockchain.
+
+This attribute is initialized using an instance of the `Sdk` class, providing the necessary configuration details for interacting with the Uniswap V3 contracts and other functionalities within the `Quoter` class.
+
+### `chainId`: `number`
+
+Stores the chain ID of the current network, fetched from the SDK's `publicClient`. This chain ID is used to ensure that operations are executed on the correct blockchain network.
+
+### `MEDIA_TOKEN`: `Token`
+
+Represents the MEDIA token, initialized using Uniswap's `Token` class. It includes details such as:
+
+- **`address`**: The address of the MEDIA token on the current network.
+- **`decimals`**: The number of decimals used by the MEDIA token.
+- **`symbol`**: The symbol of the MEDIA token (e.g., "MEDIA").
+- **`name`**: The name of the MEDIA token (e.g., "Media Token").
+
+### `WETH_TOKEN`: `Token`
+
+Represents the Wrapped Ether (WETH) token, initialized using Uniswap's `Token` class. It includes details such as:
+
+- **`address`**: The address of the WETH token on the current network.
+- **`decimals`**: The number of decimals used by the WETH token.
+- **`symbol`**: The symbol of the WETH token (e.g., "WETH").
+- **`name`**: The name of the WETH token (e.g., "Wrapped Ether").
+
+These attributes are crucial for interacting with the Uniswap V3 protocol, as they define the tokens involved in various swapping and liquidity operations. By using these predefined token attributes, the `Quoter` class ensures accurate and efficient token management within its methods.
+
+## Methods
+
+### `view`
+
+Calls a read-only function on the `QuoterV2` contract.
+
+- **Parameters**:
+- `functionName`: `string`
+The name of the function to call.
+- `args`: `any[]`
+The arguments to pass to the function.
+
+- **Returns**: `Promise<any>`
+The result of the contract function call.
+
+- **Throws**:
+Will throw an error if the contract read operation fails.
+
+### `viewPool`
+
+Calls a read-only function on a specified Uniswap V3 pool contract.
+
+- **Parameters**:
+- `address`: `string`
+The address of the pool contract.
+- `functionName`: `string`
+The name of the function to call.
+- `args`: `any[]`
+The arguments to pass to the function.
+
+- **Returns**: `Promise<any>`
+The result of the pool contract function call.
+
+- **Throws**:
+Will throw an error if the pool contract read operation fails.
+
+### `getPoolData`
+
+Fetches liquidity and slot0 data from a Uniswap V3 pool.
+
+- **Parameters**:
+- `address`: `string`
+The address of the pool contract.
+
+- **Returns**: `Promise<Object>`
+An object containing `liquidity` and `slot0` data from the pool.
+
+### `quote`
+
+Gets a quote for swapping a specific amount of an input token for an output token.
+
+- **Parameters**:
+- `tokens`: `Object`
+An object containing details such as `tokenIn`, `tokenOut`, `amountIn`, and `poolFee`.
+
+- **Returns**: `Promise<bigint>`
+The amount of output token received for the specified input token.
+
+### `getQuote`
+
+Calculates the best quote for swapping tokens, optionally routing via WETH.
+
+- **Parameters**:
+- `inputToken`: `Token`
+The input token to swap.
+- `amountIn`: `string`
+The amount of the input token to swap.
+- `outputToken`: `Token`
+The output token to receive.
+
+- **Returns**: `Promise<Object>`
+An object containing the best quote, fee, route, path, and fees.
+
+### `fancyRoute`
+
+Formats a string representation of the swap route, including token symbols and associated fees.
+
+- **Parameters**:
+- `path`: `Token[]`
+An array of tokens representing the swap path.
+- `fees`: `number[]`
+An array of fees associated with each swap.
+
+- **Returns**: `string`
+A formatted string representing the swap route.
+
+### `mintAmounts`
+
+Calculates the token amounts needed to mint a specified amount of liquidity in a Uniswap V3 pool.
+
+- **Parameters**:
+- `liquidity`: `string`
+The amount of liquidity to mint.
+- `token0`: `Token`
+The first token in the pool.
+- `token1`: `Token`
+The second token in the pool.
+- `fee`: `FeeAmount` (default: `FeeAmount.LOW`)
+The fee tier for the pool.
+
+- **Returns**: `Promise<Object>`
+An object containing the token amounts needed for minting liquidity.
+
+### `calculate`
+
+Calculates the required amounts of input token for minting liquidity and provides a quote.
+
+- **Parameters**:
+- `liquidity`: `string`
+The amount of liquidity to mint.
+- `inputToken`: `Token`
+The input token to use.
+- `fee`: `FeeAmount` (default: `FeeAmount.LOW`)
+The fee tier for the pool.
+
+- **Returns**: `Promise<Object>`
+An object containing the required token amounts and the total required input amount.

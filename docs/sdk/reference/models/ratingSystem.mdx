@@ -1,0 +1,82 @@
+---
+title: "RatingSystem Class"
+sidebar_label: RatingSystem Class
+sidebar_position: 13
+---
+
+The `RatingSystem` class is designed to interact with the Rating System smart contract. It allows for reading data and executing transactions on the Rating System contract using methods that interact with the blockchain. This class utilizes the SDK configuration for managing public and wallet client interactions.
+
+## Class: RatingSystem
+
+The `RatingSystem` class provides methods to read from and write to the Rating System smart contract. It leverages the SDK configuration for blockchain interactions and can handle both read-only and state-changing operations.
+
+### Constructor
+
+The constructor initializes an instance of the `RatingSystem` class.
+
+#### Parameters
+
+- `sdkInstance`: `Sdk`
+An instance of the SDK containing configuration details for interacting with the blockchain.
+
+#### Usage
+
+```javascript
+import { RatingSystem } from "media-sdk";
+
+const ratingSystem = new RatingSystem(sdkInstance);
+```
+
+## Attributes
+
+### `config`: `SdkConfig`
+
+Contains the configuration for the SDK, which includes:
+
+- **`walletClient`**: A client used for managing wallet-based blockchain transactions.
+- **`publicClient`**: A client used for performing read-only interactions with the blockchain.
+
+The `config` attribute is initialized using an instance of the `Sdk` class. It provides the necessary configuration details required for interacting with the Rating System smart contract, ensuring that methods within the `RatingSystem` class have access to the appropriate network, account, and client settings for both reading data and executing transactions on the blockchain.
+
+## Methods
+
+### `view`
+
+Calls a read-only function on the Rating System contract.
+
+- **Parameters**:
+- `address`: `Address`
+The address of the Rating System contract.
+- `functionName`: `string`
+The name of the contract function to call.
+- `args`: `any[]`
+The arguments to pass to the contract function.
+
+- **Returns**: `Promise<any>`
+The result of the contract function call.
+
+- **Throws**:
+Will throw an error if the contract read operation fails.
+
+This method is used to perform read-only operations on the Rating System contract, such as retrieving ratings or other data that does not modify the contract state.
+
+### `execute`
+
+Executes a state-changing function on the Rating System contract.
+
+- **Parameters**:
+- `address`: `Address`
+The address of the Rating System contract.
+- `functionName`: `string`
+The name of the contract function to execute.
+- `args`: `any[]`
+The arguments to pass to the contract function.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+- **Throws**:
+Will throw an error if the contract execution fails.
+
+This method is used for state-changing operations on the Rating System contract, such as submitting new ratings or updates that require writing to the blockchain. It handles the preparation and execution of transactions using the SDK's wallet client.
+

@@ -1,0 +1,197 @@
+---
+title: "MarketplaceHelper"
+sidebar_label: MarketplaceHelper
+sidebar_position: 7
+---
+
+The `MarketplaceHelper` class provides methods to interact with the `MarketplaceHelper` smart contract, including adding liquidity, registering media, and swapping tokens. This class is designed to facilitate interactions with Uniswap pools and manage media assets within a decentralized marketplace.
+
+## Class: MarketplaceHelper
+
+The `MarketplaceHelper` class allows developers to interact with the `MarketplaceHelper` contract on the blockchain, enabling actions like adding liquidity to Uniswap pools, registering media, and executing token swaps.
+
+### Constructor
+
+The constructor initializes an instance of the `MarketplaceHelper` class.
+
+#### Parameters
+
+- `sdkInstance`: `Sdk`
+An instance of the SDK containing configuration details for interacting with the blockchain.
+
+#### Throws
+
+- An error if the `MarketplaceHelper` contract address is not found for the current network ID.
+
+#### Usage
+
+```javascript
+const marketplaceHelper = new MarketplaceHelper(sdkInstance);
+```
+
+## Attributes
+
+### `config`: `SdkConfig`
+
+Contains the configuration for the SDK, which includes:
+
+- **`walletClient`**: A client used for managing wallet-based blockchain transactions.
+- **`publicClient`**: A client used for performing read-only interactions with the blockchain.
+
+The `config` attribute is initialized using an instance of the `Sdk` class. It holds essential configuration details required for interacting with the `MarketplaceHelper` contract, facilitating both read and write operations within the blockchain environment. This attribute ensures that the class methods have access to the correct network, wallet, and public client configurations necessary for executing and simulating smart contract functions.
+
+## Methods
+
+### `view`
+
+Reads data from the MarketplaceHelper contract.
+
+- **Parameters**:
+- `functionName`: `string`
+The name of the function to call.
+
+- `args`: `any[]`
+The arguments to pass to the function.
+
+- **Returns**: `Promise<any>`
+The result of the contract call.
+
+- **Throws**:
+Will throw an error if the contract call fails.
+
+### `execute`
+
+Executes a transaction on the MarketplaceHelper contract.
+
+- **Parameters**:
+- `functionName`: `string`
+The name of the function to call.
+
+- `args`: `any[]`
+The arguments to pass to the function.
+
+- `value`: `bigint` (default: `0n`)
+The value to send with the transaction.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+- **Throws**:
+Will throw an error if the transaction fails.
+
+### `wethToMedia`
+
+Converts WETH to Media.
+
+- **Parameters**:
+- `fee`: `FeeAmount`
+The fee amount for the conversion.
+
+- **Returns**: `string`
+The encoded path for the conversion.
+
+### `mediaToWeth`
+
+Converts Media to WETH.
+
+- **Parameters**:
+- `fee`: `FeeAmount`
+The fee amount for the conversion.
+
+- **Returns**: `string`
+The encoded path for the conversion.
+
+### `addLiquidityAndRegisterWithETH`
+
+Adds liquidity to the Uniswap pool and registers the media using ETH.
+
+- **Parameters**:
+- `params`: `AddLiquidityAndRegisterWithWETHParams`
+The parameters for the transaction, including `marketplaceId`, `label`, `publicKey`, `minMediaAmountOut`, `slippage`, `amount`, and `pairFee`.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+### `addLiquidityAndRegister`
+
+Adds liquidity to the Uniswap pool and registers the media.
+
+- **Parameters**:
+- `params`: `AddLiquidityAndRegisterParams`
+The parameters for the transaction, including `marketplaceId`, `inputToken`, `inputAmount`, `label`, `publicKey`, `slippage`, and `pairFee`.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+### `swapAndCreateDealWithETH`
+
+Swaps tokens and creates a deal using ETH.
+
+- **Parameters**:
+- `params`: `SwapAndCreatesDealWithWETHParams`
+The parameters for the transaction, including `marketplaceId`, `resourceId`, `offerId`, `sharedKeyCopy`, `minMediaAmountOut`, `amount`, and `pairFee`.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+### `swapAndCreateDeal`
+
+Swaps tokens and creates a deal.
+
+- **Parameters**:
+- `marketplaceId`: `string`
+The ID of the marketplace.
+
+- `inputToken`: `string`
+The address of the input token.
+
+- `inputAmount`: `string`
+The amount of the input token.
+
+- `resourceId`: `string`
+The ID of the resource.
+
+- `offerId`: `string`
+The ID of the offer.
+
+- `sharedKeyCopy`: `string`
+A copy of the shared key for the deal.
+
+- `minMediaAmountOut`: `string`
+The minimum amount of media tokens expected from the swap.
+
+- `pairFee`: `number` (default: `500`)
+The fee amount for the swap.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+### `swapAndCreateDealsWithETH`
+
+Swaps tokens and creates multiple deals using ETH.
+
+- **Parameters**:
+- `marketplaceId`: `string`
+The ID of the marketplace.
+
+- `resourceId`: `string`
+The ID of the resource.
+
+- `offerIds`: `string[]`
+An array of offer IDs.
+
+- `sharedKeyCopies`: `string[]`
+An array of shared key copies.
+
+- `minMediaAmountOut`: `string`
+The minimum amount of media tokens expected from the swap.
+
+- `amount`: `bigint`
+The amount of ETH to use in the swap.
+
+- `pairFee`: `number` (default: `500`)
+The fee amount for the swap.
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
