@@ -31,7 +31,8 @@ The `Resources` contract extends the `Recoverable` contract.
 
 ### Functions
 
-- [`setMarketplace`](#setmarketplace): Sets the marketplace contract address.
+- [`authorizeProxy`](#authorizeproxy): Sets the marketplace contract address.
+- [`deAuthorizeProxy`](#deauthorizeproxy): Removes the marketplace contract address.
 - [`addResource`](#addresource): Adds a new resource.
 - [`updateResource`](#updateresource): Updates a resource's encrypted data.
 - [`removeResource`](#removeresource): Removes a resource.
@@ -58,25 +59,47 @@ The `Resources` contract extends the `Recoverable` contract.
 
 ## Write Functions
 
-### setMarketplace
+### authorizeProxy
 
-Sets the marketplace contract address.
+Allows the contract owner to authorize a new address.
 
 ```solidity
-function setMarketplace(address _marketplace) external onlyOwner returns (bool);
+function authorizeProxy(address _addr) external onlyOwner returns (bool);
 ```
 
 Parameters:
 
-| Name          | Type      |                                                    |
-|---------------|-----------|----------------------------------------------------|
-| _marketplace  | `address` | The address of the marketplace contract.           |
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| _addr            | `address`| The address you want to authorize.                   |
 
-Return values:
+Return:
 
 | Type      |                                                    |
 |-----------|----------------------------------------------------|
-| `bool`    | Whether the setting was successful or not.         |
+| `bool`    | Whether the authorization was successful or not.   |
+
+---
+
+### deAuthorizeProxy
+
+Allows the contract owner to de-authorize an address.
+
+```solidity
+function deAuthorizeProxy(address _addr) external onlyOwner returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| _addr            | `address`| The address you want to de-authorize.                |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the de-authorization was successful or not.|
 
 ---
 

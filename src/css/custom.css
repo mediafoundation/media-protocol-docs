@@ -301,3 +301,6 @@ html[data-theme='dark'] .gradient-box-child {
 .navbar-sidebar__close {
   margin-left: 0;
 }
+.hidden {
+  display: none;
+}
