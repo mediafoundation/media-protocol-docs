@@ -1000,3 +1000,19 @@ html[data-theme='dark'] main .card2 svg {
   right: auto;
   transform: translate(-20rem, 10rem);
 }
+
+@media (min-width: 997px) {
+  #__docusaurus .docItemCol_node_modules-\@docusaurus-theme-classic-lib-theme-DocItem-Layout-styles-module {
+      max-width: var(--ifm-col-width) !important;
+  }
+}
+
+.docs-doc-id-intro .theme-doc-breadcrumbs {
+  display: none;
+}
+
+@media (min-width: 997px) {
+.docMainContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocRoot-Layout-Main-styles-module {
+  padding: 0 20px;
+}
+}
