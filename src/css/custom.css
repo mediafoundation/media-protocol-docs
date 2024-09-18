@@ -409,7 +409,6 @@ html[data-theme='dark'] .card-content {
 }
 
 .custom-separator {
-  width: 100%;
   height: 1px;
   position: relative;
   margin: 128px;
