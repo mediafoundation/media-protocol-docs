@@ -357,6 +357,7 @@ html[data-theme='dark'] .cards:hover .card {
   align-items: center;
   position: relative;
   transition: all 0.15s;
+  cursor: pointer;
 }
 
 html[data-theme='dark'] .card {

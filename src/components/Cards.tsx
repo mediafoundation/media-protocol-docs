@@ -37,6 +37,8 @@ export function Cards({ items }) {
           className="card"
           key={index}
           ref={(el) => (cardsRef.current[index] = el)}
+          // window open item.href only if item.href exists
+          onClick = {() => item.href && window.open(item.href, "_blank")}
         >
           <div className="card-content">
             {item.svg && (
