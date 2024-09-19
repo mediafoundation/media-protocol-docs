@@ -1,3 +1,4 @@
+import { Button } from "./Button";
 import { StackedCards } from "./Cards";
 
 const items = [
@@ -57,8 +58,8 @@ export function Hero() {
           marketplaces.
         </p>
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button className="button button--primary">Get Started</button>
-          <button className="button button--outline button--secondary">View on GitHub</button>
+          <Button name="Get Started" href="/overview" />
+          <Button name="View on Github" href="https://github.com/mediafoundation/media-protocol" />
         </div>
       </div>
       <div className="col col--6">

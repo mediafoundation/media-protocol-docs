@@ -39,45 +39,8 @@ export function Cards({ items }) {
           ref={(el) => (cardsRef.current[index] = el)}
         >
           <div className="card-content">
-            <h2
-              className="hero-landing-subtitle"
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <ThemedImage
-                height="36px"
-                width="36px"
-                style={{ padding: "3px", marginRight: "10px" }}
-                alt={item.title}
-                sources={{
-                  light: useBaseUrl(item.sources.light),
-                  dark: useBaseUrl(item.sources.dark),
-                }}
-              />
-              <a href={item.href} target="_blank">
-                {item.title}
-              </a>
-            </h2>
-            <p className="custom-text">{item.description}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export function SpecialCards({ items }) {
-  return (
-    <div className="custom-grid">
-      {items.map((item, idx) => {
-        console.log(item.url);
-        return (
-          <a
-            href={item.url}
-            key={idx}
-            target="_blank"
-            style={{ all: "unset", cursor: "pointer" }}
-          >
-            <div className="card2 connected-card connected-feature-card swiper-slide">
+            {item.svg && (
+            <div className="connected-container">
               <div className="connected-feature-card-dots">
                 <div></div>
                 <div></div>
@@ -99,21 +62,38 @@ export function SpecialCards({ items }) {
                       justifyContent: "center",
                     }}
                   >
-                    {item.logo}
+                    {item.svg}
                   </div>
                 </div>
                 <div></div>
               </div>
-
-              <div>
-                <h2>{item.title}</h2>
-                <p>{item.description}</p>
-              </div>
-              <div className="card-dots"></div>
             </div>
-          </a>
-        );
-      })}
+            )}
+            <h2
+              className="hero-landing-subtitle"
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              {item.sources && (
+                <ThemedImage
+                  height="36px"
+                  width="36px"
+                  style={{ padding: "3px", marginRight: "10px" }}
+                  alt={item.title}
+                  sources={{
+                    light: useBaseUrl(item.sources.light),
+                    dark: useBaseUrl(item.sources.dark),
+                  }}
+                />
+              )}
+              <a href={item.href} target="_blank">
+                {item.title}
+              </a>
+            </h2>
+            <p className="custom-text">{item.description}</p>
+            <div className="card-dots" />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

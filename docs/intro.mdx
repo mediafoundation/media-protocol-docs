@@ -11,13 +11,12 @@ pagination_next:
 import { Feature } from '../src/components/utils'
 import { Hero } from '../src/components/Hero'
 import { Cards } from '../src/components/Cards'
-import { SpecialCards } from '../src/components/Cards'
 import { Items } from '../src/components/utils'
 import { GovernanceItems } from '../src/components/utils'
 import { Separator } from '../src/components/Separator'
 
 <div className="home_header_back-wrap">
-    <img src="./img/hero.svg" loading="eager" alt="" className="home_header_back"></img>
+    <img src="./img/hero.svg" loading="eager" className="home_header_back"></img>
     <div className="home_header_back1"></div>
     <div className="home_header_back2"></div>
     <div className="home_header_back3"></div>
@@ -61,11 +60,12 @@ import { Separator } from '../src/components/Separator'
 <div>
     <h1>The Governance Apps</h1>
     Share your opinions and shape the future of the protocol.
-    <SpecialCards items={GovernanceItems} /> 
+    <Cards items={GovernanceItems} /> 
 </div>
 <Separator />
 <div>
     <h1>What market will you pioneer next?</h1>
+    
     <h2>Requirements</h2>
     * Git or Github CLI
     * Node.js >=16.8.0
