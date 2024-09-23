@@ -92,7 +92,8 @@ export function Cards({ items }) {
               </a>
             </h2>
             <p className="custom-text">{item.description}</p>
-            <div className="card-dots" />
+            {item.content && item.content}
+            {!item.content && <div className="card-dots" />}
           </div>
         </div>
       ))}

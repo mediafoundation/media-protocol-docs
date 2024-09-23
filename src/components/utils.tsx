@@ -1,6 +1,7 @@
 
 import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
+import { SDKBento } from "./SDKBento";
 
 export function Feature({ imageUrl, title, description }) {
   const imgUrl = useBaseUrl(imageUrl);
@@ -65,6 +66,21 @@ export const Items = [
       dark: "/img/mediafoundationwhite.svg",
     },
     href: "https://x.com/Media_FDN",
+  },
+];
+
+export const Items2 = [
+  {
+    title: "Media SDK",
+    description: (
+      <>
+        Comprehensive toolkit designed for seamless interaction with the Media Protocol's contracts. Developed in JavaScript, it harnesses the power of the viem library, providing an intuitive interface for engaging with the Media Protocol.
+      </>
+    ),
+    content: <SDKBento />,
+    href: "./sdk/overview",
+  },
+  {
   },
 ];
 
