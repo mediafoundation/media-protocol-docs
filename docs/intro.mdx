@@ -27,28 +27,8 @@ import { Separator } from '../src/components/Separator'
 
 <h6>Getting Started</h6>
 <h1>Introduction</h1>
-<div className="row cards__container margin-top--lg">
-    <Feature  
-        title="What is Media Protocol"
-        imageUrl="/introduction"
-        description="Learn about the core concepts of the Media Protocol, its governance structure, and key terminology."
-    />
-    <Feature  
-        title="Integrate with Media Protocol"
-        imageUrl="/sdk/overview"
-        description="Explore the process of integrating with Media Protocol, using the SDK and step-by-step guidance."
-    />
-    <Feature  
-        title="Media Protocol Smart Contracts"
-        imageUrl="/smart-contracts/overview"
-        description="Discover the architecture and technical reference of the smart contracts powering the Media Protocol."
-    />
-    <Feature  
-        title="Media Protocol Governance"
-        imageUrl="/governance/overview"
-        description="Understand the governance structure of the Media Protocol, and how to participate."
-    />
-</div>
+
+<Cards items={Items2} size={3} />
 
 <Separator />
 <div>
@@ -62,27 +42,4 @@ import { Separator } from '../src/components/Separator'
     <h1>The Governance Apps</h1>
     Share your opinions and shape the future of the protocol.
     <Cards items={GovernanceItems} /> 
-</div>
-<Separator />
-<div>
-    <h1>What market will you pioneer next?</h1>
-
-    <Cards items={Items2} /><br />
-
-    <h2>Requirements</h2>
-    * Git or Github CLI
-    * Node.js >=16.8.0
-    [Get the latest Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
-
-
-    <h2>Installation</h2>
-    * git clone https://github.com/mediafoundation/media-protocol-frontend-boilerplate.git
-    Clone our **Media Protocol Boilerplate** repository to start building your own marketplace.
-
-
-    <h2>Start Now</h2>
-    Learn how to start using it [here](https://github.com/mediafoundation/media-protocol-frontend-boilerplate). Built in [Next.js](https://nextjs.org/docs).
-
-    [Check the demo](https://media-protocol-frontend-boilerplate.vercel.app/).
-
 </div>

@@ -2,7 +2,7 @@ import React, { CSSProperties, useEffect, useRef } from "react";
 import ThemedImage from "@theme/ThemedImage";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
-export function Cards({ items }) {
+export function Cards({ items, size = 4, height = "auto" }) {
   const cardsRef = useRef([]);
   const wrapperRef = useRef(null);
 
@@ -35,47 +35,62 @@ export function Cards({ items }) {
       {items.map((item, index) => (
         <div
           className="card"
+          style={{ "--size": size, "--height": height } as CSSProperties}
           key={index}
           ref={(el) => (cardsRef.current[index] = el)}
           // window open item.href only if item.href exists
-          onClick = {() => item.href && window.open(item.href, "_blank")}
+          onClick={() => {
+            if (item.href) {
+              const target = item.href.startsWith("http") ? "_blank" : "_self";
+              window.open(item.href, target);
+            }
+          }}
         >
           <div className="card-content">
-            {item.svg && (
-            <div className="connected-container">
-              <div className="connected-feature-card-dots">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <div className="connected-feature-card-lines">
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <div className="connected-feature-card-circles">
-                <div style={{ position: "relative" }}>
-                  <div
-                    style={{
-                      position: "absolute",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {item.svg}
-                  </div>
+            {item.sources && (
+              <div className="connected-container">
+                <div className="connected-feature-card-dots">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
                 </div>
-                <div></div>
+                <div className="connected-feature-card-lines">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <div className="connected-feature-card-circles">
+                  <div style={{ position: "relative" }}>
+                    <div
+                      style={{
+                        position: "absolute",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <ThemedImage
+                        height="24px"
+                        width="24px"
+                        style={item.padding && { padding: "2px" }}
+                        alt={item.title}
+                        sources={{
+                          light: useBaseUrl(item.sources.light),
+                          dark: useBaseUrl(item.sources.dark),
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
               </div>
-            </div>
             )}
             <h2
               className="hero-landing-subtitle"
               style={{ display: "flex", alignItems: "center" }}
             >
-              {item.sources && (
+              {/* {item.sources && (
                 <ThemedImage
                   height="36px"
                   width="36px"
@@ -86,7 +101,7 @@ export function Cards({ items }) {
                     dark: useBaseUrl(item.sources.dark),
                   }}
                 />
-              )}
+              )} */}
               <a href={item.href} target="_blank">
                 {item.title}
               </a>
