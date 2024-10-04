@@ -857,7 +857,7 @@ html[data-theme='dark'] .NotificationAsset_card__KoMdR {
 }
 
 @media (min-width: 997px) {
-.docMainContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocRoot-Layout-Main-styles-module {
+#__docusaurus main {
   padding: 0 20px;
 }
 }
@@ -2000,5 +2000,11 @@ html[data-theme='dark'] .color-bullets2 {
 
   .stackedCards .innerCards {
     display: none;
+  }
+}
+
+@media (min-width: 997px) {
+  .container > .row > .col {
+      max-width: 100% !important;
   }
 }
