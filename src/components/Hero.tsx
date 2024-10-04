@@ -50,7 +50,7 @@ const items = [
 
 export function Hero() {
   return (
-    <div className="row margin-top--xl stackedCards" style={{ alignItems: 'center' }}>
+    <div className="row margin-top--xl margin-bottom--xl stackedCards" style={{ alignItems: 'center' }}>
       <div className="col col--6">
         <h1 className="hero__title">Media Protocol</h1>
         <p className="hero__subtitle">
