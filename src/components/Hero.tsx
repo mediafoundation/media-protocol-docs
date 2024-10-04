@@ -50,19 +50,18 @@ const items = [
 
 export function Hero() {
   return (
-    <div className="row margin-top--xl margin-bottom--xl" style={{ alignItems: 'center' }}>
+    <div className="row margin-top--xl stackedCards" style={{ alignItems: 'center' }}>
       <div className="col col--6">
         <h1 className="hero__title">Media Protocol</h1>
         <p className="hero__subtitle">
-          Most popular smart contract framework for building decentralized
-          marketplaces.
+          A suite of tools empowering builders to create peer-to-peer marketplaces.
         </p>
         <div style={{ display: 'flex', gap: '12px' }}>
           <Button name="Get Started" href="/overview" />
           <Button name="View on Github" href="https://github.com/mediafoundation/media-protocol" />
         </div>
       </div>
-      <div className="col col--6">
+      <div className="col col--6 innerCards">
         <StackedCards items={items} />
       </div>
     </div>
