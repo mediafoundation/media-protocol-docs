@@ -1,4 +1,3 @@
-import { Button } from "./Button";
 import { StackedCards } from "./Cards";
 
 const items = [
@@ -58,7 +57,7 @@ export function Hero() {
         </p>
         <div style={{ display: 'flex', gap: '12px' }}>
           <a href="#get-started" className="boton-elegante">Get Started</a>
-          <a href="https://github.com/mediafoundation/media-protoco" 
+          <a href="https://github.com/mediafoundation/media-protocol" 
             target="_blank" 
             className="boton-elegante"
           >
