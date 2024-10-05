@@ -1,0 +1,293 @@
+---
+title: "Marketplace Storage Contract Technical Reference"
+sidebar_label: Marketplace Storage
+sidebar_position: 2
+---
+
+This is a technical reference for the Media Protocol's ``Marketplace Storage`` smart contract.
+
+## Inheritance
+The `Marketplace` contract inherits [`Recoverable`](./recoverable) contract.
+
+## Public State Variables
+
+### General Variables
+
+| Name               | Type                       |                                                 |
+|--------------------|----------------------------|-------------------------------------------------|
+| protocolFeeTo      | `address`                  | Address that will receive the protocol fees.    |
+| protocolFeeRate    | `uint256`                  | The rate of the protocol fees.                  |
+| marketplacesCounter| `uint`                     | Marketplaces counter.                           |
+
+
+### Marketplaces Variables
+
+The following variables are mappings that store the data specific to each `marketplaceId`.
+
+| Name               | Type                       |                                                 |
+|--------------------|----------------------------|-------------------------------------------------|
+| owners             | `mapping(uint => address)` | Mapping of marketplaces owners.                 |
+| marketFeeTo        | `mapping(uint => address)` | Mapping of marketplaces fee recipients.         |
+| marketFeeRate      | `mapping(uint => uint)`    | Mapping of marketplaces fee rates.              |
+| REQUIRED_STAKE     | `mapping(uint => uint)`    | Mapping of required stakes for providers.       |
+| marketMetadata     | `mapping(uint => string)`   | Mapping of marketplaces metadata.              |
+| clients            | `mapping(uint => mapping(address => string))` | Mapping of clients metadata. |
+
+
+## Write Functions
+
+### initializeMarketplace
+
+Initializes a new marketplace.
+
+```solidity
+function initializeMarketplace(
+    uint requiredStake,
+    address _marketFeeTo,
+    uint256 _marketFeeRate
+) external nonReentrant returns (uint marketplaceId);
+```
+Parameters:
+
+| Name          | Type      |                                                        |
+|---------------|-----------|--------------------------------------------------------|
+| requiredStake | `uint`    | The required staked liquidity to be a provider.        |
+| _marketFeeTo  | `address` | The address that will receive the marketplace fees.    |
+| _marketFeeRate| `uint`    | The marketplace fee rate. 100 to 100000 (0.01% to 10%).|
+| metadata      | `string`  | The metadata for the marketplace.                      |
+
+Return values:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the created marketplace.                 |
+
+---
+
+### setMarketplaceMetadata
+
+Sets the metadata for a marketplace.
+
+```solidity
+function setMarketplaceMetadata(
+    uint marketplaceId,
+    string calldata metadata
+) external nonReentrant returns (bool);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| metadata      | `string`  | The metadata for the marketplace.                  |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the operation was successful or not.       |
+
+---
+
+### setRequiredStake
+
+Sets the required stake for a marketplace.
+
+```solidity
+function setRequiredStake(
+    uint marketplaceId,
+    uint requiredStake
+) external nonReentrant returns (bool);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| requiredStake | `uint`    | The required liquidity to be a provider.           |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the operation was successful or not.       |
+
+---
+
+### transferMarketplaceOwnership
+
+Transfers the ownership of a marketplace.
+
+```solidity
+function transferMarketplaceOwnership(
+    uint marketplaceId,
+    address newOwner
+) external nonReentrant returns (bool);
+```
+Parameters:
+
+| Name          | Type      |                                                    |
+|---------------|-----------|----------------------------------------------------|
+| marketplaceId | `uint`    | The id of the marketplace.                         |
+| newOwner      | `address` | The address of the new owner.                      |
+
+Return values:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the operation was successful or not.       |
+
+---
+
+### setMarketFeeRate
+
+Allows marketplace owners to set the fee rate for their marketplace.
+
+```solidity
+function setMarketFeeRate(
+    uint marketplaceId, 
+    uint256 _feeRate
+) external nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                            |
+|------------------|----------|------------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace you want to set the fee for.     |
+| _feeRate         | `uint`   | The fee rate you want to set. 100 to 100000 (0.01% to 10%).|
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
+
+---
+
+### setMarketFeeTo
+
+Allows marketplace owners to set the fee recipient for their marketplace.
+
+```solidity
+function setMarketFeeTo(
+    uint marketplaceId, 
+    address _feeTo
+) external nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace you want to set the fee for.|
+| _feeTo           | `address`| The fee recipient you want to set.                    |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
+
+
+---
+
+### updateClient
+
+Allows clients to update their metadata.
+
+```solidity
+function updateClient(
+    uint marketplaceId,
+    string calldata metadata
+) external nonReentrant returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| marketplaceId    | `uint`   | The id of the marketplace where you are registered.  |
+| metadata         | `string` | The new metadata for the client.                     |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the update was successful or not.          |
+
+---
+
+### setProtocolFeeTo
+
+Allows the contract owner to set the protocol fee recipient.
+
+```solidity
+function setProtocolFeeTo(address feeTo) external onlyRole(DEFAULT_ADMIN_ROLE) returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| feeTo            | `address`| The address of the protocol fee recipient.           |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
+
+---
+
+### setProtocolFeeRate
+
+Allows the contract owner to set the protocol fee rate.
+
+```solidity
+function setProtocolFeeRate(uint256 feeRate) external onlyRole(DEFAULT_ADMIN_ROLE) returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                           |
+|------------------|----------|-----------------------------------------------------------|
+| feeRate          | `uint256`| The rate of the protocol fee. 100 to 100000 (0.01% to 10%)|
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the setting was successful or not.         |
+
+---
+
+## Events
+
+Events are emitted for significant actions within the contract, such as registration of a provider, creation, acceptance, or cancellation of a deal. All event names and return values are self-descriptive.
+
+- `ProtocolFeeToSet(address _feeTo)`
+- `ProtocolFeeRateSet(uint256 _feeRate)`
+- `MarketplaceInitialized(uint _marketplaceId)`
+- `MarketplaceMetadataSet(uint _marketplaceId, string _metadata)`
+- `RequiredStakeSet(uint _marketplaceId, uint _stake)`
+- `MarketplaceOwnershipTransferred(uint _marketplaceId, address _newOwner)`
+- `MarketFeeRateSet(uint _marketplaceId, uint256 _feeRate)`
+- `MarketFeeToSet(uint _marketplaceId, address _feeTo)`
+- `ClientUpdated(uint _marketplaceId, address _client)`
+
+
+---
+
+## Modifiers
+
+Modifiers are used to conditionally change the behavior of functions. For instance, certain functions can only be executed by the contract owner or by authorized addresses.
+
+### onlyRole(MARKETPLACE_ROLE)
+
+The `onlyRole(MARKETPLACE_ROLE)` modifier ensures that `msg.sender` is the marketplace contract.
+
+### onlyRole(DEFAULT_ADMIN_ROLE)
+
+The `onlyRole(DEFAULT_ADMIN_ROLE)` modifier ensures that `msg.sender` is an admin. 
+

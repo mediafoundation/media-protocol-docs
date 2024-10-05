@@ -1,0 +1,85 @@
+---
+title: "Recoverable Contract Technical Reference"
+sidebar_label: Recoverable
+sidebar_position: 4
+---
+
+This is a technical reference for the Media Protocol's ``Recoverable`` smart contract.
+
+## Inheritance
+
+The `Recoverable` contract inherits the Open Zeppelin's [`AccessControl`](https://docs.openzeppelin.com/contracts/5.x/api/access#AccessControl)
+ and [`IERC721Receiver`](https://docs.openzeppelin.com/contracts/5.x/api/token/erc721#IERC721Receiver) contracts.
+
+## Write Functions
+
+
+### recoverNative
+
+Allows the contract owner to recover native coins sent unintentionally to the contract.
+
+```solidity
+function recoverNative() external onlyRole(DEFAULT_ADMIN_ROLE) returns (bool);
+```
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the recovery was successful or not.        |
+
+---
+
+### _recoverERC20
+
+Allows the contract owner to recover tokens sent unintentionally to the contract. It is an internal function. It is not meant to be called directly. To use this function, contracts that inherit from `Recoverable` should implement a public function that calls this function. In all our contracts, this function is called `recoverERC20`.
+
+```solidity
+function _recoverERC20(IERC20 _token) internal onlyRole(DEFAULT_ADMIN_ROLE) returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                                      |
+|------------------|----------|------------------------------------------------------|
+| _token           | `IERC20` | The token you want to recover.                       |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the recovery was successful or not.        |
+
+---
+
+### _recoverERC721
+
+Allows the contract owner to recover ERC721 tokens sent unintentionally to the contract. It is an internal function. It is not meant to be called directly. To use this function, contracts that inherit from `Recoverable` should implement a public function that calls this function. In all our contracts, this function is called `recoverERC721`.
+
+```solidity
+function _recoverERC721(IERC721 _token, uint256 _tokenId) internal onlyRole(DEFAULT_ADMIN_ROLE) returns (bool);
+```
+
+Parameters:
+
+| Name             | Type     |                                           |
+|------------------|----------|-------------------------------------------|
+| _token           | The token you want to recover.                       |
+| _tokenId         | `uint256` | The token ID you want to recover.        |
+
+Return:
+
+| Type      |                                                    |
+|-----------|----------------------------------------------------|
+| `bool`    | Whether the recovery was successful or not.        |
+
+
+## Modifiers
+
+Modifiers are used to conditionally change the behavior of functions. For instance, certain functions can only be executed by the contract owner or by authorized addresses.
+
+
+### onlyRole(DEFAULT_ADMIN_ROLE)
+
+The `onlyRole(DEFAULT_ADMIN_ROLE)` modifier ensures that `msg.sender` is an admin. 
+

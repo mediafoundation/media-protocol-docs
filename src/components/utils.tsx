@@ -29,8 +29,7 @@ export const Items = [
     description: (
       <>
         A suite of persistent, non-upgradable smart contracts that together form
-        a protocol, enabling anyone to create unstoppable peer-to-peer
-        marketplaces.
+        a protocol, enabling anyone to create peer-to-peer marketplaces.
       </>
     ),
     sources: {
@@ -76,7 +75,7 @@ export const Items2 = [
     description: (<>
       Learn about the core concepts of the Media Protocol, its governance structure, and key terminology.
     </>),
-    content: <img src="./img/01.svg" />,
+    content: <img src="/img/01.svg" />,
     href: "/introduction"
   },
   {
@@ -86,7 +85,7 @@ export const Items2 = [
         Explore the process of integrating with Media Protocol, using the <b>SDK</b> and step-by-step guidance.
       </>
     ),
-    content: <img src="./img/04.svg" />,
+    content: <img src="/img/04.svg" />,
     href: "/sdk/overview"
   },
   {
@@ -94,7 +93,7 @@ export const Items2 = [
     description: (
       <>Discover the architecture and technical reference of the smart contracts powering the Media Protocol.</>
     ),
-    content: <img src="./img/03.svg" />,
+    content: <img src="/img/03.svg" />,
     href: "/smart-contracts/overview"
   },
   {
@@ -115,8 +114,8 @@ export const GovernanceItems = [
     description: "A forum for governance-related discussions, proposals, and voting on key decisions that shape the future of the protocol.",
     href: "https://gov.mediaprotocol.net/",
     sources: {
-      light: "/img/mediaprotocol.svg",
-      dark: "/img/mediaprotocolwhite.svg",
+      light: "/img/forum.svg",
+      dark: "/img/forumwhite.svg",
     },
   },
   {

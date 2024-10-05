@@ -845,13 +845,6 @@ html[data-theme='dark'] .NotificationAsset_card__KoMdR {
   stroke: var(--ifm-toc-border-color);
 }
 
-
-@media (min-width: 997px) {
-  #__docusaurus .docItemCol_node_modules-\@docusaurus-theme-classic-lib-theme-DocItem-Layout-styles-module {
-      max-width: var(--ifm-col-width) !important;
-  }
-}
-
 .docs-doc-id-intro .theme-doc-breadcrumbs {
   display: none;
 }
@@ -2004,7 +1997,7 @@ html[data-theme='dark'] .color-bullets2 {
 }
 
 @media (min-width: 997px) {
-  .container > .row > .col {
+  .docs-doc-id-intro .container > .row > .col {
       max-width: 100% !important;
   }
 }
