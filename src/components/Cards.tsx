@@ -1,6 +1,7 @@
 import React, { CSSProperties, useEffect, useRef } from "react";
 import ThemedImage from "@theme/ThemedImage";
 import useBaseUrl from "@docusaurus/useBaseUrl";
+import Link from "@docusaurus/Link";
 
 export function Cards({ items, size = 4, height = "auto" }) {
   const cardsRef = useRef([]);
@@ -32,20 +33,15 @@ export function Cards({ items, size = 4, height = "auto" }) {
 
   return (
     <div className="cards" ref={wrapperRef}>
-      {items.map((item, index) => (
+      {items.map((item, index) => { 
+        return (
         <div
           className="card"
           style={{ "--size": size, "--height": height } as CSSProperties}
           key={index}
           ref={(el) => (cardsRef.current[index] = el)}
-          // window open item.href only if item.href exists
-          onClick={() => {
-            if (item.href) {
-              const target = item.href.startsWith("http") ? "_blank" : "_self";
-              window.open(item.href, target);
-            }
-          }}
         >
+          <Link to={item.href} style={{position:"absolute", inset:0}}>&nbsp;</Link>
           <div className="card-content">
             {item.sources && (
               <div className="connected-container">
@@ -111,7 +107,8 @@ export function Cards({ items, size = 4, height = "auto" }) {
             {!item.content && <div className="card-dots" />}
           </div>
         </div>
-      ))}
+      )
+      })}
     </div>
   );
 }

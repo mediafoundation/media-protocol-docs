@@ -1,8 +1,6 @@
 
 import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
-import { SDKBento } from "./SDKBento";
-import { GridBackground } from "./GridBackground";
 
 export function Feature({ imageUrl, title, description }) {
   const imgUrl = useBaseUrl(imageUrl);
@@ -36,7 +34,7 @@ export const Items = [
       light: "/img/mediaprotocol.svg",
       dark: "/img/mediaprotocolwhite.svg",
     },
-    href: "./overview",
+    href: "/overview",
   },
   {
     title: "Media Network",
@@ -137,26 +135,3 @@ export const GovernanceItems = [
     },
   }
 ]
-
-{/* <div className="row cards__container margin-top--lg">
-    <Feature  
-        title="What is Media Protocol"
-        imageUrl="/introduction"
-        description="Learn about the core concepts of the Media Protocol, its governance structure, and key terminology."
-    />
-    <Feature  
-        title="Integrate with Media Protocol"
-        imageUrl="/sdk/overview"
-        description="Explore the process of integrating with Media Protocol, using the SDK and step-by-step guidance."
-    />
-    <Feature  
-        title="Media Protocol Smart Contracts"
-        imageUrl="/smart-contracts/overview"
-        description="Discover the architecture and technical reference of the smart contracts powering the Media Protocol."
-    />
-    <Feature  
-        title="Media Protocol Governance"
-        imageUrl="/governance/overview"
-        description="Understand the governance structure of the Media Protocol, and how to participate."
-    />
-</div> */}
