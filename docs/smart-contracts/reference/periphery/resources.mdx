@@ -31,8 +31,6 @@ The `Resources` contract extends the `Recoverable` contract.
 
 ### Functions
 
-- [`authorizeProxy`](#authorizeproxy): Sets the marketplace contract address.
-- [`deAuthorizeProxy`](#deauthorizeproxy): Removes the marketplace contract address.
 - [`addResource`](#addresource): Adds a new resource.
 - [`updateResource`](#updateresource): Updates a resource's encrypted data.
 - [`removeResource`](#removeresource): Removes a resource.
@@ -43,10 +41,6 @@ The `Resources` contract extends the `Recoverable` contract.
 - [`getResources`](#getresources): Retrieves all resources of a specific address.
 - [`getPaginatedResources`](#getpaginatedresources): Retrieves a paginated list of resources.
 - [`getOwnerKeys`](#getownerkeys): Retrieves encrypted owner keys for a given address.
-- [`receive`](#receive): Allows receiving native coin.
-- [`recoverNative`](#recovernative): Allows the owner to recover any native coins sent to this contract.
-- [`recoverERC20`](#recovererc20): Allows the owner to recover any ERC20 tokens sent to this contract.
-- [`recoverERC721`](#recovererc721): Allows the owner to recover any ERC721 tokens sent to this contract.
 
 
 ### Events
@@ -61,50 +55,6 @@ The `Resources` contract extends the `Recoverable` contract.
 ---
 
 ## Write Functions
-
-### authorizeProxy
-
-Allows the contract owner to authorize a new address.
-
-```solidity
-function authorizeProxy(address _addr) external onlyRole(DEFAULT_ADMIN_ROLE) returns (bool);
-```
-
-Parameters:
-
-| Name             | Type     |                                                      |
-|------------------|----------|------------------------------------------------------|
-| _addr            | `address`| The address you want to authorize.                   |
-
-Return:
-
-| Type      |                                                    |
-|-----------|----------------------------------------------------|
-| `bool`    | Whether the authorization was successful or not.   |
-
----
-
-### deAuthorizeProxy
-
-Allows the contract owner to de-authorize an address.
-
-```solidity
-function deAuthorizeProxy(address _addr) external onlyRole(DEFAULT_ADMIN_ROLE) returns (bool);
-```
-
-Parameters:
-
-| Name             | Type     |                                                      |
-|------------------|----------|------------------------------------------------------|
-| _addr            | `address`| The address you want to de-authorize.                |
-
-Return:
-
-| Type      |                                                    |
-|-----------|----------------------------------------------------|
-| `bool`    | Whether the de-authorization was successful or not.|
-
----
 
 ### addResource
 
