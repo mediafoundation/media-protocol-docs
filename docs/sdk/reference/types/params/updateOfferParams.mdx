@@ -1,0 +1,36 @@
+---
+title: "UpdateOfferParams"
+sidebar_label: UpdateOfferParams
+sidebar_position: 2
+---
+
+The `UpdateOfferParams` interface defines the parameters required to update an existing offer.
+
+## Properties
+
+- **`marketplaceId`**: `string | number | bigint`
+The ID of the marketplace where the offer is being updated.
+
+- **`offerId`**: `number`
+The ID of the offer to update.
+
+- **`maximumDeals`**: `number`
+The maximum number of deals that can be created from this offer.
+
+- **`autoAccept`**: `boolean`
+Whether the offer automatically accepts deals.
+
+- **`pricePerSecond`**: `number`
+The price per second for the deal.
+
+- **`minDealDuration`**: `number`
+The minimum duration for a deal.
+
+- **`billFullPeriod`**: `boolean`
+Whether the deal should bill full periods.
+
+- **`singlePeriodOnly`**: `boolean`
+Whether the deal should bill for a single period only.
+
+- **`metadata`**: `string`
+Additional metadata for the offer.

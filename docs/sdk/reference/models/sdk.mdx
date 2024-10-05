@@ -1,0 +1,111 @@
+---
+title: "SDK"
+sidebar_label: SDK
+sidebar_position: 1
+---
+
+The `Sdk` class is a core component for managing interactions with the blockchain. It provides functionality to generate public and wallet clients, enabling secure and efficient communication with supported blockchain networks. This class can be used by developers to integrate blockchain functionalities into their applications.
+
+## Class: Sdk
+
+The `Sdk` class initializes a configuration for blockchain interactions and provides methods to create both public and wallet clients. It allows users to specify options like blockchain chain, transport methods, private keys, or mnemonic phrases.
+
+### Constructor
+
+The constructor initializes an instance of the `Sdk` class.
+
+#### Parameters
+
+- `chain` (optional): `Chain`
+The blockchain chain to connect to. Defaults to `sepolia`. For more information check [viem Chain](https://viem.sh/docs/glossary/terms#chain)
+
+- `transport` (optional): `Transport[]`
+An array of transport methods to use for communication. If not provided, defaults to an HTTP transport using the default RPC URL of the chain. For more information check [viem Transport](https://viem.sh/docs/glossary/terms#transport)
+
+- `privateKey` (optional): `string | undefined`
+A private key to create a wallet client. If provided, either this or the mnemonic must be used to initialize the wallet client.
+
+- `mnemonic` (optional): `string | undefined`
+A mnemonic phrase to create a wallet client. If provided, either this or the private key must be used to initialize the wallet client.
+
+- `walletClient` (optional): `any | undefined`
+An already initialized wallet client. If provided, this will be used directly instead of creating a new one.
+
+#### Usage
+
+```javascript
+const sdk = new Sdk({
+    chain: sepolia,
+    privateKey: "your-private-key"
+});
+```
+
+```javascript
+const sdk = new Sdk({
+    chain: sepolia,
+    mnemonic: "your mnemonic phrase"
+});
+```
+
+## Attributes
+
+### `config`
+#### Type: `SdkConfig`
+Contains the configuration for the SDK, including `walletClient` and `publicClient`. This configuration is essential for managing interactions with the blockchain through both public and wallet clients.
+
+## Methods
+
+### `generatePublicClient`
+
+Generates a public client for interacting with the blockchain.
+
+##### Parameters:
+- `chain`: `Chain`
+The blockchain chain to use for the public client.
+
+- `transports`: `Transport[]`
+An array of transport methods to use for communication. This allows configuring multiple transport options for redundancy and reliability.
+
+- **Returns**: `PublicClient`
+A public client configured for the specified chain and transports.
+
+- **Usage**:
+No example provided at this time.
+
+#### `createWalletClient`
+
+Creates a wallet client for handling wallet-based blockchain transactions.
+
+- **Parameters**:
+- `chain`: `Chain`
+The blockchain chain to use for the wallet client.
+
+- `transports`: `Transport[]`
+An array of transport methods to use for communication. Provides flexibility in choosing different transport mechanisms.
+
+- `privateKey`: `string | undefined`
+A private key used to create the wallet account. If provided, it initializes the wallet client with this key.
+
+- `mnemonic`: `string | undefined`
+A mnemonic phrase used to generate the wallet account. If provided, it initializes the wallet client with this mnemonic.
+
+- **Returns**: `WalletClient`
+A wallet client configured with the specified account, chain, and transports.
+
+- **Usage**:
+No example provided at this time.
+
+### Supported Chains
+
+The SDK currently supports the following chains:
+
+- `sepolia` (Chain ID: 11155111)
+- `baseSepolia` (Chain ID: 84532)
+
+These chains are defined within the `validChains` object and can be referenced when initializing the `Sdk` class.
+
+```javascript
+const validChains = {
+    11155111: sepolia,
+    84532: baseSepolia,
+};

@@ -1,17 +1,19 @@
 ---
 title: Staking Contract Technical Reference
 sidebar_label: Staking
-sidebar_position: 6
+sidebar_position: 3
 ---
+
+This is a technical reference for the Media Protocol's ``Staking`` smart contract.
+
+## Overview
 
 The `Staking` contract allows the `Marketplace` contract to stake Uniswap V3 Positions NFTs in name of users to become providers, and also provides a way to retrieve the NFT ID of a provider and the stake amount.
 
-## Details:
+## Inheritance
+The `Staking` contract inherits [`Recoverable`](../core/recoverable), and Open Zeppelin's [`ReentrancyGuard`](https://docs.openzeppelin.com/contracts/5.x/api/utils#ReentrancyGuard) contracts.
 
-### Inheritance
-The `Staking` contract inherits `Recoverable`, `IERC721Receiver`, and `ReentrancyGuard` contracts.
-
-### State Variables
+## State Variables
 
 - `token`: The staking ERC20 Token.
 - `WETH9`: The WETH9 contract address.
@@ -21,7 +23,7 @@ The `Staking` contract inherits `Recoverable`, `IERC721Receiver`, and `Reentranc
 - `factory`: The Uniswap V3 factory contract.
 
 
-### Functions
+## Functions
 
 - [`setMarketplace`](#setmarketplace): Sets the marketplace contract address.
 - [`setMediaToken`](#setmediatoken): Sets the MEDIA token address.
@@ -38,7 +40,7 @@ The `Staking` contract inherits `Recoverable`, `IERC721Receiver`, and `Reentranc
 Sets the marketplace contract address.
 
 ```solidity
-function setMarketplace(address _marketplaceAddress) external onlyOwner returns (bool)
+function setMarketplace(address _marketplaceAddress) external onlyRole(DEFAULT_ADMIN_ROLE) returns (bool)
 ```
 
 Parameters:
@@ -60,7 +62,7 @@ Return values:
 Sets the MEDIA token address.
 
 ```solidity
-function setMediaToken(address _tokenAddress) external onlyOwner returns (bool)
+function setMediaToken(address _tokenAddress) external onlyRole(DEFAULT_ADMIN_ROLE) returns (bool)
 ```
 
 Parameters:

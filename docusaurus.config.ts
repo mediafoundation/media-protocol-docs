@@ -53,7 +53,7 @@ const config: Config = {
 
       ],
     },
-/*     footer: {
+    /* footer: {
       style: 'dark',
       links: [
         {

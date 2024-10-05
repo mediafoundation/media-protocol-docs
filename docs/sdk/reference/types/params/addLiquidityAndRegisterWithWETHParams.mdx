@@ -1,0 +1,30 @@
+---
+title: "AddLiquidityAndRegisterWithWETHParams"
+sidebar_label: AddLiquidityAndRegisterWithWETHParams
+sidebar_position: 15
+---
+
+The `AddLiquidityAndRegisterWithWETHParams` interface defines the parameters required to add liquidity and register using WETH.
+
+## Properties
+
+- **`marketplaceId`**: `bigint | number | string`
+The ID of the marketplace.
+
+- **`label`**: `string`
+A label for the registration.
+
+- **`publicKey`**: `string`
+The public key for secure communication.
+
+- **`minMediaAmountOut`**: `bigint | number | string`
+The minimum media amount expected out of the transaction.
+
+- **`slippage`**: `bigint | number | string`
+The allowed slippage for the transaction.
+
+- **`amount`**: `bigint`
+The amount of WETH to use.
+
+- **`pairFee`**: `FeeAmount` (optional)
+The fee amount for the Uniswap pair.

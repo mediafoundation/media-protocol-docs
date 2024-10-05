@@ -1,0 +1,182 @@
+---
+title: "EventsHandler"
+sidebar_label: EventsHandler
+sidebar_position: 5
+---
+
+The `EventsHandler` class is designed to handle events from various smart contracts. It provides methods for retrieving past events and listening for real-time events from contracts such as the `Marketplace`, `MarketplaceViewer`, and `Resources` contracts.
+
+## Class: EventsHandler
+
+The `EventsHandler` class allows developers to interact with events emitted by smart contracts. It provides methods for retrieving historical events and for setting up listeners to capture events as they happen.
+
+### Constructor
+
+The constructor initializes an instance of the `EventsHandler` class.
+
+#### Parameters
+
+- `sdkInstance`: `Sdk`
+An instance of the SDK containing configuration details for interacting with the blockchain.
+
+#### Usage
+
+```javascript
+const eventsHandler = new EventsHandler(sdkInstance);
+```
+
+## Attributes
+
+### `config`: `SdkConfig`
+
+Contains the configuration for the SDK, which includes:
+
+- **`walletClient`**: A client used for managing wallet-based blockchain transactions.
+- **`publicClient`**: A client used for performing read-only interactions with the blockchain.
+
+The `config` attribute is initialized using an instance of the `Sdk` class and is used throughout the `EventsHandler` class to facilitate interactions with various smart contracts. It provides the necessary clients to perform both read and write operations on the blockchain.
+
+## Methods
+
+### `getPastEvents`
+
+Retrieves past events from a specified contract.
+
+- **Parameters**:
+- `contractName`: `string`
+The name of the contract.
+
+- `contractAbi`: `any`
+The ABI of the contract.
+
+- `eventName`: `string[] | string | undefined`
+The name(s) of the event(s) to retrieve.
+
+- `fromBlock`: `bigint`
+The starting block number.
+
+- `toBlock`: `bigint`
+The ending block number.
+
+- **Returns**: `Promise<ContractEvent[]>`
+The past events.
+
+- **Throws**:
+Will throw an error if the contract address is not found for the network ID.
+
+### `listenForContractEvent`
+
+Listens for a specific event from a contract.
+
+- **Parameters**:
+- `contractName`: `string`
+The name of the contract.
+
+- `contractAbi`: `any`
+The ABI of the contract.
+
+- `eventName`: `string`
+The name of the event to listen for.
+
+- `callback`: `function`
+The callback function to handle the event logs.
+
+- `onError`: `function`
+The callback function to handle errors.
+
+- **Throws**:
+Will throw an error if the contract address is not found for the network ID.
+
+### `getMarketplacePastEvents`
+
+Retrieves past events from the Marketplace contract.
+
+- **Parameters**:
+- `eventName`: `string[] | string | undefined`
+The name(s) of the event(s) to retrieve.
+
+- `fromBlock`: `bigint`
+The starting block number.
+
+- `toBlock`: `bigint`
+The ending block number.
+
+- **Returns**: `Promise<ContractEvent[]>`
+The past events.
+
+### `getMarketplaceViewerPastEvents`
+
+Retrieves past events from the MarketplaceViewer contract.
+
+- **Parameters**:
+- `eventName`: `string[] | string | undefined`
+The name(s) of the event(s) to retrieve.
+
+- `fromBlock`: `bigint`
+The starting block number.
+
+- `toBlock`: `bigint`
+The ending block number.
+
+- **Returns**: `Promise<ContractEvent[]>`
+The past events.
+
+### `getResourcesPastEvents`
+
+Retrieves past events from the Resources contract.
+
+- **Parameters**:
+- `eventName`: `string[] | string | undefined`
+The name(s) of the event(s) to retrieve.
+
+- `fromBlock`: `bigint`
+The starting block number.
+
+- `toBlock`: `bigint`
+The ending block number.
+
+- **Returns**: `Promise<ContractEvent[]>`
+The past events.
+
+### `listenForMarketplaceEvent`
+
+Listens for a specific event from the Marketplace contract.
+
+- **Parameters**:
+- `eventName`: `string`
+The name of the event to listen for.
+
+- `callback`: `function`
+The callback function to handle the event logs.
+
+- `onError`: `function`
+The callback function to handle errors.
+
+### `listenForMarketplaceViewerEvent`
+
+Listens for a specific event from the MarketplaceViewer contract.
+
+- **Parameters**:
+- `eventName`: `string`
+The name of the event to listen for.
+
+- `callback`: `function`
+The callback function to handle the event logs.
+
+- `onError`: `function`
+The callback function to handle errors.
+
+### `listenForResourcesEvent`
+
+Listens for a specific event from the Resources contract.
+
+- **Parameters**:
+- `eventName`: `string`
+The name of the event to listen for.
+
+- `callback`: `function`
+The callback function to handle the event logs.
+
+- `onError`: `function`
+The callback function to handle errors.
+

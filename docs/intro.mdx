@@ -1,0 +1,40 @@
+---
+slug: /
+title: "Welcome to Media Protocol"
+sidebar_class_name: hidden
+breadcrumbs: false
+hide_title: true
+sidebar_position: 0
+pagination_next:
+---
+
+import { Feature } from '../src/components/utils'
+import { Hero } from '../src/components/Hero'
+import { Cards } from '../src/components/Cards'
+import { Items } from '../src/components/utils'
+import { Items2 } from '../src/components/utils'
+import { GovernanceItems } from '../src/components/utils'
+import { Separator } from '../src/components/Separator'
+
+<div className="home_header_back-wrap">
+    <img src="./img/hero.svg" loading="eager" className="home_header_back"></img>
+</div>
+
+<Hero />
+<div id="get-started" className='padding-top--xl'>
+    <Cards items={Items2} size={3} />
+</div>
+
+<Separator />
+<div>
+    <h1>Protocol, Network, Foundation</h1>
+    Let's clarify the differences among the various components of the **Media Ecosystem**. Some of these might confuse newcomers. **Media Network** concept was born first, and subsequently, the **Media Protocol** was established as its foundation. The **Media Foundation** is the driving force behind the development of both projects.
+    
+    <Cards items={Items} />
+</div>
+<Separator />
+<div>
+    <h1>The Governance Apps</h1>
+    Share your opinions and shape the future of the protocol.
+    <Cards items={GovernanceItems} /> 
+</div>

@@ -1,0 +1,24 @@
+---
+title: "CreateDealsParams"
+sidebar_label: CreateDealsParams
+sidebar_position: 5
+---
+
+The `CreateDealsParams` interface defines the parameters required to create multiple deals.
+
+## Properties
+
+- **`marketplaceId`**: `number | string | bigint`
+The ID of the marketplace where the deals are being created.
+
+- **`resourceId`**: `string | number | bigint`
+The ID of the resource associated with the deals.
+
+- **`offersId`**: `number[]`
+An array of offer IDs to create deals from.
+
+- **`blockedBalance`**: `number`
+The amount of balance to block for each deal.
+
+- **`sharedKeyCopies`**: `string[]`
+An array of shared key copies required for accessing each deal.

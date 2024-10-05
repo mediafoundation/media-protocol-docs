@@ -46,7 +46,7 @@ Return values:
 Sets the marketplace contract address.
 
 ```solidity
-function setMarketplace(Marketplace _marketplace) external onlyOwner returns (bool)
+function setMarketplace(Marketplace _marketplace) external onlyRole(DEFAULT_ADMIN_ROLE) returns (bool)
 ```
 
 Parameters:
@@ -116,8 +116,3 @@ Return values:
 | Name          | Type      |                                                    |
 |---------------|-----------|----------------------------------------------------|
 |               | `uint256` | The average rating for the provider.               |
----
-
-:::note
-This is a high-level technical breakdown. For a deep understanding of each function's inner workings and logic, refer to the smart contract's actual implementation.
-:::

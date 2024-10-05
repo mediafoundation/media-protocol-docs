@@ -1,0 +1,33 @@
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-0.1 47.9 431 193">   <defs>     <style> @media (prefers-color-scheme: light) {
+      .cls-1 {         
+        fill: rgb(58, 60, 67);          
+        fill-rule: evenodd;         
+        stroke: rgb(12, 14, 18);         
+        stroke-miterlimit: 10;       
+      }        
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .cls-1 {         
+        fill: #292b32;          
+        fill-rule: evenodd;         
+        stroke: #444950;         
+        stroke-miterlimit: 10;       
+      }        
+    }        
+    
+    @media (prefers-color-scheme: light) {
+      .cls-2 {         
+        fill: none;         
+        stroke: #dadde1;         
+        stroke-dasharray: 0 0 4 3;       
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .cls-2 {         
+        fill: none;         
+        stroke: #444950;         
+        stroke-dasharray: 0 0 4 3;       
+      }
+    } </style>   </defs>   <rect class="cls-2" x=".9" y="48.9" width="429" height="191"></rect>   <path class="cls-2" d="M24.4,48.4v192"></path>   <path class="cls-2" d="M48.4,48.4v192"></path>   <path class="cls-2" d="M72.4,48.4v192"></path>   <path class="cls-2" d="M96.4,48.4v192"></path>   <path class="cls-2" d="M120.4,48.4v192"></path>   <path class="cls-2" d="M144.4,48.4v192"></path>   <path class="cls-2" d="M168.4,48.4v192"></path>   <path class="cls-2" d="M192.4,48.4v192"></path>   <path class="cls-2" d="M216.4,48.4v192"></path>   <path class="cls-2" d="M240.4,48.4v192"></path>   <path class="cls-2" d="M264.4,48.4v192"></path>   <path class="cls-2" d="M288.4,48.4v192"></path>   <path class="cls-2" d="M312.4,48.4v192"></path>   <path class="cls-2" d="M336.4,48.4v192"></path>   <path class="cls-2" d="M360.4,48.4v192"></path>   <path class="cls-2" d="M384.4,48.4v192"></path>   <path class="cls-2" d="M408.4,48.4v192"></path>   <path class="cls-2" d="M430.4,144.4H.4"></path>   <path class="cls-2" d="M430.4,168.4H.4"></path>   <path class="cls-2" d="M430.4,192.4H.4"></path>   <path class="cls-2" d="M430.4,216.4H.4"></path>   <path class="cls-2" d="M430.4,120.4H.4"></path>   <path class="cls-2" d="M430.4,96.4H.4"></path>   <path class="cls-2" d="M430.4,72.4H.4"></path>   <g>     <g>       <path class="cls-1" d="M224.3,73.4h-44.8v116.1h98.7v-89.8s-53.8,0-53.8,0v-26.3ZM197.2,163.5v-10.4l63,.9v8.9l-63,.6ZM197.3,144.5v-8.7h63v8.7h-63ZM260.2,127h-63.3v-9.8h63.3v9.8Z"></path>       <path class="cls-1" d="M233.6,73.4v16.6h42.7l-42.7-16.6Z"></path>     </g>     <path class="cls-1" d="M152.9,91.4v125.1h97.7v-18.1h-80.8s0-107,0-107h-16.9Z"></path>   </g> </svg>

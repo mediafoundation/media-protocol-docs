@@ -1,0 +1,58 @@
+---
+title: "Deal"
+sidebar_label: Deal
+sidebar_position: 1
+---
+
+The `Deal` interface represents a structure for deals in the marketplace. It contains information about the client, provider, resource, and terms of the deal.
+
+## Properties
+
+- **`id`**: `bigint`
+The unique identifier of the deal.
+
+- **`offerId`**: `bigint`
+The ID of the related offer.
+
+- **`client`**: `Address`
+The address of the client involved in the deal.
+
+- **`provider`**: `Address`
+The address of the provider involved in the deal.
+
+- **`resourceId`**: `bigint`
+The ID of the resource associated with the deal.
+
+- **`totalPayment`**: `bigint`
+The total payment for the deal.
+
+- **`blockedBalance`**: `bigint`
+The balance blocked for the deal.
+
+- **`terms`**: `Object`
+An object containing terms of the deal:
+    - `pricePerSecond`: `bigint`
+    Price per second for the deal.
+    - `minDealDuration`: `bigint`
+    Minimum duration of the deal.
+    - `billFullPeriods`: `boolean`
+    If true, bills full periods.
+    - `singlePeriodOnly`: `boolean`
+    If true, only a single period is billed.
+    - `metadata`: `string`
+    Additional metadata for the deal.
+
+- **`status`**: `Object`
+An object containing the status of the deal:
+    - `active`: `boolean`
+    Indicates if the deal is active.
+    - `createdAt`: `bigint`
+    Timestamp when the deal was created.
+    - `acceptedAt`: `bigint`
+    Timestamp when the deal was accepted.
+    - `billingStart`: `bigint`
+    Timestamp when billing started.
+    - `cancelled`: `boolean`
+    Indicates if the deal is cancelled.
+    - `cancelledAt`: `bigint`
+    Timestamp when the deal was cancelled.

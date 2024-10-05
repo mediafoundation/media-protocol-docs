@@ -31,7 +31,6 @@ The `Resources` contract extends the `Recoverable` contract.
 
 ### Functions
 
-- [`setMarketplace`](#setmarketplace): Sets the marketplace contract address.
 - [`addResource`](#addresource): Adds a new resource.
 - [`updateResource`](#updateresource): Updates a resource's encrypted data.
 - [`removeResource`](#removeresource): Removes a resource.
@@ -42,8 +41,7 @@ The `Resources` contract extends the `Recoverable` contract.
 - [`getResources`](#getresources): Retrieves all resources of a specific address.
 - [`getPaginatedResources`](#getpaginatedresources): Retrieves a paginated list of resources.
 - [`getOwnerKeys`](#getownerkeys): Retrieves encrypted owner keys for a given address.
-- [`receive`](#): Allows receiving native coin.
-- [`recoverTokens`](#): Allows the owner to recover any ERC20 tokens sent to this contract.
+
 
 ### Events
 
@@ -57,28 +55,6 @@ The `Resources` contract extends the `Recoverable` contract.
 ---
 
 ## Write Functions
-
-### setMarketplace
-
-Sets the marketplace contract address.
-
-```solidity
-function setMarketplace(address _marketplace) external onlyOwner returns (bool);
-```
-
-Parameters:
-
-| Name          | Type      |                                                    |
-|---------------|-----------|----------------------------------------------------|
-| _marketplace  | `address` | The address of the marketplace contract.           |
-
-Return values:
-
-| Type      |                                                    |
-|-----------|----------------------------------------------------|
-| `bool`    | Whether the setting was successful or not.         |
-
----
 
 ### addResource
 
@@ -459,6 +435,3 @@ Parameters:
 |---------------|-----------|----------------------------------------------------|
 | _id           | `uint`    | The id of the resource.                             |
 | _addr         | `address` | The address of the user.                            |
-
----
-

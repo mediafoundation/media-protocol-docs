@@ -241,7 +241,7 @@ Return:
 Allows the contract owner to set the maximum dispute duration.
 
 ```solidity
-function setMaxDisputeDuration(uint256 _maxDisputeDuration) external onlyOwner;
+function setMaxDisputeDuration(uint256 _maxDisputeDuration) external onlyRole(DEFAULT_ADMIN_ROLE);
 ```
 
 Parameters:
@@ -273,7 +273,7 @@ Return:
 Allows the contract owner to set the marketplace contract address.
 
 ```solidity
-function setMarketplace(Marketplace _marketplace) external onlyOwner;
+function setMarketplace(Marketplace _marketplace) external onlyRole(DEFAULT_ADMIN_ROLE);
 ```
 
 Parameters:
@@ -281,42 +281,3 @@ Parameters:
 | Name             | Type         | Description                                                                 |
 |------------------|--------------|-----------------------------------------------------------------------------|
 | `_marketplace`   | `Marketplace`| The marketplace contract address.                                         |
-
----
-
-### receive
-
-Allows the contract to receive native coins.
-
-```solidity
-receive() external payable;
-```
-
----
-
-### recoverTokens
-
-Allows the contract owner to recover tokens sent unintentionally to the contract.
-
-```solidity
-function recoverTokens(IERC20 _token) external onlyOwner returns (bool);
-```
-
-Parameters:
-
-| Name             | Type     |                                                      |
-|------------------|----------|------------------------------------------------------|
-| _token           | `IERC20` | The token you want to recover.                       |
-
-Return:
-
-| Type      |                                                    |
-|-----------|----------------------------------------------------|
-| `bool`    | Whether the recovery was successful or not.        |
-
----
-
-
-:::note
-This is a high-level technical breakdown. For a deep understanding of each function's inner workings and logic, refer to the smart contract's actual implementation.
-:::

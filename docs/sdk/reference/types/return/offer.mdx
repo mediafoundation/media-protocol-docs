@@ -1,0 +1,37 @@
+---
+title: "Offer"
+sidebar_label: Offer
+sidebar_position: 2
+---
+
+The `Offer` interface represents a structure for offers in the marketplace. It contains information about the provider, terms of the offer, and the maximum number of deals.
+
+## Properties
+
+- **`id`**: `bigint`
+The unique identifier of the offer.
+
+- **`provider`**: `Address`
+The address of the provider who made the offer.
+
+- **`publicKey`**: `string`
+The public key of the provider for secure communication.
+
+- **`maximumDeals`**: `bigint`
+The maximum number of deals that can be created from this offer.
+
+- **`autoAccept`**: `boolean`
+Indicates if deals can be automatically accepted.
+
+- **`terms`**: `Object`
+An object containing the terms of the offer:
+    - `pricePerSecond`: `bigint`
+    Price per second for deals created from this offer.
+    - `minDealDuration`: `bigint`
+    Minimum duration for a deal.
+    - `billFullPeriods`: `boolean`
+    If true, bills full periods.
+    - `singlePeriodOnly`: `boolean`
+    If true, only a single period is billed.
+    - `metadata`: `string`
+    Additional metadata for the offer.
