@@ -17,14 +17,14 @@ To run code from the SDK in your application, use an `import` or `require` state
 ## ES6 (import)
 
 ```javascript
-import { Sdk, MarketplaceViewer, Marketplace, Resources, Helper } from 'media-sdk';
+import { Sdk, MarketplaceViewer, Marketplace, Resources, MarketplaceHelper } from 'media-sdk';
 
 ```
 
 ## CommonJS (require)
 
 ```javascript
-const { Sdk, MarketplaceViewer, Marketplace, Resources, Helper } = require('media-sdk');
+const { Sdk, MarketplaceViewer, Marketplace, Resources, MarketplaceHelper } = require('media-sdk');
 ```
 
 ## Initializing the SDK
@@ -48,10 +48,19 @@ All parameters are optional. If all three `privateKey`, `mnemonic`, and `walletC
 Using a private key. (Useful for backend applications)
 
 ```javascript
-import { Sdk, MarketplaceViewer, Marketplace, Resources, MarketplaceHelper } from 'media-sdk'
+import { Sdk } from 'media-sdk'
 
 // initialize the sdk using a private key.
 const sdk = new Sdk({ privateKey: 'afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890' })
+```
+
+Using a mnemonic.
+
+```javascript
+import { Sdk } from 'media-sdk'
+
+// initialize the sdk using a mnemonic.
+const sdk = new Sdk({ mnemonic: 'degree tackle suggest window test behind mesh extra cover prepare oak script' })
 ```
 
 Using a browser wallet:
