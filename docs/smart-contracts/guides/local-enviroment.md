@@ -79,19 +79,19 @@ To confirm that our environment is configured correctly we’ll attempt to compi
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "./media-protocol/contracts/interfaces/IMarketplace.sol";
+import "./media-protocol/contracts/interfaces/IMarketplaceStorage.sol";
 
 contract SimpleInitializeMarketplace {
-    Marketplace marketplace;
+    IMarketplaceStorage marketplaceStorage;
     constructor(address _marketplaceAddress) {
-        marketplace = Marketplace(_marketplaceAddress);
+        marketplaceStorage = IMarketplaceStorage(_marketplaceStorageAddress);
     }
 
     function initializeMarketplace() external returns (uint marketplaceId) {
-        marketplaceId = marketplace.initializeMarketplace(
+        marketplaceId = marketplaceStorage.initializeMarketplace(
             5000000000000000000, // marketplace min required liquidity
             msg.sender, // marketplace owner
-            3000 // 3% fee
+            30000 // 3% fee
         );
     }
 }

@@ -31,21 +31,19 @@ const { Sdk, MarketplaceViewer, Marketplace, Resources, MarketplaceHelper } = re
 
 To initialize an instance of the Media SDK, use the `Sdk` class. This class constructor takes in an object with the following **optional** parameters:
 
-- `chain`: A chain object. See [Viem's Chains](https://viem.sh/docs/chains/introduction#chains) for more details. If nothing is provided, the default chain will be used, which is Ethereum Goerli until mainnet launch.
-
+- `chain`: A chain object. See [Viem's Chains](https://viem.sh/docs/chains/introduction#chains) for more details. If nothing is provided, the default chain will be used, which is Ethereum Sepolia until mainnet launch.
 - `transport`: An array of transport objects. See [Viem's Transport](https://viem.sh/docs/clients/intro#transports) for more details.
-
 - `privateKey`: A ECP256K1 private key as a hex string to create a wallet client. Example: 'afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890'.
-
 - `mnemonic`: A BIP39 mnemonic phrase to create a wallet client. Example: 'degree tackle suggest window test behind mesh extra cover prepare oak script'.
-
 - `walletClient`: A wallet client. See [Viem's Wallet Client](https://viem.sh/docs/clients/wallet.html) for more details.
 
 All parameters are optional. If all three `privateKey`, `mnemonic`, and `walletClient` are absent, only view functions will be available. Therefore, none write functions will be available.
 
 ## Examples
 
-Using a private key. (Useful for backend applications)
+### Using a private key. 
+
+Useful for backend applications
 
 ```javascript
 import { Sdk } from 'media-sdk'
@@ -54,7 +52,7 @@ import { Sdk } from 'media-sdk'
 const sdk = new Sdk({ privateKey: 'afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890' })
 ```
 
-Using a mnemonic.
+### Using a mnemonic.
 
 ```javascript
 import { Sdk } from 'media-sdk'
@@ -63,7 +61,7 @@ import { Sdk } from 'media-sdk'
 const sdk = new Sdk({ mnemonic: 'degree tackle suggest window test behind mesh extra cover prepare oak script' })
 ```
 
-Using a browser wallet:
+### Using a browser wallet:
 
 ```javascript
 import { Sdk, custom, createWalletClient, validChains } from 'media-sdk'
@@ -80,7 +78,9 @@ const walletClient = createWalletClient({
 const sdk = new Sdk({ walletClient: walletClient });
 ```
 
-Using it without signer just for view functions with a custom chain:
+### Using it without signer 
+
+Useful to use the view functions only.
 
 ```javascript
 import { Sdk, MarketplaceViewer, validChains } from 'media-sdk'
