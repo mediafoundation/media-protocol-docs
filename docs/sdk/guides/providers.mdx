@@ -14,21 +14,27 @@ Before performing any CRUD operations, providers must register themselves on the
 `addLiquidityAndRegisterWithETH` function takes the following params:
 
 - `marketplaceId`: The id of the marketplace to register with.
-- `label`: The label of the provider.
-- `publicKey`: The public key of the provider.
-- `minMediaAmountOut` : The minimum amount of media to receive in return for the liquidity provided.
-- `slippage`: The slippage tolerance for the transaction.
-- `pairFee`: The pair fee for the transaction.
+- `metadata`: The provider metadata.
+- `publicKey`: The provider public key.
+- `minOut`: Array with the minimum amounts of media and weth to receive.
+- `path`: The preferred MEDIA/WETH Uniswap path. (Utilized to swap half of the ETH to MEDIA)
+- `slippage`: The slippage tolerance.
+- `poolFee`: The pair fee of the pool where your liquidity will be added.
+- `amount`: The amount of ETH to send.
+
 
 `addLiquidityAndRegister` function takes the following params:
 
 - `marketplaceId`: The id of the marketplace to register with.
-- `inputToken`: The address of the token to provide liquidity with.
-- `inputAmount`: The amount of input token to provide as liquidity.
-- `label`: The label of the provider.
-- `publicKey`: The public key of the provider.
-- `slippage`: The slippage tolerance for the transaction.
-- `pairFee`: The pair fee for the transaction.
+- `inputToken`: The input token address.
+- `inputAmount`: The input amount.
+- `metadata`: The provider metadata.
+- `publicKey`: The provider public key.
+- `minOut`: Array with the minimum amounts of media and weth to receive.
+- `paths`: The preferred Uniswap paths. (Utilized to swap half of the input token to MEDIA and the other half to ETH)
+- `slippage`: The slippage tolerance.
+- `poolFee`: The pair fee of the pool where your liquidity will be added.
+
 
 #### Return
 
@@ -37,34 +43,38 @@ Both functions will return `Promise<any>`.
 #### Example
 
 ```javascript
-import { Sdk, MarketPlaceHelper } from 'media-sdk';
+import { Sdk, MarketplaceHelper } from 'media-sdk';
 
 // initialize the sdk using a private key
 const sdk = new Sdk({ privateKey: "afdfd9c3d2095ef696594f6cedcae59e72dcd697e2a7521b1578140422a4f890" });
 
-const marketPlaceHelper = new MarketPlaceHelper(sdk);
+const marketplaceHelper = new MarketplaceHelper(sdk);
 
 // register with ETH
 
-await marketPlaceHelper.addLiquidityAndRegisterWithETH({
+await marketplaceHelper.addLiquidityAndRegisterWithETH({
     marketplaceId: 1,
-    label: 'My Provider',
+    metadata: '{"label":"Super Provider"}',
     publicKey: '0x1234567890',
-    minMediaAmountOut: 100,
-    slippage: 0.1,
-    pairFee: 0.1
+    minOut: [100, 100],
+    path: '0x1234567890',
+    slippage: 50000, // 5%
+    poolFee: 500,
+    amount: 100,
 });
 
-// register with token
+// register with an ERC20 Token
 
-await marketPlaceHelper.addLiquidityAndRegister({
+await marketplaceHelper.addLiquidityAndRegister({
     marketplaceId: 1,
     inputToken: '0x1234567890',
     inputAmount: 100,
-    label: 'My Provider',
+    metadata: '{"label":"Super Provider"}',
     publicKey: '0x1234567890',
-    slippage: 0.1,
-    pairFee: 0.1
+    minOut: [100, 100],
+    paths: ['0x1234567890', '0x1234567890'],
+    slippage: 50000, // 5%
+    poolFee: 500,
 });
 ```
 

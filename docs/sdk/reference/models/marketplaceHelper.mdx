@@ -1,7 +1,6 @@
 ---
 title: "MarketplaceHelper"
 sidebar_label: MarketplaceHelper
-sidebar_position: 7
 ---
 
 The `MarketplaceHelper` class provides methods to interact with the `MarketplaceHelper` smart contract, including adding liquidity, registering media, and swapping tokens. This class is designed to facilitate interactions with Uniswap pools and manage media assets within a decentralized marketplace.
@@ -81,55 +80,42 @@ Will throw an error if the transaction fails.
 
 ### `wethToMedia`
 
-Converts WETH to Media.
+Encodes a Uniswap path to trade WETH for MEDIA with a given pool fee.
 
 - **Parameters**:
 - `fee`: `FeeAmount`
-The fee amount for the conversion.
+The fee amount.
 
 - **Returns**: `string`
-The encoded path for the conversion.
+The encoded path.
 
 ### `mediaToWeth`
 
-Converts Media to WETH.
+Encodes a Uniswap path to trade MEDIA for WETH with a given pool fee.
 
 - **Parameters**:
 - `fee`: `FeeAmount`
-The fee amount for the conversion.
+The fee amount.
 
 - **Returns**: `string`
-The encoded path for the conversion.
+The encoded path.
 
 ### `addLiquidityAndRegisterWithETH`
 
-Adds liquidity to the Uniswap pool and registers the media using ETH.
+Adds liquidity to the MEDIA/WETH Uniswap pool using ETH and utilizes the resulting NFT to register as provider of a given marketplace.
 
 - **Parameters**:
-- `params`: `AddLiquidityAndRegisterWithWETHParams`
-The parameters for the transaction, including `marketplaceId`, `label`, `publicKey`, `minMediaAmountOut`, `slippage`, `amount`, and `pairFee`.
+- `params`: [`AddLiquidityAndRegisterWithETHParams`](../types/params/AddLiquidityAndRegisterWithETHParams)
 
 - **Returns**: `Promise<any>`
 The result of the transaction.
 
 ### `addLiquidityAndRegister`
 
-Adds liquidity to the Uniswap pool and registers the media.
+Adds liquidity to the MEDIA/WETH Uniswap pool using an ERC20 Token and utilizes the resulting NFT to register as provider of a given marketplace.
 
 - **Parameters**:
-- `params`: `AddLiquidityAndRegisterParams`
-The parameters for the transaction, including `marketplaceId`, `inputToken`, `inputAmount`, `label`, `publicKey`, `slippage`, and `pairFee`.
-
-- **Returns**: `Promise<any>`
-The result of the transaction.
-
-### `swapAndCreateDealWithETH`
-
-Swaps tokens and creates a deal using ETH.
-
-- **Parameters**:
-- `params`: `SwapAndCreateDealWithWETHParams`
-The parameters for the transaction, including `marketplaceId`, `resourceId`, `offerId`, `sharedKeyCopy`, `minMediaAmountOut`, `amount`, and `pairFee`.
+- `params`: [`AddLiquidityAndRegisterParams`](../types/params/AddLiquidityAndRegisterParams)
 
 - **Returns**: `Promise<any>`
 The result of the transaction.
@@ -139,59 +125,43 @@ The result of the transaction.
 Swaps tokens and creates a deal.
 
 - **Parameters**:
-- `marketplaceId`: `string`
-The ID of the marketplace.
-
-- `inputToken`: `string`
-The address of the input token.
-
-- `inputAmount`: `string`
-The amount of the input token.
-
-- `resourceId`: `string`
-The ID of the resource.
-
-- `offerId`: `string`
-The ID of the offer.
-
-- `sharedKeyCopy`: `string`
-A copy of the shared key for the deal.
-
-- `minMediaAmountOut`: `string`
-The minimum amount of media tokens expected from the swap.
-
-- `pairFee`: `number` (default: `500`)
-The fee amount for the swap.
+- `params`: [`SwapAndCreateDealParams`](../types/params/SwapAndCreateDealParams)
 
 - **Returns**: `Promise<any>`
 The result of the transaction.
+
+
+### `swapAndCreateDealWithETH`
+
+Swaps tokens and creates a deal using ETH.
+
+- **Parameters**:
+- `params`: [`SwapAndCreateDealWithETHParams`](../types/params/SwapAndCreateDealWithETHParams)
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+### `swapAndCreateDeals`
+
+Swaps tokens and creates multiple deals.
+
+- **Parameters**:
+- `params`: [`SwapAndCreateDealsParams`](../types/params/SwapAndCreateDealsParams)
+
+- **Returns**: `Promise<any>`
+The result of the transaction.
+
+
 
 ### `swapAndCreateDealsWithETH`
 
 Swaps tokens and creates multiple deals using ETH.
 
 - **Parameters**:
-- `marketplaceId`: `string`
-The ID of the marketplace.
-
-- `resourceId`: `string`
-The ID of the resource.
-
-- `offerIds`: `string[]`
-An array of offer IDs.
-
-- `sharedKeyCopies`: `string[]`
-An array of shared key copies.
-
-- `minMediaAmountOut`: `string`
-The minimum amount of media tokens expected from the swap.
-
-- `amount`: `bigint`
-The amount of ETH to use in the swap.
-
-- `pairFee`: `number` (default: `500`)
-The fee amount for the swap.
+- `params`: [`SwapAndCreateDealsWithETHParams`](../types/params/SwapAndCreateDealsWithETHParams)
 
 - **Returns**: `Promise<any>`
 The result of the transaction.
+
+
 

@@ -1,0 +1,32 @@
+---
+title: "AddLiquidityAndRegisterWithETHParams"
+sidebar_label: AddLiquidityAndRegisterWithETHParams
+---
+
+The `AddLiquidityAndRegisterWithETHParams` interface defines the parameters required to add liquidity and register using ETH.
+
+## Properties
+
+- **`marketplaceId`**: `bigint | number | string`
+The ID of the marketplace.
+
+- **`metadata`**: `string`
+The metadata for the provider.
+
+- **`publicKey`**: `string`
+The public key of the provider.
+
+- **`minOut`**: `bigint[] | number[] | string[]`
+The minimum amounts of MEDIA and WETH to receive.
+
+- **`path`**: `string`
+The preferred MEDIA/WETH Uniswap path. (Used to swap half of the ETH to MEDIA)
+
+- **`slippage`**: `bigint | number | string`
+The slippage for the NFT mint. Note that this is not the slippage for the swap but for `amount0Min` and `amount1Min` in Uniswap's `INonfungiblePositionManager.MintParams`.
+
+- **`poolFee`**: `bigint | number | string`
+The pair fee of the pool where your liquidity will be added.
+
+- **`amount`**: `bigint | number | string`
+The amount of ETH to send.

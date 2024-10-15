@@ -1,10 +1,9 @@
 ---
-title: "SwapAndCreateDealWithWETHParams"
-sidebar_label: SwapAndCreateDealWithWETHParams
-sidebar_position: 17
+title: "SwapAndCreateDealWithETHParams"
+sidebar_label: SwapAndCreateDealWithETHParams
 ---
 
-The `SwapAndCreateDealWithWETHParams` interface defines the parameters required to swap and create a deal using WETH.
+The `SwapAndCreateDealWithETHParams` interface defines the parameters required to swap ETH to MEDIA and create a deal.
 
 ## Properties
 
@@ -21,10 +20,10 @@ The ID of the offer.
 A copy of the shared key for accessing the deal.
 
 - **`minMediaAmountOut`**: `bigint | number | string`
-The minimum media amount expected out of the transaction.
+The minimum media amount expected out of the swap.
 
 - **`amount`**: `bigint`
 The amount of WETH to use.
 
-- **`pairFee`**: `FeeAmount` (optional)
+- **`poolFee`**: `FeeAmount` (optional)
 The fee amount for the Uniswap pair.

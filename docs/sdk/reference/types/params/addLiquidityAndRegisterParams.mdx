@@ -1,30 +1,36 @@
 ---
 title: "AddLiquidityAndRegisterParams"
 sidebar_label: AddLiquidityAndRegisterParams
-sidebar_position: 16
 ---
 
-The `AddLiquidityAndRegisterParams` interface defines the parameters required to add liquidity and register.
+The `AddLiquidityAndRegisterParams` interface defines the parameters required to add liquidity and register using an ERC20 Token.
 
 ## Properties
 
 - **`marketplaceId`**: `bigint | number | string`
 The ID of the marketplace.
 
-- **`inputToken`**: `string`
-The token to be input.
+- **`inputToken`**: `Address`
+The address of the input token.
 
 - **`inputAmount`**: `bigint | number | string`
-The amount of input token.
+The amount of the input token.
 
-- **`label`**: `string`
-A label for the registration.
+- **`metadata`**: `string`
+The metadata for the provider.
 
 - **`publicKey`**: `string`
-The public key for secure communication.
+The public key of the provider.
+
+- **`minOut`**: `bigint[] | number[] | string[]`
+The minimum amounts of MEDIA and WETH to receive.
+
+- **`paths`**: `string[]`
+The preferred Uniswap paths. Used to swap half of the input token to MEDIA and the other half to ETH.
 
 - **`slippage`**: `bigint | number | string`
-The allowed slippage for the transaction.
+The slippage tolerance.
 
-- **`pairFee`**: `FeeAmount` (optional)
-The fee amount for the Uniswap pair.
+- **`poolFee`**: `bigint | number | string`
+The pair fee of the pool where your liquidity will be added.
+

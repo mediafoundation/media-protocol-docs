@@ -33,12 +33,16 @@ An already initialized wallet client. If provided, this will be used directly in
 
 #### Usage
 
+Initializing with a private key:
+
 ```javascript
 const sdk = new Sdk({
     chain: sepolia,
     privateKey: "your-private-key"
 });
 ```
+
+Initializing with a mnemonic phrase:
 
 ```javascript
 const sdk = new Sdk({

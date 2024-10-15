@@ -1,0 +1,32 @@
+---
+title: "SwapAndCreateDealsParams"
+sidebar_label: SwapAndCreateDealsParams
+---
+
+The `SwapAndCreateDealsParams` interface defines the parameters required to swap an ERC20 token to MEDIA and create multiple deals.
+
+## Properties
+
+- **`marketplaceId`**: `bigint | number | string`
+The ID of the marketplace.
+
+- **`inputToken`**: `Address`
+The address of the input token.
+
+- **`inputAmount`**: `bigint | number | string`
+The amount of the input token.
+
+- **`resourceId`**: `bigint | number | string`
+The ID of the resource.
+
+- **`offerIds`**: `bigint[] | number[] | string[]`
+An array of offer IDs.
+
+- **`sharedKeyCopies`**: `string[]`
+An array of copies of the shared key for accessing the resource.
+
+- **`minMediaAmountOut`**: `bigint | number | string`
+The minimum media amount expected out of the swap.
+
+- **`path`**: `string`
+The preferred Uniswap path.

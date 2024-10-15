@@ -1,0 +1,29 @@
+---
+title: "SwapAndCreateDealsWithETHParams"
+sidebar_label: SwapAndCreateDealsWithETHParams
+---
+
+The `SwapAndCreateDealsWithETHParams` interface defines the parameters required to swap ETH to MEDIA and create multiple deals.
+
+## Properties
+
+- **`marketplaceId`**: `bigint | number | string`
+The ID of the marketplace.
+
+- **`resourceId`**: `bigint | number | string`
+The ID of the resource.
+
+- **`offerIds`**: `bigint[] | number[] | string[]`
+An array of offer IDs.
+
+- **`sharedKeyCopies`**: `string[]`
+An array of copies of the shared key for accessing the resource.
+
+- **`minMediaAmountOut`**: `bigint | number | string`
+The minimum media amount expected out of the swap.
+
+- **`amount`**: `bigint`
+The amount of WETH to use.
+
+- **`poolFee`**: `FeeAmount` (optional)
+The fee amount for the Uniswap pair.
