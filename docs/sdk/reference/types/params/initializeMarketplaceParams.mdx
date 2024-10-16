@@ -7,11 +7,11 @@ The `InitializeMarketplaceParams` interface defines the parameters required to i
 
 ## Properties
 
-- **`requiredStake`**: `number`
+- **`requiredStake`**: `number | string | bigint`
 The required stake amount to register as provider of the new marketplace.
 
-- **`marketFeeTo`**: `string`
+- **`marketFeeTo`**: `Address`
 The address to receive market fees.
 
-- **`marketFeeRate`**: `number`
+- **`marketFeeRate`**: `number | string | bigint`
 The rate of the market fee. E.g., 10000 for 1%.

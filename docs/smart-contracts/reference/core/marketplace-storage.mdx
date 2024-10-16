@@ -44,7 +44,8 @@ Initializes a new marketplace.
 function initializeMarketplace(
     uint requiredStake,
     address _marketFeeTo,
-    uint256 _marketFeeRate
+    uint256 _marketFeeRate,
+    string calldata metadata
 ) external nonReentrant returns (uint marketplaceId);
 ```
 Parameters:

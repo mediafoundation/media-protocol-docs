@@ -24,7 +24,8 @@ const marketplace = new Marketplace(sdk);
 const hash = await marketplace.initializeMarketplace({
   requiredStake: 100,  // replace with your required stake 
   marketFeeTo: sdk.config.walletClient.account.address, // replace with your market fee recipient address 
-  marketFeeRate: 50000 // replace with your market fee rate % ex 5% = 50000
+  marketFeeRate: 50000, // replace with your market fee rate % ex 5% = 50000
+  metadata: '{"name": "Test Marketplace"}' // replace with your metadata
 });
 
 // wait for the transaction to be mined

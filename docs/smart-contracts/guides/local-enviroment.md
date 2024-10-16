@@ -91,7 +91,8 @@ contract SimpleInitializeMarketplace {
         marketplaceId = marketplaceStorage.initializeMarketplace(
             5000000000000000000, // marketplace min required liquidity
             msg.sender, // marketplace owner
-            30000 // 3% fee
+            30000, // 3% fee
+            '{"name": "Test Marketplace"}' // metadata
         );
     }
 }
